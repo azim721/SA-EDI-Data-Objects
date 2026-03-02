@@ -1,0 +1,990 @@
+{
+    "Name": "keymgr.kmac_en_masking_i",
+    "Description": "Indicates whether KMAC operates in masking mode; used by design assertions to ensure the integration\u2019s masking configuration matches the key manager\u2019s expectation.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "keymgr.key_vld",
+    "Description": "Aggregate validity of the key inputs/selection for all operations.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1245",
+        "CWE-1221",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "keymgr.u_cfgen.en_i",
+    "Description": "The 'Configuration global enable input' (en_i) is crucial for controlling the configuration enable path. It qualifies initialization, participates in disabling (vld_dis), and directly gates the output (out_o). This ensures that configuration changes are only allowed when en_i is asserted, maintaining the integrity of the configuration process.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.en_i",
+    "Description": "Global enable from lifecycle gates whether the controller accepts operations and influences state transitions and wiping.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.op_start_i",
+    "Description": "Starts an operation (advance, generate, etc.) when asserted in conjunction with op_i.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.entropy_i",
+    "Description": "Per-share PRNG entropy consumed to randomize/wipe key shares and for advance operations.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.sideload_sel_err_i",
+    "Description": "Error with sideload destination selection.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.data_fsm_err",
+    "Description": "Error from the data enable FSM controlling data_hw_en_o/data_sw_en_o.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.kmac_done_i",
+    "Description": "Indicates completion of a KMAC operation to the op-state FSM.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.prng_reseed_done_i",
+    "Description": "Indicates a reseed event completed (used to drive PRNG behavior after disable/invalid).",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.prng_reseed_ack_i",
+    "Description": "Acknowledges a reseed request to advance into randomization.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.op_done_o",
+    "Description": "Indicates completion of an operation to software.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.data_valid_o",
+    "Description": "Marks KMAC data valid phase during KeyUpdateKmac.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_data_en.hw_sel_i",
+    "Description": "Selects which data path (hardware or software) is enabled when an id/gen operation is requested; invalid/ambiguous values cause the path to be disabled.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_data_en.adv_en_i",
+    "Description": "Forces the FSM into the disable state during an advance operation and keeps data disabled until the completion sequence is observed.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_data_en.id_en_i",
+    "Description": "Requests a non-advance operation that may enable data, steering to HwEn/SwEn based on the selector.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_data_en.op_done_i",
+    "Description": "Transitions HwEn/SwEn/Dis to the Wait state where outputs are deasserted, shaping the completion sequence before returning to Idle.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1262",
+        "CWE-1220"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_data_en.op_start_i",
+    "Description": "Controls exit from the Wait state; only when deasserted does the FSM return to Idle to allow the next operation.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1262",
+        "CWE-1220"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_data_en.fsm_err_o",
+    "Description": "Asserted in the default case to indicate illegal/invalid FSM state detection (sparse-encoded FSM).",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_err.sideload_sel_err_i",
+    "Description": "Indicates an illegal sideload key selection; contributes to synchronous fault collection (SyncFaultSideSel).",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_err.regfile_intg_err_i",
+    "Description": "Signals integrity faults in the register file; contributes to AsyncFaultRegIntg and fault_o.",
+    "Family": [
+        "Security",
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_err.ctrl_fsm_err_i",
+    "Description": "Contributes to aggregated FSM integrity fault (AsyncFaultFsmIntg) that is propagated to fault_o.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_err.error_o",
+    "Description": "Publishes final error codes gated by operation completion, summarizing synchronous and asynchronous errors.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_err.op_done_i",
+    "Description": "Marks operation completion, clears latched sync error/fault accumulators, and gates the transfer of final status into error_o/fault_o.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_input_checks.key_version_i",
+    "Description": "Input key version candidate that is compared against the current maximum allowed version to decide acceptance.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_input_checks.creator_seed_vld_o",
+    "Description": "Indicates whether the creator seed passes the basic plausibility check.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_input_checks.owner_seed_vld_o",
+    "Description": "Indicates whether the owner seed passes the plausibility check.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_input_checks.health_state_vld_o",
+    "Description": "Indicates whether the health state input passes the plausibility check.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_input_checks.key_version_vld_o",
+    "Description": "Outputs whether the provided key version is within the allowed maximum.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_input_checks.key_vld_o",
+    "Description": "Aggregated validity flag across key shares indicating non-trivial key material.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_kmac_if.adv_en_i",
+    "Description": "One-hot command selector; when asserted it chooses adv_data_i, sets the number of rounds, and initiates the transaction.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_kmac_if.id_en_i",
+    "Description": "One-hot command selector to choose the ID generation path and its data for KMAC.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_kmac_if.fsm_error_o",
+    "Description": "Asserted when the sparse FSM enters an invalid state or when counter errors occur; indicates a terminal error condition.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "keymgr_kmac_if.kmac_error_o",
+    "Description": "Captures kmac_data_i.error when KMAC signals done, propagating KMAC-side error status.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "keymgr_kmac_if.kmac_done_error_o",
+    "Description": "Latched when KMAC asserts done outside the valid window (protocol violation).",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_kmac_if.cmd_error_o",
+    "Description": "Flags one-hot violations and enable inconsistency across a transaction (one_hot_err_q | cmd_consty_err_q).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1262",
+        "CWE-1220"
+    ]
+},
+{
+    "Name": "keymgr_kmac_if.entropy_i",
+    "Description": "Two-share entropy input used to formulate decoy_data and to populate data_o with decoys before completion.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1319",
+        "CWE-1247",
+        "CWE-1279"
+    ]
+},
+{
+    "Name": "keymgr_kmac_if.done_o",
+    "Description": "Indicates KMAC operation completion; used by control logic to acknowledge and return to idle after start de-asserts.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_op_state.kmac_done_i",
+    "Description": "Signals completion of a KMAC operation and triggers state transitions, acknowledgments, or updates.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1245"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_op_state.op_ack_o",
+    "Description": "Notifies upstream logic that the current operation is complete.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1245"
+    ]
+},
+{
+    "Name": "keymgr_ctrl.u_op_state.op_fsm_err_o",
+    "Description": "Flags an error when the FSM reaches an invalid/default state while allowing transaction completion.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "keymgr.u_reg.shadowed_storage_err_o",
+    "Description": "Aggregates storage error conditions from all shadowed configuration fields and exposes them to the system as an alert/status output.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "keymgr.u_reg.shadowed_update_err_o",
+    "Description": "Aggregates invalid shadowed write sequence errors for shadowed registers and exposes them to the system.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "keymgr.u_reg.intg_err_o",
+    "Description": "Signals a detected integrity error on incoming TL-UL transactions or spurious write enables.",
+    "Family": [
+        "Security",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "keymgr.u_reseed_ctrl.reseed_req_i",
+    "Description": "External control that requests an entropy reseed; when asserted and not already in progress, it causes the module to issue an EDN request.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1276"
+},
+{
+    "Name": "keymgr.u_reseed_ctrl.reseed_ack_o",
+    "Description": "Provides an acknowledgement when the module has accepted a reseed request (coincident with EDN ack).",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1276, CWE-1384"
+},
+{
+    "Name": "keymgr.u_reseed_ctrl.cnt_err_o",
+    "Description": "Indicates an error from the prim_count instance managing the reseed counter (e.g., redundancy check failure).",
+    "Family": [
+        "Counter/Timer",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1334, CWE-1276"
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.u_aes_key.en_i",
+    "Description": "Gates the valid output and also clears the internal valid state when low; valid_o = valid_q & en_i and valid_q is cleared when !en_i.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.u_aes_key.set_en_i",
+    "Description": "On a set operation, selects whether key_q loads the provided key shares (key_i) or fills with entropy-derived data.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.u_aes_key.entropy_i",
+    "Description": "Provides per-share entropy used to overwrite key storage on clear and to generate a dummy key when set_en_i is deasserted.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1279",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.u_aes_key.key_i",
+    "Description": "Secret key shares provided to be stored into key_q when set_i is asserted with set_en_i enabled.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1300"
+    ]
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.u_aes_key.key_o",
+    "Description": "Outputs the stored key shares for consumption by downstream cryptographic blocks.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1264",
+        "CWE-1191",
+        "CWE-1300",
+        "CWE-1239",
+        "CWE-319"
+    ]
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.u_aes_key.valid_o",
+    "Description": "Indicates to downstream logic whether the sideload key is valid and usable (valid_q AND en_i).",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.entropy_i",
+    "Description": "Entropy used by sideload key instances for masking/refresh during set and clear operations.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1279"
+    ]
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.sideload_sel_err_o",
+    "Description": "Asserts if observed valids conflict with internal valid_tracking_q expectations, indicating an unexpected valid assertion.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keymgr_sideload_key_ctrl.fsm_err_o",
+    "Description": "Asserts on illegal/default FSM states in the sideload control.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+}

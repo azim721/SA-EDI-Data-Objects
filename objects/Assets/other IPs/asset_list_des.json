@@ -1,0 +1,275 @@
+{
+    "Name": "des3.u0.K_sub",
+    "Description": "The 48-bit subkey input (K_sub) is used in each DES round. It is XORed with the expanded right-half (E) to form the intermediate value X, which directly drives the S-box lookups. The output of the S-boxes ultimately determines the permutation output P.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "des3.key1",
+    "Description": "Top-level key input used by key_sel3 to derive 48-bit round subkeys (K_sub) that drive the Feistel function in crp across rounds.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "des3.key2",
+    "Description": "Top-level key input used by key_sel3 in the subkey selection process for triple-DES operation.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "des3.key3",
+    "Description": "Top-level key input used by key_sel3 to produce per-round K_sub values for the Feistel function.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "des3.K_sub",
+    "Description": "Internal 48-bit subkey selected by key_sel3 based on roundSel and decrypt, XORed with the expanded data inside crp for each round.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "des3.desIn",
+    "Description": "64-bit input block that undergoes initial permutation and 16 Feistel rounds to produce desOut.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "des3.desIn",
+    "Description": "When decrypt=0, desIn carries plaintext that is permuted and processed through 16 rounds to produce ciphertext.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Code/Data",
+        "Secret"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300"
+    ]
+},
+{
+    "Name": "des3.decrypt",
+    "Description": "1-bit control that selects whether key scheduling and data flow operate in decryption or encryption direction.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "des3.roundSel",
+    "Description": "6-bit selector that determines which round\u2019s subkey is used and steers internal muxing of Lout/Xin (with special handling at roundSel=0,16,32).",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity, Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "des3.desOut",
+    "Description": "Final 64-bit block produced after the final permutation of FP; represents the processed ciphertext (encryption) or plaintext (decryption).",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "des3.u1.key1",
+    "Description": "Provides one of the three 56-bit master keys that the module selects from to derive round subkeys.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-203",
+        "CWE-1240"
+    ]
+},
+{
+    "Name": "des3.u1.key2",
+    "Description": "Provides the second 56-bit master key used in triple-DES key scheduling depending on the round bank and mode.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-203",
+        "CWE-1240"
+    ]
+},
+{
+    "Name": "des3.u1.key3",
+    "Description": "Provides the third 56-bit master key used when the round bank and mode select this key for subkey derivation.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-203",
+        "CWE-1240"
+    ]
+},
+{
+    "Name": "des3.u1.roundSel",
+    "Description": "Selects which set of subkeys is output for the current round and also influences which master key bank is chosen.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "des3.u1.decrypt",
+    "Description": "Controls whether the subkey sequence is traversed in encryption or decryption order and which key bank ordering is applied.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261"
+    ]
+},
+{
+    "Name": "des3.u1.K_sub",
+    "Description": "Outputs the 48-bit round subkey derived from the selected master key and round index for use by the DES round function.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-203"
+    ]
+}

@@ -1,0 +1,206 @@
+{
+    "Name": "neorv32_cpu_control.pmp_fault_i",
+    "Description": "Input that signals a physical memory protection (PMP) fault on instruction fetch/execute, which the trap controller latches as an instruction access/execute fault and may trigger a trap/exception.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "When pmp_fault_i is asserted it inhibits bus strobe generation and contributes to arbiter errors, effectively blocking memory accesses; a persistent or malicious assertion therefore denies service to the CPU. Thus pmp_fault_i is an integration-level attack point that can be used to create a DoS on the LSU."
+},
+{
+    "Name": "neorv32_cpu_control.alu_cp_done_i",
+    "Description": "Input handshake indicating completion of multi-cycle ALU/CFU/FPU operations; the execute FSM uses it to resume execution and perform register-file write-back for those operations.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If alu_cp_done_i is manipulated (asserted early or suppressed), the control FSM can incorrectly proceed to write-back or may wait indefinitely; early/spurious assertion can cause wrong results to be committed, corrupting register-file state and program semantics. Therefore this signal is critical to preserving correct computation integrity."
+},
+{
+    "Name": "neorv32_cpu_control.irq_dbg_i",
+    "Description": "External single-bit input used to request a debug-mode halt entry (if debug is enabled); it is treated as an async halt trigger and routed into debug-entry logic.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1313",
+        "CWE-1269"
+    ],
+    "Justification": "An adversary or misintegration asserting irq_dbg_i can force or repeatedly request halt/debug entry, preventing normal program execution and causing a denial-of-service. Because its dominant effect is to stop or pause the CPU, availability is the primary concern."
+},
+{
+    "Name": "neorv32_cpu_control.lsu_wait_i",
+    "Description": "Single-bit input indicating the LSU has an outstanding memory transaction and that the execute FSM should wait in EX_MEM_RSP until completion.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247"
+    ],
+    "Justification": "If lsu_wait_i is held asserted by a compromised integrator or faulty subsystem, the execute FSM will stall waiting for memory responses and may never progress, resulting in a denial-of-service. Conversely, spuriously deasserting it can cause premature progression but the dominant risk at integration is DoS by driving it high."
+},
+{
+    "Name": "neorv32_cpu_control.mem_sync_i",
+    "Description": "Indicates completion of memory synchronization operations; used to update exe_engine.msync (and combined with ctrl.lsu_fence) and to let the EX_FENCE state progress when synchronization completes.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If mem_sync_i is not asserted when required (or prevented), fence operations will not complete and the CPU may stall or remain in a fence waiting state, causing a denial-of-service for memory-ordered operations. Thus tampering with this line primarily impacts availability of correct execution."
+},
+{
+    "Name": "neorv32_cpu_control.if_ack",
+    "Description": "Internal handshake asserted to acknowledge that an instruction word supplied by the front-end is being consumed by the backend (backend-to-frontend handshake).",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245"
+    ],
+    "Justification": "if_ack controls the handshake protocol with the front-end; if it is prevented from asserting (or asserted incorrectly by corrupted logic), instruction transfer and dispatch can be disrupted, leading to instruction fetch stalls or lost synchrony and therefore denial-of-service. At integration level, manipulation of the handshake affects ability to fetch/dispatch instructions."
+},
+{
+    "Name": "neorv32_cpu_control.if_reset",
+    "Description": "Internal control signal used to reset/flush the instruction fetch front-end on branches, restarts or trap events; forwarded to the front-end via the control bus.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1313"
+    ],
+    "Justification": "If if_reset is toggled maliciously or incorrectly, the front-end can be repeatedly reset or held in reset, preventing instruction fetch and halting execution (DoS). Because it gates the front-end progress, integrity impact is secondary to the availability impact."
+},
+{
+    "Name": "neorv32_cpu_control.illegal_cmd",
+    "Description": "Combinatorial flag set when the decoded instruction is illegal or unsupported; used to raise illegal-instruction exceptions and feed trap logic.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If illegal_cmd is forced high (or inputs that set it are manipulated), the CPU will raise an illegal-instruction trap and can be prevented from executing intended instructions, resulting in denial-of-service. While it relates to correctness, the primary risk at integration is blocking normal execution."
+},
+{
+    "Name": "neorv32_cpu_control.irq_machine_i",
+    "Description": "Vector input of standard RISC-V machine interrupts (MSI, MEI, MTI) that are sampled into the interrupt-pending buffer and participate in priority/irq firing logic.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1263",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Machine-level interrupts drive forward progress (timer tick, external events, and software interrupts). If these lines are dropped, delayed, or incorrectly masked, irq_pnd/irq_buf will not set and irq_fire will not trigger despite mie/mstatus enabling, leading to missed trap entries, stalled scheduling, and system hang\u2014directly degrading availability."
+},
+{
+    "Name": "neorv32_cpu_control.irq_fast_i",
+    "Description": "Vector input of NEORV32-specific fast interrupts latched into irq-pending/buffer and used for fast interrupt trap entries.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1263",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Fast interrupts serve latency-sensitive servicing; corruption or loss prevents env_enter/irq_fire from initiating the handler (even when mie_firq is set), causing missed deadlines, peripheral overruns, and prolonged service starvation\u2014conditions that reduce overall system availability."
+},
+{
+    "Name": "neorv32_cpu_control.debug_ctrl.run",
+    "Description": "Internal register indicating whether the CPU is currently in debug-mode (online) and gating debug-specific behavior (e.g., privilege handling, stopping counters, gating interrupts).",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1313",
+        "CWE-1191",
+        "CWE-1244"
+    ],
+    "Justification": "If debug_ctrl.run is forced or stuck in the debug state, the CPU operates in debug-mode semantics and may halt or prevent normal execution causing denial-of-service. Because debug mode changes execution flow and can stop normal operation, availability is the main security effect."
+},
+{
+    "Name": "neorv32_cpu_control.hwtrig_fired",
+    "Description": "Internal sticky flag that marks when a hardware trigger (address match) has fired; used to generate breakpoint/ebreak or debug-entry and presented via trigger CSR read-back.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1313",
+        "CWE-1299"
+    ],
+    "Justification": "If the hwtrig_fired status is set (or prevented from being cleared), it will cause or report breakpoint-like conditions that can trigger traps or debug entries, interrupting normal execution. Manipulation can be used to induce repeated trap entries or prevent clearing of a fired trigger, leading to denial-of-service."
+}

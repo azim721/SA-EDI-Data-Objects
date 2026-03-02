@@ -1,0 +1,141 @@
+{
+    "Name": "neorv32_cpu_regfile.rd_i",
+    "Description": "XLEN-bit destination data input that is written into a selected register file entry when write enable is asserted.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "rd_i provides the data that updates register file entries. If rd_i is corrupted or manipulated, register contents will be modified incorrectly, directly corrupting CPU state and program behavior, so integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_regfile.reg_file",
+    "Description": "Array of general-purpose registers (32 entries for RV32I or 16 for RV32E) that stores operands, intermediate results and program-visible state.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Code/Data",
+        "Critical",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "reg_file holds the authoritative CPU state (general-purpose registers). Any corruption or unauthorized modification of these memory cells changes program-visible state and computation results, so integrity protection is the primary requirement."
+},
+{
+    "Name": "neorv32_cpu_regfile.rf_we",
+    "Description": "Internal single-bit write enable signal that gates writes into reg_file (derived from control signals and x0 protection logic).",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "rf_we determines whether rd_i is written into reg_file. Faults or manipulation that force or suppress rf_we can cause unintended writes or prevent legitimate updates, corrupting register state; thus integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_regfile.opa_addr",
+    "Description": "Multiplexed address (rs1 or rd or forced-zero) used to index the register file for the synchronous read and for write destination selection in the FPGA-style variant.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "opa_addr selects which register is read or written via the shared port; tampering or misselection can cause writes to or reads from wrong registers, corrupting CPU state and operation. Therefore integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_regfile.rd_zero",
+    "Description": "Internal flag indicating that the current destination address is x0; used to prevent normal writes to the zero register unless explicitly forced.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "rd_zero prevents accidental modification of the architectural x0 register. If this signal is compromised (e.g., suppressed or stuck), writes to x0 might occur or prevented when intended, altering architectural guarantees and corrupting state, so integrity is the primary risk."
+},
+{
+    "Name": "neorv32_cpu_regfile.rs1_o",
+    "Description": "XLEN-bit synchronous source operand output delivering the register value selected by rf_rs1 to the rest of the CPU datapath.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ],
+    "Justification": "rs1_o is required by downstream execution units to obtain operands; if this port is blocked, tied-off or withheld at integration, instructions cannot execute correctly, causing denial-of-service or halted CPU progress. Availability is the dominant risk for this observable port."
+},
+{
+    "Name": "neorv32_cpu_regfile.rs2_o",
+    "Description": "XLEN-bit synchronous source operand output delivering the register value selected by rf_rs2 to the rest of the CPU datapath.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ],
+    "Justification": "Like rs1_o, rs2_o is required for instruction execution; if rs2_o is made unavailable or corrupted at integration level, many instructions will fail to execute, producing a denial-of-service. Hence availability is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_regfile.rs3_addr",
+    "Description": "Internal signal derived from ctrl_i.ir_funct12(11 downto 7) that selects which register is read for the optional rs3_o port.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "rs3_addr determines which register value is presented on rs3_o. If this address is manipulated, instructions will read incorrect operands leading to incorrect computation and corrupted state, so integrity is the main concern."
+}

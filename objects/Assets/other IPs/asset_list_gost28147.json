@@ -1,0 +1,128 @@
+{
+    "Name": "gost_28147_89.key",
+    "Description": "Provides the 256-bit secret key that is stored into internal registers and used in all rounds.",
+    "Family": [
+        "Security",
+        "Memories"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-319",
+        "CWE-1191",
+        "CWE-1244",
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "gost_28147_89.select",
+    "Description": "Determines which predefined S-box configuration is applied by the Sbox(...) substitution at each encryption round.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "gost_28147_89.pdata",
+    "Description": "Carries the 64-bit plaintext block that is loaded into internal state and processed.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-319",
+        "CWE-1191",
+        "CWE-1244",
+        "CWE-1239",
+        "CWE-1272",
+        "CWE-1258",
+        "CWE-1300"
+    ]
+},
+{
+    "Name": "gost_28147_89.cdata",
+    "Description": "Outputs the 64-bit encrypted/decrypted result once processing completes.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1313",
+        "CWE-1384",
+        "CWE-1261"
+    ]
+},
+{
+    "Name": "gost_28147_89.done",
+    "Description": "Signals that 32 rounds have completed and the output data is valid for capture.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "gost_28147_89.K",
+    "Description": "Holds eight 32-bit words of the cipher key used for round operations.",
+    "Family": [
+        "Security",
+        "Memories"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1244",
+        "CWE-1239",
+        "CWE-1258",
+        "CWE-1272",
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1301",
+        "CWE-1330",
+        "CWE-1299"
+    ]
+}

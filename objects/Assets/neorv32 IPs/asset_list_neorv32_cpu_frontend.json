@@ -1,0 +1,73 @@
+{
+    "Name": "neorv32_cpu_frontend.fetch.pc",
+    "Description": "Holds the current word-aligned program counter used to generate ibus_req_o.addr and incremented on successful fetch responses to point to the next instruction word.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Critical",
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Corrupting the PC would cause the frontend to fetch incorrect instruction words, directly changing program flow and breaking execution correctness. Because it controls which instructions are fetched, its integrity is critical to system correctness and security."
+},
+{
+    "Name": "neorv32_cpu_frontend.fetch.restart",
+    "Description": "Buffered restart flag set on reset or branch (ctrl_i.if_reset) that clears/initializes IPB and forces the fetch and issue engines to reinitialize to a new PC.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1261"
+    ],
+    "Justification": "Forcing repeated or persistent restarts prevents forward progress by clearing the prefetch buffer and reinitializing the fetch pipeline, effectively causing a denial-of-service of instruction delivery. Thus manipulation of this flag primarily impacts availability of normal operation."
+},
+{
+    "Name": "neorv32_cpu_frontend.ipb.free",
+    "Description": "Per-entry free signals from the FIFO indicating available space; used by the fetch FSM to determine whether to issue new bus requests and to set frontend halted when insufficient space exists.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261"
+    ],
+    "Justification": "Falsely indicating the FIFO is full (or otherwise manipulating free signals) prevents further fetch requests and can halt instruction intake, causing the frontend/back-end to stall. Hence these status signals primarily affect availability of instruction flow."
+},
+{
+    "Name": "neorv32_cpu_frontend.ipb.avail",
+    "Description": "Per-entry availability flags that indicate valid half-word data present in the FIFO; used by the issue engine to assert frontend_o.valid and decide when to assemble/issue instructions.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261"
+    ],
+    "Justification": "Suppressing availability (making entries appear empty) prevents the issue engine from presenting instructions to the backend even though data exists, stalling instruction issuance. Thus these indicators are crucial to maintaining availability of instruction delivery."
+}

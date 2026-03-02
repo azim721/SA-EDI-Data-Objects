@@ -1,0 +1,64 @@
+{
+    "Name": "gpio.gpio_output_enable_o",
+    "Description": "Drives per-bit output-enable for GPIO pins based on the direction register.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "gpio.intr_o",
+    "Description": "Aggregated interrupt signal derived from raw interrupt status and mask configuration.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1320"
+    ]
+},
+{
+    "Name": "gpio.gpio_int_mask_enable_q",
+    "Description": "Holds interrupt mask bits to enable/disable per-pin interrupt generation.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "gpio.rvalid_q",
+    "Description": "Holds the read valid state until the master asserts RREADY.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1245"
+    ]
+}

@@ -1,0 +1,125 @@
+{
+    "Name": "axi_adapter.addr_i",
+    "Description": "Carries the target address for AXI read/write transactions and is used to compute burst base and offsets.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "axi_adapter.we_i",
+    "Description": "Selects between read (0) and write (1) transactions at request time.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "axi_adapter.wdata_i",
+    "Description": "Provides the payload data for AXI write beats (single or burst).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "axi_adapter.be_i",
+    "Description": "Specifies which bytes within each write beat are active, controlling partial writes.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "axi_adapter.valid_o",
+    "Description": "Signals that read data (or atomic result) is available and valid on rdata_o.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "axi_adapter.rdata_o",
+    "Description": "Returns read data (single or assembled burst) or atomic results to the requester.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "axi_adapter.critical_word_valid_o",
+    "Description": "Indicates when critical_word_o is valid during a burst read.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+}

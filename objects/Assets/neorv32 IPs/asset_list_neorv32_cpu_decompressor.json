@@ -1,0 +1,75 @@
+{
+    "Name": "neorv32_cpu_decompressor.instr_i",
+    "Description": "16-bit compressed instruction input that the decompressor reads and decodes to assemble the 32-bit instruction and immediates.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ],
+    "Justification": "An attacker or faulty integrator that can modify instr_i will directly change the decoded 32-bit instruction and thus the processor's executed behavior. Maintaining integrity of this input is required to prevent instruction corruption, unintended control-flow changes, or arbitrary code execution."
+},
+{
+    "Name": "neorv32_cpu_decompressor.decoded",
+    "Description": "Internal 32-bit signal that holds the assembled/pre-decoded instruction built from instr_i and immediates; this value is propagated to instr_o (subject to 'illegal').",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ],
+    "Justification": "Corruption or unauthorized modification of 'decoded' will change what is presented on instr_o and thus what the processor executes. Ensuring integrity of this internal state is necessary to prevent execution of altered or malicious instructions."
+},
+{
+    "Name": "neorv32_cpu_decompressor.illegal",
+    "Description": "Internal flag set during decompression checks to indicate the compressed instruction is illegal; when asserted it forces instr_o[1] to '0' to reflect an illegal encoding.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ],
+    "Justification": "If 'illegal' is tampered with, illegal encodings could be hidden or valid encodings could be falsely reported, altering instruction semantics delivered to the CPU. Integrity of this flag is required to ensure correctness of illegal-instruction detection and the resulting output encoding."
+},
+{
+    "Name": "neorv32_cpu_decompressor.instr_o",
+    "Description": "32-bit decompressed instruction output driven from the internal decoded word (bits[31:2] mirror decoded; bit[1] is forced to '0' when an illegal compressed instruction is detected).",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ],
+    "Justification": "If instr_o is blocked, held, or otherwise made unavailable to the downstream execution unit, the CPU will not receive valid instructions and normal operation can be denied. Availability of this output is therefore critical to prevent denial-of-service at the instruction delivery boundary."
+}

@@ -1,0 +1,18 @@
+{
+    "Name": "neorv32_sysinfo.sysinfo(0)",
+    "Description": "Holds the processor clock frequency (32-bit) initialized from generic CLOCK_FREQUENCY and can be updated at runtime by bus write transactions to sysinfo word index 0; read by software via the bus response to determine system timing/configuration.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Sensitive",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "sysinfo(0) conveys critical configuration information (processor clock frequency) that software relies on for correct operation. The RTL explicitly permits bus writes to sysinfo(0), so an attacker who can modify or corrupt writes could change this value and cause incorrect timing assumptions or misconfiguration; therefore its integrity must be protected."
+}

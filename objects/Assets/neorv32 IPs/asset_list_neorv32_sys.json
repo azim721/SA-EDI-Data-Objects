@@ -1,0 +1,37 @@
+{
+    "Name": "neorv32_sys_clock.enable_i",
+    "Description": "Vector of enable channels that is OR-reduced to produce the internal enable 'en'; when deasserted the internal counter is held at zero and no clock-enable pulses are generated.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "This external input gates the generation of all derived clock-enable pulses. If an integrator or attacker can force or keep this input deasserted (or manipulate it), peripherals and logic relying on the generated clk_en_o pulses can be starved of timing ticks, producing a denial-of-service of downstream functionality."
+},
+{
+    "Name": "neorv32_sys_clock.cnt",
+    "Description": "12-bit counter that increments while 'en' is active; individual bit rises are used to generate the single-cycle clk_en_o pulses for various divided clocks.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1261",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "cnt enforces the watchdog\u2019s liveness window; if it is stalled or cleared incorrectly the watchdog may never expire (hung systems persist), while premature or accelerated counting triggers spurious timeouts and resets\u2014both conditions disrupt forward progress and service availability."
+}

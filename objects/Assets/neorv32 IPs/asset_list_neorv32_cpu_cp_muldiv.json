@@ -1,0 +1,252 @@
+{
+    "Name": "neorv32_cpu_cp_muldiv.rs1_i",
+    "Description": "XLEN-bit operand source 1 provided from the register file; used as multiplicand or dividend and inspected for sign in signed operations.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "Altering rs1_i changes the data being shifted and therefore directly corrupts computation results; an integrator would consider the correctness of this operand critical. Because rs1_i is an input that controls the value transformed by the shifter, its integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.rs2_i",
+    "Description": "XLEN-bit operand source 2 provided from the register file; used as multiplier or divisor and inspected for sign in signed operations.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "If rs2_i is modified the multiplier/divider will compute wrong outputs (or divide by wrong/divisor), potentially producing incorrect program-visible state or triggering faults. Ensuring integrity of rs2_i is essential for correct arithmetic behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.res_o",
+    "Description": "XLEN-bit output presenting the computed result when the co-processor signals completion; contains lower/upper product bits for multiply or the division/remainder result depending on the operation and funct3 selection.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1319"
+    ],
+    "Justification": "If res_o is blocked or not produced when expected, downstream units cannot obtain required computation results and processor execution would be disrupted (denial-of-service impact). Although output integrity matters, the dominant integration-level concern is that the result must be available when expected for correct operation."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.ctrl.rs1_is_signed",
+    "Description": "Internal flag indicating whether rs1 should be treated as signed for the current operation (affects sign compensation and initial abs conversion).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "Incorrect signedness interpretation changes arithmetic semantics (e.g., abs conversion, sign compensation) and will produce wrong results. Maintaining correctness of this control bit is necessary for arithmetic integrity."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.ctrl.rs2_is_signed",
+    "Description": "Internal flag indicating whether rs2 should be treated as signed for the current operation (affects product/add/sub behavior and divisor absolute value).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "If ctrl.rs2_is_signed is wrong, product or division algorithms perform incorrect sign handling (including negation/abs), leading to incorrect outputs. This directly impacts correctness of arithmetic results."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.ctrl.cnt",
+    "Description": "Iteration/cycle counter stepping serial multiply/divide algorithms and detecting completion or abort conditions.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Tampering with the cycle counter can cause premature termination or extra iterations of the serial algorithms, producing wrong results or corrupted intermediate state. The counter directly controls algorithm correctness."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.mul.prod",
+    "Description": "2*XLEN-bit product register used by parallel and iterative multiplier implementations to hold/accumulate the full multiplication result.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data",
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "mul.prod holds the computed product; corruption here changes the final output halves selected for res_o. Integrity of this register is required to ensure correct multiplication results."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.div.res",
+    "Description": "Final division/remainder result after optional sign compensation, selected for delivery on res_o for div/rem operations.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data",
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "div.res is the module's canonical division/rem result; corruption or incorrect sign compensation produces erroneous quotient/remainder values visible to the CPU. Its integrity is essential for correct divide/rem semantics."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.valid_o",
+    "Description": "One-cycle valid flag asserted when the unit finished the operation (S_DONE) to indicate res_o contains a valid result.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "valid_o is the observable/unlocking signal used by the debug module; if it is unavailable, stuck low, or suppressed at integration, the debugger remains locked and normal debug functionality is denied, making this port availability-critical."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.ctrl.out_en",
+    "Description": "Internal one-cycle enable produced by the FSM to permit driving final result onto res_o/valid_o (asserted in S_DONE).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "ctrl.out_en directly gates when results are presented externally; preventing or forcing this signal can block outputs (DoS) or cause spurious outputs. As the integration-level point that enables final result delivery, its availability is dominant."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.ctrl.state",
+    "Description": "FSM state (S_IDLE, S_BUSY, S_DONE) that sequences start, iterative processing, and one-cycle result output.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "Forcing or blocking FSM transitions can prevent operations from starting or prevent the one-cycle output window, causing denial-of-service of multiply/divide operations. The FSM state is the primary sequencer for availability of results."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.div.start",
+    "Description": "Start signal asserted when a division/rem instruction is detected to initialize divider state and begin the iterative division sequence.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "If div.start is prevented or spuriously asserted, divides/rem operations can be blocked or erroneously triggered, causing denial-of-service or spurious activity. As the entry point to the divider, its availability governs whether division can complete."
+},
+{
+    "Name": "neorv32_cpu_cp_muldiv.mul.start",
+    "Description": "Start signal asserted when a multiplication instruction is detected to initialize multiplier state and begin product computation.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware: Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1384"
+    ],
+    "Justification": "Preventing mul.start blocks multiplication operations (DoS) while spurious starts may produce incorrect timing or outputs. This signal is the integration-level trigger for multiply operations, so its availability is critical."
+}

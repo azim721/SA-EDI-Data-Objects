@@ -1,0 +1,149 @@
+{
+    "Name": "neorv32_wdt.clkgen_en_o",
+    "Description": "Output that enables the external clock generator/prescaler when the WDT is enabled; gates the timing source (prsc_tick) used to start and advance the watchdog counter.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/tick will not be provided and the watchdog counter will not progress, disabling the WDT functionality and preventing the module from performing its recovery/reset role (Denial-of-service on WDT)."
+},
+{
+    "Name": "neorv32_wdt.ctrl.enable",
+    "Description": "Control bit that enables or disables the watchdog: starting the timeout counter and enabling the clock-generator output when set, and clearing the counter when cleared.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1247"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the watchdog from starting/counting and thereby prevent the WDT from performing system recovery, causing a loss of the module's intended availability/safety function."
+},
+{
+    "Name": "neorv32_wdt.ctrl.lock",
+    "Description": "Lock bit that prevents further writes to the control register when set; attempted writes to a locked CTRL register result in a forced indication (reset_force) and, in strict mode, can cause a reset.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1224",
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1247"
+    ],
+    "Justification": "ctrl.lock protects the integrity of the WDT configuration; if the lock bit is maliciously cleared or prevented from being set, an attacker (or faulty integration) can alter critical configuration such as timeout or strict behavior, corrupting intended behavior and security policy."
+},
+{
+    "Name": "neorv32_wdt.ctrl.strict",
+    "Description": "Configuration bit that, when set, enforces strict behavior: illegal accesses (wrong password or writes to locked config) cause a hardware reset instead of being ignored.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244",
+        "CWE-1247"
+    ],
+    "Justification": "Altering ctrl.strict changes how the module reacts to illegal accesses; changing this bit undermines the integrity of the WDT's enforcement policy (either enabling unexpected resets or suppressing required resets), thus impacting correct security semantics."
+},
+{
+    "Name": "neorv32_wdt.ctrl.timeout",
+    "Description": "24-bit programmed timeout compare value stored in the control register; compared against the internal counter to detect a watchdog timeout event.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1247"
+    ],
+    "Justification": "If ctrl.timeout is modified illegitimately, the timing window for watchdog expiration is corrupted (too short or too long), directly changing system behavior and breaking the integrity of the safety policy the WDT is supposed to enforce."
+},
+{
+    "Name": "neorv32_wdt.reset_cause",
+    "Description": "2-bit register that records the cause of the last system reset (external, debugger, watchdog timeout, or invalid watchdog access) for software readback.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1247"
+    ],
+    "Justification": "Tampering with reset_cause can mislead software about the origin of the last reset, causing incorrect decisions in higher-level fault handling or diagnostics; maintaining the integrity of this status information is important for correct system behavior."
+},
+{
+    "Name": "neorv32_wdt.cnt",
+    "Description": "24-bit internal timeout counter that increments on prescaler ticks while the watchdog is active and is reset when the watchdog is fed or disabled.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261"
+    ],
+    "Justification": "cnt enforces the watchdog\u2019s liveness window; if it is stalled or cleared incorrectly the watchdog may never expire (hung systems persist), while premature or accelerated counting triggers spurious timeouts and resets\u2014both conditions disrupt forward progress and service availability."
+},
+{
+    "Name": "neorv32_wdt.cnt_timeout",
+    "Description": "Signal asserted when the running counter equals the programmed timeout while counting, indicating that a watchdog timeout condition has occurred.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261"
+    ],
+    "Justification": "cnt_timeout initiates the watchdog\u2019s fault response; if suppressed when the threshold is reached, hung software is never recovered, and if asserted spuriously it forces unnecessary resets\u2014either outcome degrades system availability."
+}

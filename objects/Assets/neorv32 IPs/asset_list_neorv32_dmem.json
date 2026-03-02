@@ -1,0 +1,67 @@
+{
+    "Name": "neorv32_dmem.mem_ram_b0, mem_ram_b1, mem_ram_b2, mem_ram_b3",
+    "Description": "Four byte-wide memory arrays that store the DMEM contents (bits 7..0, 15..8, 23..16, 31..24). They are written selectively using bus_req_i.ben and provide the four bytes assembled into the 32-bit read word.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Code/Data",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "These slices are the authoritative program store; any unintended write-enable, bit flip, or byte-lane corruption alters opcodes/immediates and can redirect control flow or execute unintended code, so code-store integrity is critical."
+},
+{
+    "Name": "neorv32_dmem.addr",
+    "Description": "Combinatorially derived unsigned word-aligned index taken from bus_req_i.addr(addr_hi_c downto 2) used to index the byte memories for reads (default style) and writes.",
+    "Family": [
+        "Bus/Interface",
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "addr selects which instruction word is fetched or written; if manipulated or computed incorrectly, the core fetches from the wrong location, enabling code redirection or silent corruption."
+},
+{
+    "Name": "neorv32_dmem.rdata",
+    "Description": "32-bit vector that collects the four byte-wide memory outputs (mem_ram_b0..b3 or via addr_ff) and supplies the read data that is presented on the bus response.",
+    "Family": [
+        "Memories",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "rdata is the instruction presented to fetch/decode; corruption, stale sampling, or byte-lane mix-ups yield the wrong opcode to the CPU, causing incorrect execution, so its integrity must be preserved."
+},
+{
+    "Name": "neorv32_dmem.rden",
+    "Description": "Clocked flag that is asserted when a bus request is valid and indicates a read; used to gate bus_rsp_o.data timing (bus_rsp_o.data <= rdata when rden = '1').",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "rden governs when instruction data is driven; if stuck low, instruction fetches never complete and the pipeline stalls, while spurious assertion can cause fetch glitches\u2014both degrading forward progress."
+}

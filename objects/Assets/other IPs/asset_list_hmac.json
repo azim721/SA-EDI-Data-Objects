@@ -1,0 +1,363 @@
+{
+    "Name": "hmac.secret_key",
+    "Description": "256-bit internal storage for the HMAC secret key used in inner and outer hash pads.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1239",
+        "CWE-1258",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "hmac.hmac_en",
+    "Description": "Configuration bit that enables HMAC functionality in the core.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "hmac.sha_en",
+    "Description": "Configuration bit that enables the SHA256 engine.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "hmac.reg_hash_start",
+    "Description": "Start command sampled from CSRs to initiate an HMAC operation.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1279"
+    ]
+},
+{
+    "Name": "hmac.hash_start",
+    "Description": "Start condition after checks (e.g., sha_en and cfg not blocked) that actually arms the operation.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1279"
+    ]
+},
+{
+    "Name": "hmac.reg_hash_done",
+    "Description": "Status from hmac_core indicating the operation is complete and configuration can unlock.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "hmac.sha_hash_start",
+    "Description": "Control from hmac_core to the SHA2 engine to start hashing.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1279"
+    ]
+},
+{
+    "Name": "hmac.sha_hash_done",
+    "Description": "Status from SHA2 engine indicating current hash phase is complete.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "hmac.u_hmac.secret_key",
+    "Description": "256-bit secret used to derive i_pad and o_pad and to seed the inner and outer SHA-256 operations.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1239"
+    ]
+},
+{
+    "Name": "hmac.u_hmac.hmac_en",
+    "Description": "Selects HMAC mode vs. pass-through SHA control; gates whether internal state machine drives sha_hash_start/process and data muxing.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "hmac.u_hmac.reg_hash_start",
+    "Description": "External control to kick off the HMAC sequence (drives state machine entry and sha_hash_start when hmac_en is set).",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "hmac.u_hmac.hash_done",
+    "Description": "Output status signaling completion of the HMAC operation.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "hmac.u_hmac.sha_rvalid",
+    "Description": "Output handshake indicating sha_rdata is valid for SHA to consume.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "hmac.u_reg.intg_err_o",
+    "Description": "Aggregates integrity violations and spurious write-enable detection for alert signaling to the system.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1262",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "hmac.u_sha2.sha_en",
+    "Description": "Gates the SHA-256 engine; when low, internal content is cleared and operation is disabled.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1221",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "hmac.u_sha2.hash_start",
+    "Description": "Initiates a new hash operation, clears digest, and transitions FSMs to load and compress states.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1279"
+    ]
+},
+{
+    "Name": "hmac.u_sha2.hash_done",
+    "Description": "Signals completion of processing a chunk and alignment of digest update.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313",
+        "CWE-1245",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "hmac.u_sha2.u_pad.sha_en",
+    "Description": "Top-level enable for entering the padding flow; StIdle transitions only when sha_en and hash_start are asserted.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1262",
+        "CWE-1220"
+    ]
+},
+{
+    "Name": "hmac.u_sha2.u_pad.hash_start",
+    "Description": "Starts a new message padding sequence and clears tx_count and hash_process_flag.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1262",
+        "CWE-1220"
+    ]
+},
+{
+    "Name": "hmac.u_sha2.u_pad.hash_done",
+    "Description": "Clears hash_process_flag when the compression engine completes a block.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+}

@@ -1,0 +1,128 @@
+{
+    "Name": "neorv32_debug_dtm.jtag_tdo_o",
+    "Description": "Drives the serial output bit on TCK falling edges to present the LSB of the selected instruction/data register (idcode, dtmcs, dmi or bypass) to the JTAG host.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-319",
+        "CWE-1258",
+        "CWE-1244",
+        "CWE-1313"
+    ],
+    "Justification": "TDO is the primary debug output path; if TDO is blocked, driven incorrectly, or withheld, external debuggers cannot observe register or device state, preventing normal debug/read-back workflows and effectively denying service."
+},
+{
+    "Name": "neorv32_debug_dtm.tap_reg.dtmcs",
+    "Description": "Contains DTM control bits (e.g., dmihardreset, dmireset) and status fields; it is written via the DR and used to control/reset the DMI interface and report status back to the host.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1247"
+    ],
+    "Justification": "DTMCS governs resets and status of the debug transport; if its contents are corrupted or spoofed, the DMI can be reset spuriously or status misreported, desynchronizing host\u2013target control and causing unintended state transitions\u2014hence its integrity must be preserved."
+},
+{
+    "Name": "neorv32_debug_dtm.dmi_ctrl.addr",
+    "Description": "7-bit address used by the DTM to specify the target register inside the debug module for read/write DMI transactions.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1244",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "The address determines where read/write operations land inside the debug module; corruption or manipulation of this field can cause writes/reads to unintended registers, leading to corrupted configuration or unauthorized access to internal state."
+},
+{
+    "Name": "neorv32_debug_dtm.tap_reg.dmi",
+    "Description": "When shifted/written it contains the DMI operation, address and write data which are sampled and forwarded to the dmi_controller to initiate DMI read/write transactions.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1247"
+    ],
+    "Justification": "tap_reg.dmi holds the target address, payload and command for DMI operations; any tampering while shifting or capturing these bits can redirect or corrupt DMI transactions, modifying which debug-module register is accessed and what data/command is executed."
+},
+{
+    "Name": "neorv32_debug_dtm.dmi_ctrl.busy",
+    "Description": "Indicates that a DMI transaction is in progress and prevents new DMI accesses until the current operation completes; used to arbitrate and stall additional requests.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If the busy flag is stuck or incorrectly asserted, new DMI operations are prevented (the controller treats the interface as occupied), effectively causing a denial-of-service on DMI accesses and blocking debug interactions."
+},
+{
+    "Name": "neorv32_debug_dtm.jtag_tms_i",
+    "Description": "Selects TAP state transitions (driving the TAP state machine); it is synchronized and used on TCK edges to move between JTAG states (e.g., SHIFT, UPDATE, RUN_IDLE).",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384",
+        "CWE-1313"
+    ],
+    "Justification": "TMS determines TAP state progression; malicious or erroneous control of TMS can prevent entering required states (e.g., DR_UPDATE) or lock the TAP, effectively denying debugging operations and blocking access to the debug interface."
+},
+{
+    "Name": "neorv32_debug_dtm.dmi_ctrl.op",
+    "Description": "2-bit operation code that encodes the requested DMI action (e.g., NOP, read, write) forwarded to the debug module.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1244",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "The op field determines whether a DMI access is a read or write (or noop); tampering with op can convert harmless accesses into destructive writes or prevent expected reads, compromising control-flow and data correctness of debug transactions."
+}

@@ -1,0 +1,80 @@
+{
+    "Name": "rc4.password_input",
+    "Description": "Feeds key bytes into the module during KSS_KEYREAD; each byte is stored into key[i] and later used in key scheduling.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Integrity",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "rc4.key",
+    "Description": "Holds the collected key bytes which are referenced during KSS_KEYSCHED2 to compute j and permute S.",
+    "Family": [
+        "Memories",
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Code/Data",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Integrity",
+    "CWEs": [
+        "CWE-1239",
+        "CWE-1272",
+        "CWE-1191",
+        "CWE-1299",
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "rc4.K",
+    "Description": "Provides the generated keystream byte once output_ready is asserted after the initial discard period.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Availability",
+    "CWEs": [
+        "CWE-1240",
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "rc4.output_ready",
+    "Description": "Indicates that K is valid for consumption after discarding the first 1536 keystream bytes.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1313",
+        "CWE-1384"
+    ]
+}

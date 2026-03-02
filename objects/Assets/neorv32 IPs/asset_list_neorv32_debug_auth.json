@@ -1,0 +1,98 @@
+{
+    "Name": "neorv32_debug_auth.we_i",
+    "Description": "Input write-enable signal that, when high on a clock edge (and when enable_i is high), allows wdata_i(0) to be sampled and used to set the internal authenticated state.",
+    "Family": [
+        "Security",
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "we_i governs when configuration words are committed; if asserted or suppressed incorrectly, cfg_en/prsc/pol/cdiv/duty can be overwritten or left stale, producing unintended output timing or polarity and silently corrupting the channel\u2019s programmed behavior."
+},
+{
+    "Name": "neorv32_debug_auth.enable_i",
+    "Description": "Input enable signal for the authenticator; when low it immediately clears the authenticated state and disables updates, and when high normal authentication updates are permitted.",
+    "Family": [
+        "Security",
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276"
+    ],
+    "Justification": "This external input gates the generation of all derived clock-enable pulses. If an integrator or attacker can force or keep this input deasserted (or manipulate it), peripherals and logic relying on the generated clk_en_o pulses can be starved of timing ticks, producing a denial-of-service of downstream functionality."
+},
+{
+    "Name": "neorv32_debug_auth.valid_o",
+    "Description": "Output that reflects the authenticated state (driven from authenticated_q); when high it indicates authentication passed and unlocks the on-chip debugger.",
+    "Family": [
+        "Security",
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276"
+    ],
+    "Justification": "valid_o is the observable/unlocking signal used by the debug module; if it is unavailable, stuck low, or suppressed at integration, the debugger remains locked and normal debug functionality is denied, making this port availability-critical."
+},
+{
+    "Name": "neorv32_debug_auth.authenticated_q",
+    "Description": "Internal single-bit register that stores whether authentication has passed; it is set from wdata_i(0) when we_i and enable_i allow, and cleared by reset or when enable_i is low.",
+    "Family": [
+        "Security",
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276"
+    ],
+    "Justification": "authenticated_q is the authoritative state that gates debug access; unauthorized modification of this internal signal (or its incorrect update) directly compromises the correctness of authentication, so its integrity must be preserved."
+},
+{
+    "Name": "neorv32_debug_auth.busy_o",
+    "Description": "Output indicating the authenticator is busy; in this implementation it is permanently driven low, but conceptually it can block further read/write accesses while high.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "busy_o governs whether new transactions may proceed; if asserted or stuck high, legitimate accesses are blocked and the system can stall, while if suppressed when the unit is actually busy, overlapping operations can cause retries or lockups\u2014both directly harming forward progress and availability (even if this instance ties the signal low)."
+}

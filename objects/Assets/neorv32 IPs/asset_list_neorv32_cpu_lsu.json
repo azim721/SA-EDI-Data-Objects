@@ -1,0 +1,192 @@
+{
+    "Name": "neorv32_cpu_lsu.addr_i",
+    "Description": "Input address captured into the Memory Address Register (MAR) on lsu_mo_we; used for alignment checks, byte-enable calculation and supplied as the bus address for load/store transactions.",
+    "Family": [
+        "Processors",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1257",
+        "CWE-1260"
+    ],
+    "Justification": "addr_i determines the tag, set index, and word offset; if corrupted, the cache targets the wrong line/word, returning stale data or overwriting unrelated entries, thereby violating data correctness."
+},
+{
+    "Name": "neorv32_cpu_lsu.wdata_i",
+    "Description": "Provides write-data used to form the bus request payload (data field) with alignment/replication for sub-word stores and is used as the operand for atomic memory operations.",
+    "Family": [
+        "Processors",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "wdata_i directly determines the write payload for memory stores and serves as the operand for AMOs; if altered, the memory contents or atomic update semantics are corrupted."
+},
+{
+    "Name": "neorv32_cpu_lsu.mar",
+    "Description": "Internal register that latches the access address (from addr_i) and is used as the bus address, for alignment checks, and to select the correct byte/half-word when forming read data.",
+    "Family": [
+        "Processors",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1257",
+        "CWE-1260"
+    ],
+    "Justification": "MAR holds the canonical address for the current memory access; corruption of MAR will result in wrong addresses being issued on the bus and incorrect data being read or written. Because it is the latched source of address decisions, its integrity is essential for correct LSU behavior."
+},
+{
+    "Name": "neorv32_cpu_lsu.amo_cmd",
+    "Description": "Encoded AMO opcode derived from ir_funct12 that is forwarded to the bus request (dbus_req_o.amoop) to specify the semantic of atomic memory operations (LR/SC/ADD/AND/OR/MIN/MAX/etc.).",
+    "Family": [
+        "Processors",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If amo_cmd is altered, the semantic of performed AMOs changes (for example ADD -> AND), leading to incorrect memory updates and corrupted shared state. Because AMOs change read-modify-write behavior atomically, the correctness of their encoding is a critical integrity property."
+},
+{
+    "Name": "neorv32_cpu_lsu.pmp_fault_i",
+    "Description": "Physical Memory Protection fault input that is OR'ed into arbiter_err and prevents issuing the bus strobe (dbus_req_o.stb) when asserted.",
+    "Family": [
+        "Security",
+        "Processors",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1320"
+    ],
+    "Justification": "When pmp_fault_i is asserted it inhibits bus strobe generation and contributes to arbiter errors, effectively blocking memory accesses; a persistent or malicious assertion therefore denies service to the CPU. Thus pmp_fault_i is an integration-level attack point that can be used to create a DoS on the LSU."
+},
+{
+    "Name": "neorv32_cpu_lsu.wait_o",
+    "Description": "Handshaking signal asserted while the LSU is waiting for the bus response (driven as not dbus_rsp_i.ack) to indicate the CPU must stall until the access completes.",
+    "Family": [
+        "Processors",
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261"
+    ],
+    "Justification": "If wait_o is held asserted (or mis-driven) the CPU will be stalled and forward progress will be prevented, producing a denial-of-service at the processor level. Because wait_o directly controls CPU stalling behavior, it is availability-critical to system operation."
+},
+{
+    "Name": "neorv32_cpu_lsu.misaligned",
+    "Description": "Flag set when the latched address (MAR) is misaligned for the requested access size; used to inhibit bus strobe (preventing the access) and to report misaligned load/store errors.",
+    "Family": [
+        "Processors",
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261"
+    ],
+    "Justification": "If misaligned is spuriously asserted, the LSU will withhold issuing bus transactions (dbus_req_o.stb is gated by not misaligned), causing legitimate accesses to be blocked and resulting in a DoS. Therefore, the correctness/availability of this signal is required for normal operation."
+},
+{
+    "Name": "neorv32_cpu_lsu.arbiter_req",
+    "Description": "Latches a pending LSU bus request (set from ctrl_i.lsu_req and cleared on bus acknowledge or trap); it gates read-data capture and is used to generate wait and error conditions.",
+    "Family": [
+        "Processors",
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1245"
+    ],
+    "Justification": "If arbiter_req is stuck asserted or stuck deasserted, the LSU will either never accept new requests or never clear outstanding requests, both of which prevent normal operation and create a denial-of-service. Because it controls whether the LSU is considered busy, its correct behavior is critical to availability."
+},
+{
+    "Name": "neorv32_cpu_lsu.err_o",
+    "Description": "Reports four access/alignment and bus/PMP error conditions (misaligned load/store and load/store bus errors) to the control unit while an access is pending.",
+    "Family": [
+        "Processors",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "err_o communicates alignment, bus, and PMP faults to the control unit; if tampered (suppressed, spurious, or bit-flipped), the CPU may either commit an illegal access or trap unnecessarily, breaking architectural guarantees and enabling silent corruption or bypass of memory-protection checks."
+},
+{
+    "Name": "neorv32_cpu_lsu.rdata_o",
+    "Description": "Delivers aligned and sign/zero-extended data from the data-bus response to the CPU after selecting bytes/half-words/words based on MAR and funct3.",
+    "Family": [
+        "Processors",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "rdata_o is the value the core consumes after byte-lane selection and sign/zero extension; any corruption or mis-selection yields incorrect load results, causing silent state corruption and incorrect program behavior, so its integrity must be preserved."
+}

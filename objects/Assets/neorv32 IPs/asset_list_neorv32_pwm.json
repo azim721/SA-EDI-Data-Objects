@@ -1,0 +1,167 @@
+{
+    "Name": "neorv32_pwm.neorv32_pwm_channel_inst.cfg_en",
+    "Description": "Single-bit configuration that enables or disables the channel; when '0' it clears counters, disables PWM activity and controls the per-channel clock generator request (clkgen_en_o).",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1221"
+    ],
+    "Justification": "cfg_en determines whether the channel is active and affects counters and clk requests; unauthorized changes during operation will alter channel behavior (enable/disable) and produce incorrect outputs or timing."
+},
+{
+    "Name": "neorv32_pwm.neorv32_pwm_channel_inst.cfg_duty",
+    "Description": "8-bit duty-cycle setting that defines the compare threshold for the duty counter and therefore the high/low ratio of the PWM waveform for the channel.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1221"
+    ],
+    "Justification": "cfg_duty directly controls the output duty of the PWM. Corrupting this value changes the physical output ratio (e.g., motor speed or LED brightness), so it must be protected from unauthorized modification."
+},
+{
+    "Name": "neorv32_pwm.neorv32_pwm_channel_inst.cfg_cdiv",
+    "Description": "10-bit fine divider compared against the internal cnt_cdiv to generate a single-cycle cnt_tick that advances the duty counter and sets PWM timing resolution.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1221"
+    ],
+    "Justification": "cfg_cdiv controls the fine timing granularity of PWM periods. Tampering with cfg_cdiv will change tick generation and thus the effective PWM frequency/period, leading to incorrect timing behavior."
+},
+{
+    "Name": "neorv32_pwm.neorv32_pwm_channel_inst.cfg_prsc",
+    "Description": "3-bit index selecting one bit of clkgen_i as the pre-scaled clock source used to step the fine divider, thereby coarsely selecting the channel clock speed.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1221"
+    ],
+    "Justification": "cfg_prsc chooses which clkgen_i bit drives the fine divider. Malicious or erroneous changes alter which clock source the channel uses and will corrupt PWM frequency selection and behavior."
+},
+{
+    "Name": "neorv32_pwm.neorv32_pwm_channel_inst.wdata_i",
+    "Description": "Carries the 32-bit configuration word that is decoded into the channel configuration registers (cfg_*).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1220"
+    ],
+    "Justification": "wdata_i directly determines all configuration fields for a channel on a write. Malicious or erroneous modifications to this input will corrupt channel configuration (enable, prescaler, polarity, divider, duty) and thus alter or break PWM behavior."
+},
+{
+    "Name": "neorv32_pwm.neorv32_pwm_channel_inst.we_i",
+    "Description": "Enables latching of wdata_i into the channel configuration registers on a clock edge; gates when configuration changes occur.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1276"
+    ],
+    "Justification": "we_i governs when configuration words are committed; if asserted or suppressed incorrectly, cfg_en/prsc/pol/cdiv/duty can be overwritten or left stale, producing unintended output timing or polarity and silently corrupting the channel\u2019s programmed behavior."
+},
+{
+    "Name": "neorv32_pwm.pwm_o",
+    "Description": "Multi-bit output carrying the per-channel PWM signals (up to 16 channels) to downstream logic or external pins.",
+    "Family": [
+        "Counter/Timer",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ],
+    "Justification": "pwm_o is the module's functional output; if it becomes unavailable (blocked, forced static or otherwise prevented from toggling) the PWM signals cannot perform their intended control tasks. Loss of this output equates to denial-of-service for devices depending on PWM."
+},
+{
+    "Name": "neorv32_pwm.clkgen_i",
+    "Description": "Provides the prescaled/coarse clock bits that channels index into using cfg_prsc to produce fine-tuned cnt_tick pulses driving PWM timing.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1384"
+    ],
+    "Justification": "clkgen_i selects the coarse timing source for channels via cfg_prsc. If clkgen_i is manipulated or absent, the derived cnt_tick timing changes or stops and channel frequencies/duty timing are corrupted, impacting correct PWM operation."
+},
+{
+    "Name": "neorv32_pwm.clkgen_en_o",
+    "Description": "OR-reduced per-channel enable requests indicating whether the global clock generator must be enabled for any active channel.",
+    "Family": [
+        "Counter/Timer",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware: Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/clock generator may not be enabled for active channels, so cnt_tick will not be provided and PWM outputs will not toggle (denial-of-service on PWM)."
+}

@@ -1,0 +1,167 @@
+{
+    "Name": "neorv32_neoled.neoled_o",
+    "Description": "Asynchronous single-wire serial data line that the serial TX engine toggles to transmit timed pulses (bits and reset) to WS281x smart LEDs.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "neoled_o carries the actual LED payload; any unauthorized modification of the signal (timing or level) changes the transmitted bits and thus corrupts LED colors/behavior. Protecting this line against tampering is primarily an integrity concern because it directly affects correctness of output data."
+},
+{
+    "Name": "neorv32_neoled.ctrl.mode",
+    "Description": "Selects whether FIFO words are sent as 24-bit RGB (mode='0') or 32-bit RGBW (mode='1'), affecting bit count and sreg indexing during transmission.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "Corrupting ctrl.mode changes how many bits are transmitted and which bits are selected from the shift register, likely producing incorrect colors or mis-framed data. This directly alters the correctness of transmitted payloads, making integrity the dominant concern."
+},
+{
+    "Name": "neorv32_neoled.ctrl.strobe",
+    "Description": "When set, marks a FIFO write as a RESET (STROBE) command instead of normal LED color data; the serial engine uses this to enter the STROBE state.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "A malicious modification of ctrl.strobe can convert intended data into RESETs or vice versa, changing transmitted behavior (e.g., sending unintended resets). This corrupts the intended data-flow and thus is primarily an integrity risk."
+},
+{
+    "Name": "neorv32_neoled.ctrl.clk_prsc",
+    "Description": "3-bit index into clkgen_i that selects which external pulse clock is sampled as pulse_clk for the serial timing engine.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "Altering ctrl.clk_prsc changes the pulse_clk source and therefore the timing granularity used for pulse widths; incorrect selection can corrupt symbol timing and transmitted bits (wrong T_high/T_total cadence), impacting correctness of the protocol."
+},
+{
+    "Name": "neorv32_neoled.ctrl.t_total",
+    "Description": "5-bit field specifying the total number of pulse-clock ticks that define a single symbol period (T_total) for bit transmission timing.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "Tampering with ctrl.t_total modifies the duration of symbol periods and can violate the WS281x timing requirements, causing transmitted pulses to be misinterpreted by LEDs and corrupting data integrity."
+},
+{
+    "Name": "neorv32_neoled.clkgen_en_o",
+    "Description": "Output that enables/disables the external clock generator used to derive the pulse_clk inputs for the serial TX engine.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/tick will not be provided and the watchdog counter will not progress, disabling the WDT functionality and preventing the module from performing its recovery/reset role (Denial-of-service on WDT)."
+},
+{
+    "Name": "neorv32_neoled.irq_o",
+    "Description": "Interrupt request output asserted according to FIFO status and ctrl.irq_conf to notify the CPU about FIFO empty/low conditions when the module is enabled.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "If irq_o is suppressed, the host may not service the peripheral promptly, leading to idle time and stalled workflows; if asserted spuriously, it can trigger interrupt storms that starve normal processing\u2014both harm overall availability."
+},
+{
+    "Name": "neorv32_neoled.ctrl.enable",
+    "Description": "Control bit that gates module operation: enables/disables the serial FSM, drives clkgen_en_o, and influences FIFO clearing via tx_fifo.clear.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the watchdog from starting/counting and thereby prevent the WDT from performing system recovery, causing a loss of the module's intended availability/safety function."
+},
+{
+    "Name": "neorv32_neoled.tx_fifo.clear",
+    "Description": "Synchronous, high-active FIFO clear input that flushes/clears the TX FIFO; it is driven by the inverse of ctrl.enable so the FIFO is cleared when the module is disabled.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1220"
+    ],
+    "Justification": "Forcing tx_fifo.clear causes loss of buffered data and prevents pending transmissions, effectively denying service. Preventing unauthorized assertions of this clear signal is primarily an availability concern."
+},
+{
+    "Name": "neorv32_neoled.tx_fifo.avail",
+    "Description": "Status signal indicating that FIFO data is available (non-empty); used by the serial engine to begin transmission and by bus/status reads and IRQ logic to reflect FIFO state.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If tx_fifo.avail is manipulated (false negatives/positives), the serial engine or bus status logic may stall or misbehave, preventing regular refills and causing interruptions in LED updates. The dominant risk is loss of service (availability)."
+}

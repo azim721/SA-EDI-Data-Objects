@@ -1,0 +1,140 @@
+{
+    "Name": "neorv32_twd.ctrl.enable",
+    "Description": "Software-writable enable bit for the TWD module; also drives clkgen_en_o to enable the SoC clock generator used for input sampling and effectively gates major functionality of the peripheral.",
+    "Family": [
+        "Controllers",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the watchdog from starting/counting and thereby prevent the WDT from performing system recovery, causing a loss of the module's intended availability/safety function."
+},
+{
+    "Name": "neorv32_twd.clkgen_en_o",
+    "Description": "Output that enables the external clock generator used to produce the sample clocks for SDA/SCL filtering and sampling.",
+    "Family": [
+        "Bus/Interface",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "1262"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/tick will not be provided and the watchdog counter will not progress, disabling the WDT functionality and preventing the module from performing its recovery/reset role (Denial-of-service on WDT)."
+},
+{
+    "Name": "neorv32_twd.twd_sda_i",
+    "Description": "External serial data line input sampled and synchronized to detect bus levels, start/stop conditions and to capture incoming bits from a host/master.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "If the SDA input is driven, held, or otherwise made unavailable/unreliable at integration, the controller cannot correctly receive bytes or detect bus events, preventing normal device operation (DoS). The input is therefore availability-critical."
+},
+{
+    "Name": "neorv32_twd.twd_scl_i",
+    "Description": "Physical SCL input sampled and synchronized to detect edges used for timing sampling, byte framing, and start/stop detection.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "1319",
+        "1384"
+    ],
+    "Justification": "If SCL is not provided or is interfered with at integration, the controller cannot sample bits or detect framing, which prevents transaction progress and results in a denial-of-service for I2C communication."
+},
+{
+    "Name": "neorv32_twd.twd_sda_o",
+    "Description": "Open-drain SDA output driven by the bus engine to transmit data bits and to send ACK/NACK (default released/high).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "1247",
+        "1262"
+    ],
+    "Justification": "This output directly determines bits placed on the I2C bus (ACK/NACK and data). Unauthorized modification of its value or timing corrupts the protocol and transmitted data, so the integrity of twd_sda_o must be preserved."
+},
+{
+    "Name": "neorv32_twd.twd_scl_o",
+    "Description": "Output pin state used to represent controller-driven SCL state (default released/high); used to implement open-drain behavior or indicate controller-driven SCL.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "1247",
+        "1262"
+    ],
+    "Justification": "The output can affect bus timing and transaction sequencing; unexpected modification of twd_scl_o can corrupt sampling/transfer timing and thus corrupt the integrity of exchanged data and protocol sequencing."
+},
+{
+    "Name": "neorv32_twd.irq_o",
+    "Description": "Interrupt line asserted when enabled control flags and FIFO/status conditions indicate an interrupt-worthy event (RX available, RX full, TX empty).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "1262",
+        "1320"
+    ],
+    "Justification": "If irq_o is suppressed, the host may not service the peripheral promptly, leading to idle time and stalled workflows; if asserted spuriously, it can trigger interrupt storms that starve normal processing\u2014both harm overall availability."
+},
+{
+    "Name": "neorv32_twd.tx_dummy",
+    "Description": "Backup of the last transmitted TX byte used as fallback transmission when the TX FIFO is empty and tx_dummy_en is enabled.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "1247",
+        "1262"
+    ],
+    "Justification": "When tx_dummy_en is active the engine may transmit this stored byte instead of FIFO content; misuse or unexpected selection of tx_dummy changes transmitted data (replay of previous byte), impacting integrity of read responses."
+}

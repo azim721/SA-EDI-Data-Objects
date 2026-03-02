@@ -1,0 +1,113 @@
+{
+    "Name": "neorv32_trng.neoTRNG_inst.data_o",
+    "Description": "Provides the 8-bit random data byte produced by the neoTRNG core (LFSR-style mixed/de-biased stream); pulses valid_o when the byte is new.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": "CWE-1300, CWE-1191, CWE-1244",
+    "Justification": "The random byte is consumed by cryptographic protocols and should not be observable via unintended paths; premature or unauthorized disclosure enables eavesdroppers to harvest entropy or correlate internal state, weakening protocol secrecy."
+},
+{
+    "Name": "neorv32_trng.neoTRNG_inst.debias_data",
+    "Description": "Single-bit output from the John von Neumann de-biasing stage which is fed into the LFSR-style sample shift-register to build the final random byte.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1247, CWE-1319",
+    "Justification": "debias_data determines each contributed bit of the final random byte; corruption biases the distribution, degrades statistical quality, and reduces effective entropy, undermining cryptographic strength."
+},
+{
+    "Name": "neorv32_trng.neoTRNG_inst.sample_en",
+    "Description": "Local sampled copy of the enable_i input that gates sampling; when low the sampler is restarted/cleared and when high sampling proceeds.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": "CWE-1247, CWE-1319",
+    "Justification": "sample_en gates entropy collection; if stuck low the TRNG never produces bytes, and if stuck high when a restart is needed the pipeline can wedge or produce stale output\u2014both conditions deny timely random data to consumers."
+},
+{
+    "Name": "neorv32_trng.enable",
+    "Description": "Holds the TRNG enable bit written by the host control register and drives neoTRNG.enable_i; turning it on/off starts or restarts sampling and the entropy pipeline.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1262, CWE-1247",
+    "Justification": "The enable bit controls when entropy generation starts or restarts; unauthorized or corrupted writes can silently disable the TRNG or cause unintended resets of the sampling pipeline, compromising correctness of operation and downstream assumptions."
+},
+{
+    "Name": "neorv32_trng.fifo_clr",
+    "Description": "Write-only flag driven by the host that triggers a synchronous clear of the data FIFO (auto-clears next cycle); used to erase the FIFO contents.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1262, CWE-1247",
+    "Justification": "fifo_clr erases buffered random bytes; spurious assertion discards valid entropy and breaks sequencing, while suppression leaves stale data present for reads\u2014both corrupt the intended stream semantics."
+},
+{
+    "Name": "neorv32_trng.fifo.avail",
+    "Description": "Status flag from the FIFO indicating whether valid data is available for host reads; exposed to software via the control register available bit.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": "CWE-1247, CWE-1319",
+    "Justification": "If the availability flag is manipulated (reported false when data exists) the host may refrain from reading the DATA register and be denied entropy; falsified availability information therefore enables a practical DoS on consumers relying on that status."
+},
+{
+    "Name": "neorv32_trng.fifo.free",
+    "Description": "Flag from the FIFO that indicates whether there is at least one free entry to accept a new random byte written by the neoTRNG.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": "CWE-1247, CWE-1319",
+    "Justification": "fifo.free governs admission of new bytes; a false negative stalls writes and starves consumers, while a false positive can cause overflow/overwrite and lost data\u2014both reduce the availability of usable entropy."
+},
+{
+    "Name": "neorv32_trng.fifo.re",
+    "Description": "Read-enable signal asserted when the bus performs a read of the data register, causing the FIFO to pop the next byte for the host.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": "CWE-1318, CWE-1247",
+    "Justification": "If reads are suppressed or the read gate is prevented from asserting, the host cannot retrieve available random bytes even if they exist in the FIFO, producing a denial-of-service at the integration level for consumers of TRNG data."
+}

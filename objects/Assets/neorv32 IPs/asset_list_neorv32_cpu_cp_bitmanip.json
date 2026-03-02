@@ -1,0 +1,176 @@
+{
+    "Name": "neorv32_cpu_cp_bitmanip.rs1_i",
+    "Description": "XLEN-bit primary operand input that is buffered into rs1_reg and used by most bit-manipulation operations (shifts/rotates, popcount, byte ops, rev8, clmul LHS, etc.).",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Altering rs1_i changes the data being shifted and therefore directly corrupts computation results; an integrator would consider the correctness of this operand critical. Because rs1_i is an input that controls the value transformed by the shifter, its integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.rs2_i",
+    "Description": "XLEN-bit secondary operand input buffered into rs2_reg and used for operations such as shifted-add, packing, logical-negate ops, and carry-less multiplication (RHS).",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "If rs2_i is modified the multiplier/divider will compute wrong outputs (or divide by wrong/divisor), potentially producing incorrect program-visible state or triggering faults. Ensuring integrity of rs2_i is essential for correct arithmetic behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.res_o",
+    "Description": "Result output vector driven by the selected operation and presented on the rising clock when the coprocessor signals the result is valid; consumed by the core/register file or next-stage logic.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If res_o is blocked or not produced when expected, downstream units cannot obtain required computation results and processor execution would be disrupted (denial-of-service impact). Although output integrity matters, the dominant integration-level concern is that the result must be available when expected for correct operation."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.rs1_reg",
+    "Description": "Internal buffered copy of the external operand rs1_i used as the primary input for virtually all bit-manipulation operations (shifts, rotates, logical ops, zip/pack, clmul, etc.).",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1239",
+        "CWE-1191",
+        "CWE-1300"
+    ],
+    "Justification": "rs1_reg holds operand data inside the co-processor and is used directly by many operations including those intended for cryptographic purposes (e.g., carry-less multiply). If the module processes secret keys or plaintext, rs1_reg would contain sensitive material that could be leaked via outputs or side-channels, so it is confidentiality-critical."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.rs2_reg",
+    "Description": "Internal buffered copy of the external operand rs2_i used as the second operand for operations such as logic-with-negate, shifted-add, pack, and carry-less multiplication.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1239",
+        "CWE-1191",
+        "CWE-1300"
+    ],
+    "Justification": "Like rs1_reg, rs2_reg stores operand data that may be cryptographic secrets when the bit-manipulation extension is used for crypto-related operations. Exposure of rs2_reg contents (or its propagated results) would leak sensitive data, so it is confidentiality-critical."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.shamt_i",
+    "Description": "Index-sized input that controls shift/rotate distance, single-bit selection (one_hot generator), and is sampled into sha_reg for operations requiring a bit index or rotation amount.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Corrupting shamt_i directly changes the executed shift operation (magnitude of shift) and therefore can silently change computational results or break software assumptions. As a control input that modifies data transformation, ensuring its integrity is essential."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.cmp_i",
+    "Description": "2-bit comparator status input sampled into less_reg and used by selection logic (e.g., MIN/MAX instructions) to decide which operand to forward as the result.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "cmp_i encodes the ALU\u2019s equality/ordering outcome consumed by the FPU; if altered or corrupted, FEQ/FLT/FLE would produce incorrect flags/results, misleading program decisions and violating computational correctness, so its integrity must be maintained."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.cmd",
+    "Description": "Vector of decoded command flags (one bit per supported operation) that identifies which specific bit-manipulation operation should be executed and gates generation of res_out entries.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "cmd selects the operation performed by the module; if the decoded command bits are tampered with, the module can perform an unintended operation (e.g., expose different computation or corrupt data). Maintaining the integrity of cmd is therefore essential to ensure correct and authorized behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.valid_o",
+    "Description": "External 1-bit output indicating that res_o holds a valid result; consumers use it to accept/consume the result produced by the co-processor.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "valid_o is the observable/unlocking signal used by the debug module; if it is unavailable, stuck low, or suppressed at integration, the debugger remains locked and normal debug functionality is denied, making this port availability-critical."
+},
+{
+    "Name": "neorv32_cpu_cp_bitmanip.ctrl_state",
+    "Description": "FSM state (S_IDLE, S_START, S_BUSY) that manages operation start, multi-cycle operation progression, and completion. It controls starting iterative cores, issuing valid, and returning to idle.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261"
+    ],
+    "Justification": "ctrl_state governs whether operations are started, run and complete. If the FSM is corrupted or stuck in a non-progressing state the module cannot complete operations or assert valid, preventing normal operation and causing a denial-of-service; hence it is availability-critical."
+}

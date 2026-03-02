@@ -1,0 +1,138 @@
+{
+    "Name": "gpio.sb_araddr",
+    "Description": "Selects which internal resource is read (gpio_odr or gpio_i) via sb_araddr[2].",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "gpio.sb_wvalid",
+    "Description": "Indicates the bus master is presenting valid write data and address.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1318",
+        "CWE-1220"
+    ]
+},
+{
+    "Name": "gpio.sb_wready",
+    "Description": "Signals the module is ready to accept write data; driven high in this design.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1245"
+    ]
+},
+{
+    "Name": "gpio.sb_waddr",
+    "Description": "Selects the target of a write; sb_waddr[2]==0 updates the output data register.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "gpio.sb_wdata",
+    "Description": "Provides the 32-bit data for writes; lower 16 bits drive gpio_odr when addressed.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "gpio.sb_rvalid",
+    "Description": "Indicates when read data on sb_rdata is valid.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261"
+    ]
+},
+{
+    "Name": "gpio.sb_rready",
+    "Description": "From the master, indicates readiness to accept read data, allowing the module to drop sb_rvalid.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261"
+    ]
+},
+{
+    "Name": "gpio.sb_rdata",
+    "Description": "Carries the 32-bit read data, returning either zero-padded gpio_odr or gpio_i based on the selected address.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261"
+    ]
+}

@@ -1,0 +1,89 @@
+{
+    "Name": "wb_gpio.wb_we_i",
+    "Description": "Qualifies Wishbone write transactions; when asserted with cyc/stb, it causes writes to either the GPIO data register or direction register depending on the address.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "wb_gpio.gpio_dir_o",
+    "Description": "Per-bit pin direction control; \u20181\u2019 sets a pin as output, \u20180\u2019 as input. Written via the Wishbone interface.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1221",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "wb_gpio.wb_err_o",
+    "Description": "Wishbone error signal. In this wb_gpio implementation it is hard-wired low (tie-off), i.e., `assign wb_err_o = 0;`, while acknowledge is generated from the handshake (`wb_cyc_i & wb_stb_i`) in a clocked process.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "wb_gpio.wb_stb_i",
+    "Description": "Indicates a valid data transfer; together with cyc_i (and we_i for writes) it triggers register accesses and drives ack generation.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1220"
+    ]
+},
+{
+    "Name": "wb_gpio.wb_ack_o",
+    "Description": "Signals transaction completion; asserted for one cycle following a valid cyc/stb.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1245"
+    ]
+}

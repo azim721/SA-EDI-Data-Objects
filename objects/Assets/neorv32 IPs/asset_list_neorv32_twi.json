@@ -1,0 +1,192 @@
+{
+    "Name": "neorv32_twi.ctrl.enable",
+    "Description": "Global module enable bit that gates the TWI unit operation, drives engine.state(2), controls clock-generator reset behavior and the clkgen_en_o output.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the watchdog from starting/counting and thereby prevent the WDT from performing system recovery, causing a loss of the module's intended availability/safety function."
+},
+{
+    "Name": "neorv32_twi.ctrl.prsc",
+    "Description": "Selects which bit of the external pre-scaled clock vector (clkgen_i) is sampled to produce the internal clk_gen.tick timing used by the phase generator and engine.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262",
+        "CWE-1319"
+    ],
+    "Justification": "Tampering with the prescaler will alter uart_clk selection and thus change bit timing, which can corrupt transmissions and receptions. The primary risk is integrity degradation of serial data due to incorrect timing."
+},
+{
+    "Name": "neorv32_twi.ctrl.cdiv",
+    "Description": "Fine-grained clock divider value used by the internal clock generator to determine when to assert clk_gen.tick (counts up to ctrl.cdiv).",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262",
+        "CWE-1319"
+    ],
+    "Justification": "ctrl.cdiv shapes tick generation and duty/hold timing; if altered, setup/hold windows and SCL high/low durations become incorrect, corrupting transfers even when logic otherwise behaves."
+},
+{
+    "Name": "neorv32_twi.engine.done",
+    "Description": "Pulse asserted when a byte transmission/reception completes; used to write RX FIFO and to transition engine state back to IDLE.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "engine.done delineates byte boundaries and triggers FIFO updates; spurious or missing pulses cause duplicated/dropped bytes and incorrect state transitions, corrupting the data stream."
+},
+{
+    "Name": "neorv32_twi.twi_sda_i",
+    "Description": "External serial data input sampled and synchronized into io_con.sda_in_ff for bus sensing and as the sampled input during transmissions.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "twi_sda_i is the truth source for received bits and ACK/NACK; corruption or mis-sampling yields wrong data and protocol markers, leading to silent data corruption or failed transactions."
+},
+{
+    "Name": "neorv32_twi.twi_sda_o",
+    "Description": "Top-level SDA drive signal reflecting io_con.sda_out; actively drives SDA low to claim the bus and releases it to let the pull-up drive it high.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Incorrect SDA drive level or timing produces invalid start/stop edges or bit values and can break arbitration, corrupting transactions for all devices on the bus."
+},
+{
+    "Name": "neorv32_twi.engine.busy",
+    "Description": "Indicates that a bus operation is currently in progress (derived from engine.state); used by status reads and IRQ generation.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If engine.busy is stuck high, software defers new operations indefinitely; if stuck low, overlapping requests can be issued that the engine cannot serialize, causing stalls or retries\u2014both harm forward progress."
+},
+{
+    "Name": "neorv32_twi.twi_scl_i",
+    "Description": "External SCL input sampled and synchronized to detect bus state and clock-stretching conditions via io_con.scl_in_ff.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "twi_scl_i is required to detect clock stretching and phase completion; if not sensed correctly, the controller may wait forever or advance prematurely, wedging the bus and degrading availability."
+},
+{
+    "Name": "neorv32_twi.twi_scl_o",
+    "Description": "Top-level SCL drive signal reflecting io_con.scl_out; used by the engine/clock generator to actively control the SCL line during phases.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If SCL cannot be driven/released at the right times, bit phases cannot progress and transfers stall or deadlock, directly impacting bus availability."
+},
+{
+    "Name": "neorv32_twi.clkgen_en_o",
+    "Description": "Output reflecting ctrl.enable used to enable an external pre-scaler/clock source; exposes the module enable state to external clocking logic.",
+    "Family": [
+        "Counter/Timer",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/tick will not be provided and the watchdog counter will not progress, disabling the WDT functionality and preventing the module from performing its recovery/reset role (Denial-of-service on WDT)."
+},
+{
+    "Name": "neorv32_twi.irq_o",
+    "Description": "Signals the host that the TWI module is enabled and ready/idle (TX FIFO empty and engine idle); used by the host to schedule further actions.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If irq_o is suppressed, the host may not service the peripheral promptly, leading to idle time and stalled workflows; if asserted spuriously, it can trigger interrupt storms that starve normal processing\u2014both harm overall availability."
+}

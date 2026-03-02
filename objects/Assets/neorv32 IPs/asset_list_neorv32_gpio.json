@@ -1,0 +1,159 @@
+{
+    "Name": "neorv32_gpio.gpio_o",
+    "Description": "Vector output that drives the external GPIO pins with the values coming from the module's output register (port_out). It is the physical interface used by external devices to observe/control state driven by the SoC.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If gpio_o is blocked, held inactive, or otherwise made unavailable at integration, external devices will not receive the expected control signals and the GPIO\u2019s role in the system is effectively denied. The primary impact is loss of outward functionality (denial-of-service), so availability is the dominant concern."
+},
+{
+    "Name": "neorv32_gpio.gpio_i",
+    "Description": "Vector input sampled into the module (into port_in) and used for bus read-back and interrupt generation. It represents external events and sensor/status signals sampled by the processor.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If gpio_i is manipulated (spoofed or corrupted), the sampled values and resulting IRQ decisions can be wrong, causing false or missing event detection. The main concern is unauthorized modification of input data that changes system behavior, so integrity is dominant."
+},
+{
+    "Name": "neorv32_gpio.cpu_irq_o",
+    "Description": "Single-bit output that is asserted when any enabled GPIO pending interrupt bit is set (irq_pend reduction), serving as the module\u2019s interrupt to the CPU.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If cpu_irq_o is suppressed or disabled at integration, the CPU will not be notified of GPIO events and the interrupt-driven functionality is denied. This is primarily a denial-of-service effect on the CPU notification channel, so availability is the dominant objective."
+},
+{
+    "Name": "neorv32_gpio.port_out",
+    "Description": "Internal register holding the 0..GPIO_NUM-1 output bits; written via bus writes to the output port and directly drives gpio_o. Controls the logic-levels driven to external pins.",
+    "Family": [
+        "Memories",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ],
+    "Justification": "Unauthorized modification of port_out (via a compromised bus/master) changes external output signals and can cause incorrect actuation or state corruption of attached devices. This is a classic integrity concern because the register controls externally-observable state."
+},
+{
+    "Name": "neorv32_gpio.port_in",
+    "Description": "Synchronized capture of gpio_i that is used for bus read-back and as primary input to the IRQ evaluation logic.",
+    "Family": [
+        "Memories",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Corruption or tampering of port_in (or its sampling timing) will change values observed by software and the IRQ logic, causing incorrect system responses. The primary risk is unauthorized modification of sampled data, so integrity is dominant."
+},
+{
+    "Name": "neorv32_gpio.port_in2",
+    "Description": "One-clock-old copy of port_in used to detect rising/falling edges in the IRQ trigger logic.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Altering or corrupting port_in2 changes edge-detection outcomes (false or missed edge detection), thereby changing interrupt behavior. This attacks correctness of event detection, so integrity is the main concern."
+},
+{
+    "Name": "neorv32_gpio.irq_typ",
+    "Description": "Per-pin register selecting level vs. edge trigger mode; used together with irq_pol to compute irq_trig conditions.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ],
+    "Justification": "If irq_typ is modified during operation, the kind of event detected (level vs. edge) changes and interrupts may trigger incorrectly or not at all. This is a configuration-integrity issue that affects correctness of IRQ detection."
+},
+{
+    "Name": "neorv32_gpio.irq_pol",
+    "Description": "Per-pin register selecting polarity (high/low for level or rising/falling for edge) used in computing irq_trig conditions.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ],
+    "Justification": "Tampering with irq_pol flips the meaning of input events (e.g., rising vs. falling), causing incorrect interrupt signaling. This is a configuration integrity risk as it directly changes event detection semantics."
+},
+{
+    "Name": "neorv32_gpio.irq_en",
+    "Description": "Per-pin enable bits that gate whether a detected trigger can set the pending interrupt (irq_pend).",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ],
+    "Justification": "Changing irq_en can enable or disable interrupt delivery for pins; unauthorized modification alters which events are allowed to produce pending interrupts, corrupting expected control-flow and behavior. This is primarily an integrity concern over interrupt configuration."
+},
+{
+    "Name": "neorv32_gpio.irq_pend",
+    "Description": "Latched per-pin pending-interrupt bits that buffer irq_trig events (subject to irq_en and irq_clrn) until cleared; reduced to produce cpu_irq_o when any bit is set.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "Manipulation of irq_pend (or its improper clearing) directly affects whether interrupts are reported to the CPU; clearing or preventing pending bits denies notification of events. The main impact is loss of interrupt availability to the CPU."
+}

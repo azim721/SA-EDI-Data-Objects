@@ -1,0 +1,242 @@
+{
+    "Name": "neorv32_cpu.msi_i",
+    "Description": "Machine software interrupt input that signals a software-generated interrupt to the CPU's machine-level interrupt logic and is folded into the irq_machine vector.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Manipulation or persistent assertion of this interrupt input can prevent forward progress of normal software (interrupt storms or unwanted context switches), effectively causing denial-of-service. Because it controls interrupt-driven flow rather than carrying secret data or configuration, availability is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu.mei_i",
+    "Description": "Machine external interrupt input that signals external interrupt requests to the CPU's machine-level interrupt handling and is combined into irq_machine.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "An attacker who can assert or withhold this input can induce spurious interrupts or block expected external interrupts, disrupting normal operation and causing denial-of-service. The primary risk is interruption/denial of normal execution, so availability is the dominant objective."
+},
+{
+    "Name": "neorv32_cpu.mti_i",
+    "Description": "Machine timer interrupt input used to notify the control unit of timer-based events (mti) which drive timer interrupts and scheduling decisions.",
+    "Family": [
+        "Controllers",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Corrupting or spamming the timer interrupt can prevent timely progress of time-sensitive tasks or create continual interruptions, impairing system availability. The signal affects control flow and liveness rather than confidentiality or integrity of stored data."
+},
+{
+    "Name": "neorv32_cpu.firq_i",
+    "Description": "16-bit vector of custom fast/low-latency interrupt inputs providing multiple fast interrupt sources to the CPU.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If an attacker can assert or hold these fast interrupt lines, they can forcibly preempt or stall normal execution, causing denial-of-service or livelock. Because the vector primarily affects control flow and responsiveness, availability is the key objective."
+},
+{
+    "Name": "neorv32_cpu.dbi_i",
+    "Description": "Debug halt request input used to request the CPU to enter or handle debug/halt conditions from the debug subsystem.",
+    "Family": [
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1313",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "This signal can directly stop or park CPU execution when asserted, providing an easy way for an attacker or misconfigured integrator to deny service to the system. The principal risk is halting normal operation, so availability is dominant."
+},
+{
+    "Name": "neorv32_cpu.mem_sync_i",
+    "Description": "Input that signals the CPU when an external memory synchronization operation has completed, used to resume or finalize memory-related actions.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If mem_sync_i is not asserted when required (or prevented), fence operations will not complete and the CPU may stall or remain in a fence waiting state, causing a denial-of-service for memory-ordered operations. Thus tampering with this line primarily impacts availability of correct execution."
+},
+{
+    "Name": "neorv32_cpu.lsu_rdata",
+    "Description": "Data returned from the Load/Store Unit after a memory access and used as a write-back source into the register file.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data",
+        "Secret"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1264"
+    ],
+    "Justification": "lsu_rdata can carry sensitive data (e.g., secret keys or confidential memory contents) fetched from memory; unauthorized observation or exposure of this signal would leak secrets. Given the CPU's support for cryptographic extensions and that loads can return secret material, confidentiality is the primary concern."
+},
+{
+    "Name": "neorv32_cpu.alu_res",
+    "Description": "Primary ALU result used as a write-back source to the register file and by downstream units for further computation.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If 'alu_res' is manipulated the value written back for AMO operations will be incorrect, leading to corrupted memory state and violated atomic operation semantics; this is a clear integrity threat."
+},
+{
+    "Name": "neorv32_cpu.alu_add",
+    "Description": "Address/result bus produced by the ALU used as the effective memory access address input to the LSU and as input to PMP/address checks.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1280"
+    ],
+    "Justification": "If alu_add is modified or corrupted, memory accesses (loads/stores) will target incorrect addresses, leading to data corruption or privileged-data disclosure. Because it directly controls which memory locations are accessed, protecting its integrity is critical."
+},
+{
+    "Name": "neorv32_cpu.lsu_mar",
+    "Description": "Represents the effective address used for the most recent load/store and is provided to PMP and for debugging/diagnostic purposes.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Tampering with lsu_mar changes the effective memory address of data operations, which can corrupt memory or cause unintended side-effects. The primary impact is incorrect memory accesses, so integrity protection is required."
+},
+{
+    "Name": "neorv32_cpu.rf_wdata",
+    "Description": "Multiplexed write-back data fed into the register file (from ALU, LSU, CSR read data, or return PC) and thus determines what values get written to registers.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If rf_wdata is corrupted an attacker can inject arbitrary values into registers, changing program state and control/data flow. Because it determines register contents for future instructions, its integrity is essential."
+},
+{
+    "Name": "neorv32_cpu.csr_rdata",
+    "Description": "CSR read-data output produced by the control unit for CSR read instructions and selectable as a write-back source into the register file.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Corruption of CSR read data can lead to incorrect configuration or misreporting of system status and can change privileged behavior when written back. The main risk is incorrect control/configuration state, so integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu.lsu_wait",
+    "Description": "Flow-control signal from the LSU indicating the CPU must wait for an ongoing data bus access to complete; used by the control unit to stall instruction execution.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If lsu_wait is asserted permanently or manipulated, the CPU will stall and forward progress stops, causing denial-of-service. Because it controls execution liveness, availability is the primary objective."
+},
+{
+    "Name": "neorv32_cpu.pmp_fault",
+    "Description": "Flag asserted by the PMP on permission violations to signal the control unit and LSU about PMP access faults for exception handling or blocking accesses.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If pmp_fault is incorrectly asserted or manipulated at integration, it will block memory accesses and trigger exceptions, preventing normal operation. The primary impact is denying memory access/operation, therefore availability is the chief concern."
+}

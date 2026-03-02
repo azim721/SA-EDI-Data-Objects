@@ -1,0 +1,476 @@
+{
+    "Name": "keccak.f_permutation_.in",
+    "Description": "576-bit input that is absorbed into the Keccak state on acceptance by XORing into the upper portion of the state.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.out",
+    "Description": "1600-bit Keccak state updated each cycle when update is asserted and provided to downstream logic as the permutation result.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.in_ready",
+    "Description": "Indicates availability of input data and, together with calc, determines when the module accepts new data.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.out_ready",
+    "Description": "Asserted only at the final round to signal that the output state is valid.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.ack",
+    "Description": "Signals to the upstream that the current input has been consumed in the cycle it is accepted.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.rc1",
+    "Description": "Round constant generated from i and fed into the round transformation.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.rc2",
+    "Description": "Second round constant generated from i and used by the round transformation.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keccak.in[63:0]",
+    "Description": "Carries the 64-bit message segment into the keccak top module, which is padded and permuted to produce the hash.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Secret"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-203",
+        "CWE-1191",
+        "CWE-1258",
+        "CWE-1239",
+        "CWE-319"
+    ]
+},
+{
+    "Name": "keccak.in_ready",
+    "Description": "Indicates to the keccak module that a new 64-bit input chunk is available to be accepted and processed.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1245"
+    ]
+},
+{
+    "Name": "keccak.out[511:0]",
+    "Description": "Presents the 512-bit hash result after permutation and byte reordering.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1245"
+    ]
+},
+{
+    "Name": "keccak.out_ready",
+    "Description": "Indicates when the 512-bit hash on out is valid, driven after internal timing/counter conditions are met.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1245"
+    ]
+},
+{
+    "Name": "keccak.f_ack",
+    "Description": "Acknowledges acceptance of the padded block by the permutation engine, enabling the padder/source to advance.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1245"
+    ]
+},
+{
+    "Name": "keccak.f_out_ready",
+    "Description": "Signals that the permutation engine has produced a valid 1600-bit state output.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384",
+        "CWE-1245"
+    ]
+},
+{
+    "Name": "keccak.padder_.out",
+    "Description": "576-bit buffered, padded message block shifted in 64-bit chunks (v1) and provided to f_permutation when the buffer becomes full.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1239"
+    ]
+},
+{
+    "Name": "keccak.padder_.in",
+    "Description": "64-bit input data chunk from the user; used directly as v1 when not the last word and contributes to the padded block.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Integrity",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.padder_.in_ready",
+    "Description": "Handshaking input indicating that an input word is available; used in accept = (~state) & in_ready & (~buffer_full).",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.padder_.out_ready",
+    "Description": "Signals when a 576-bit padded block is ready (wired to buffer_full).",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.padder_.f_ack",
+    "Description": "Acknowledgment from f_permutation; used to clear/hold the buffer length counter i and control when the padder can start filling a new block.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.padder_.done",
+    "Description": "Set when state=1 and out_ready=1; prevents further buffer updates once a final padded block is produced.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.padder_.p0.in",
+    "Description": "64-bit data chunk to be padded; depending on byte_num, the upper bytes of this word are passed through to the output while the next byte is set to 0x01 and the remaining bytes to 0.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Integrity",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keccak.padder_.p0.out",
+    "Description": "64-bit padded word combining the valid portion of 'in' with the 0x01 marker and trailing zeros, forwarded to the higher-level padder/buffer.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Availability",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.rconst_.rc1",
+    "Description": "64-bit round constant derived combinationally from input 'i'; used in the round2in1 module as round_const_1 for Keccak\u2019s iota step.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity, Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.rconst_.rc2",
+    "Description": "64-bit round constant derived combinationally from input 'i'; used in the round2in1 module as round_const_2 for the subsequent iota application within two-round processing.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity, Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.round_.in",
+    "Description": "1600-bit input state to the two-round Keccak transformation; it is decomposed into 5x5 lanes and feeds theta, rho, pi, chi, and iota steps.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Secret"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.round_.out",
+    "Description": "1600-bit output state after applying two rounds of Keccak (including iota with provided round constants); forwarded to subsequent rounds or modules.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Secret"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.round_.round_const_1",
+    "Description": "64-bit round constant XORed into lane g[0][0] during the iota step of the first round.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1282"
+    ]
+},
+{
+    "Name": "keccak.f_permutation_.round_.round_const_2",
+    "Description": "64-bit round constant XORed into lane gg[0][0] during the iota step of the second round.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1282"
+    ]
+}

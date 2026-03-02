@@ -1,0 +1,207 @@
+{
+    "Name": "neorv32_xbus.xbus_adr_o",
+    "Description": "Drives the 32-bit target address on the external Wishbone-compatible bus derived from the internal transaction address (bus_req.addr).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_adr_o selects the external target; any corruption misaddresses requests, causing reads from or writes to unintended devices/locations and silently corrupting system state."
+},
+{
+    "Name": "neorv32_xbus.xbus_dat_o",
+    "Description": "Outputs 32-bit write data to the external bus for store/write transactions (driven from bus_req.data).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_dat_o carries the value committed to peripherals/memory; if altered, the system stores incorrect data, breaking end-to-end correctness guarantees."
+},
+{
+    "Name": "neorv32_xbus.xbus_dat_i",
+    "Description": "Receives 32-bit read data from the external device and is forwarded into the internal bus response (bus_rsp.data) when a transaction is pending.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_dat_i becomes the CPU-visible read value; spoofing or corruption injects wrong data into architectural state, leading to silent malfunction."
+},
+{
+    "Name": "neorv32_xbus.xbus_we_o",
+    "Description": "Single-bit signal indicating direction of transfer (read=0 / write=1) for external transactions, driven from bus_req.rw.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_we_o encodes operation direction; a flip turns reads into unintended writes (or vice versa), causing data loss or missed updates."
+},
+{
+    "Name": "neorv32_xbus.xbus_sel_o",
+    "Description": "4-bit byte-enable mask signaling which bytes of the 32-bit word are active for the transfer (driven from bus_req.ben).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_sel_o chooses active byte lanes; errors drop intended bytes or overwrite adjacent lanes, producing partial-word corruption."
+},
+{
+    "Name": "neorv32_xbus.xbus_stb_o",
+    "Description": "Strobe asserting a valid single transfer request on the external bus (driven from bus_req.stb); part of the pipelined Wishbone interface.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_stb_o launches transfers; if suppressed the bus never issues requests (stall), while if stuck high it can monopolize the bus or create protocol violations, degrading throughput."
+},
+{
+    "Name": "neorv32_xbus.xbus_cyc_o",
+    "Description": "Indicates a valid bus cycle and is asserted while a transfer is active (driven as bus_req.stb OR pending(1)) to hold cycles across multi-step/atomic accesses.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_cyc_o holds the bus during active/atomic sequences; incorrect assertion/deassertion can hang the bus or prematurely end cycles, stalling forward progress."
+},
+{
+    "Name": "neorv32_xbus.xbus_ack_i",
+    "Description": "Acknowledge from the external device indicating transfer completion; used to generate bus_rsp.ack and to advance/complete pending transactions and atomic sequences.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical",
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_ack_i completes handshakes; if missing, requests never retire (stall), while spurious acks can advance state without valid data, leading to retries or lockups."
+},
+{
+    "Name": "neorv32_xbus.xbus_err_i",
+    "Description": "Error indication from the external device used to set bus_rsp.err and to abort/clear pending transactions and timeouts.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "xbus_err_i terminates faulty transactions; if suppressed, the controller may wait indefinitely, and if asserted spuriously, valid traffic is aborted\u2014both harming availability."
+},
+{
+    "Name": "neorv32_xbus.pending",
+    "Description": "Internal two-bit vector tracking pending/atomic transaction state used to gate responses (bus_rsp) and to compute xbus_cyc_o behavior.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Critical",
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "pending tracks in-flight/atomic sequences; corruption can keep the bus busy forever or drop cycles early, causing deadlock or lost operations."
+},
+{
+    "Name": "neorv32_xbus.timeout",
+    "Description": "Internal flag asserted when the timeout counter reaches TIMEOUT_VAL to signal an unacknowledged access and produce a bus error/abort.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical",
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "timeout bounds wait time; if never asserted, the bus can hang on unresponsive devices, and if asserted prematurely, valid transactions are aborted\u2014both reducing availability."
+},
+{
+    "Name": "neorv32_xbus.timecnt",
+    "Description": "Internal cycle counter that is incremented while a transaction is pending and compared against TIMEOUT_VAL to generate the timeout flag.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "timecnt drives timeout detection; incorrect counting delays or prevents aborts (hang) or triggers early timeouts (spurious aborts), impairing forward progress."
+}

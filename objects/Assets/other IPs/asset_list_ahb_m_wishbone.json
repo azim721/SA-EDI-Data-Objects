@@ -1,0 +1,150 @@
+{
+    "Name": "AHB2WB.HADDR",
+    "Description": "Carries the 32-bit address from the AHB master; the address is registered (rHADDR) and forwarded to the Wishbone side as wb_adr_o.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1317"
+    ]
+},
+{
+    "Name": "AHB2WB.HWDATA",
+    "Description": "Carries 32-bit write data from the AHB master; directly forwarded to the Wishbone bus as wb_dat_o during write operations.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1317"
+    ]
+},
+{
+    "Name": "AHB2WB.HWRITE",
+    "Description": "Indicates whether the current transaction is a write or read; registered and used to derive master_wants_write/read, which in turn drive Wishbone control (wb_we_o, wb_stb_o, wb_cyc_o).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1317"
+    ]
+},
+{
+    "Name": "AHB2WB.HSEL",
+    "Description": "Selects this bridge as the active AHB slave; registered (rHSEL) and used to qualify transaction intent (master_wants_read/write).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1317"
+    ]
+},
+{
+    "Name": "AHB2WB.wb_we_o",
+    "Description": "Indicates a write cycle to the Wishbone slave; asserted when the AHB side intends a write.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1317"
+    ]
+},
+{
+    "Name": "AHB2WB.HREADY",
+    "Description": "Indicates that the AHB bus is ready; used to qualify when AHB inputs are captured into internal registers.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "AHB2WB.wb_ack_i",
+    "Description": "Acknowledges completion on the Wishbone side; combined with internal cycle state to generate HREADYOUT for the AHB master.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "AHB2WB.HRDATA",
+    "Description": "Outputs 32-bit read data to the AHB master; directly driven from wb_dat_i when the transaction completes.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "AHB2WB.HREADYOUT",
+    "Description": "Indicates to the AHB master that the slave is ready to complete the transfer; driven high based on Wishbone acknowledgment and internal cycle state.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ]
+}

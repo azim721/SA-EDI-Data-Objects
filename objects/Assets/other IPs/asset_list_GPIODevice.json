@@ -1,0 +1,120 @@
+{
+    "Name": "GPIODevice.peripheralEnable",
+    "Description": "Top-level bus gating signal that allows the device to respond to peripheral bus transactions.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "GPIODevice.peripheralBus_we",
+    "Description": "Controls whether writes occur to internal registers (OE, output data, IRQ enable).",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "GPIODevice.peripheralBus_address",
+    "Description": "Selects which internal register is targeted for read/write operations.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1257",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "GPIODevice.peripheralBus_dataRead",
+    "Description": "Carries data from the device registers (OE, output, input, IRQ enable) back to the bus.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "GPIODevice.peripheralBus_dataWrite",
+    "Description": "Carries write data from the bus to the device\u2019s internal registers.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "GPIODevice.gpio_oe",
+    "Description": "Direction control for each GPIO pin (output enable for driving pins).",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1221",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "GPIODevice.gpio_irq",
+    "Description": "Aggregated interrupt request based on enabled pins and input state.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1220"
+    ]
+}

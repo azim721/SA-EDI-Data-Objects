@@ -1,0 +1,146 @@
+{
+    "Name": "neorv32_cpu_cp_crypto.rs1_i",
+    "Description": "Register-file source operand 1 supplied to the crypto co-processor and latched into internal rs1 when a crypto instruction is valid; used as primary data input for permutations, hash, AES/SM4 and other operations.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Sensitive",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300"
+    ],
+    "Justification": "Altering rs1_i changes the data being shifted and therefore directly corrupts computation results; an integrator would consider the correctness of this operand critical. Because rs1_i is an input that controls the value transformed by the shifter, its integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_cp_crypto.rs2_i",
+    "Description": "Register-file source operand 2 supplied to the crypto co-processor and latched into internal rs2 when a crypto instruction is valid; used as secondary data, byte/nibble selectors, and S-box indices.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Sensitive",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If rs2_i is modified the multiplier/divider will compute wrong outputs (or divide by wrong/divisor), potentially producing incorrect program-visible state or triggering faults. Ensuring integrity of rs2_i is essential for correct arithmetic behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_crypto.sm4.so1",
+    "Description": "8-bit S-box output read from SM4 ROM and latched each clock; zero-extended to sm4.so2 and used to compute the SM4 round or key-schedule word.",
+    "Family": [
+        "Security",
+        "Storage",
+        "Accelerator"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "The S-box output is a key-dependent intermediate of SM4; observing or inferring this byte enables differential or correlation attacks, so it must remain internal and confidential."
+},
+{
+    "Name": "neorv32_cpu_cp_crypto.funct12",
+    "Description": "Buffered copy of the instruction's 12-bit funct field used to select the specific crypto sub-function, control internal multiplexers, byte-rotation, mix-steps and out_sel.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "funct12 governs cryptographic subfunction selection and internal routing; if altered, the unit can execute the wrong operation or sequence, producing incorrect results, so its integrity must be preserved."
+},
+{
+    "Name": "neorv32_cpu_cp_crypto.funct3",
+    "Description": "Buffered copy of the instruction's 3-bit funct3 field used by decode/operation selection (e.g., xperm byte/nibble choice) and other selection logic.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "funct3 participates in decode and variant selection; corruption misroutes control and yields incorrect function choice, so strong integrity of this field is required."
+},
+{
+    "Name": "neorv32_cpu_cp_crypto.done",
+    "Description": "One-cycle-wide internal pulse asserted when an operation is finished; used to drive valid_o and to qualify/reserve res_o for a single cycle.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "The one-cycle completion pulse drives the result handshake; if suppressed, stretched, or duplicated, instructions cannot retire reliably and the pipeline can stall, so it is critical for availability."
+},
+{
+    "Name": "neorv32_cpu_cp_crypto.res_o",
+    "Description": "XLEN-bit output driven one cycle when an operation completes; conveys the selected functional-unit result back to the core/register file.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If res_o is blocked or not produced when expected, downstream units cannot obtain required computation results and processor execution would be disrupted (denial-of-service impact). Although output integrity matters, the dominant integration-level concern is that the result must be available when expected for correct operation."
+},
+{
+    "Name": "neorv32_cpu_cp_crypto.valid_o",
+    "Description": "One-cycle valid pulse indicating res_o contains a completed operation result; driven from internal done signal to signal readiness to the integrating CPU.",
+    "Family": [
+        "Security",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "valid_o is the observable/unlocking signal used by the debug module; if it is unavailable, stuck low, or suppressed at integration, the debugger remains locked and normal debug functionality is denied, making this port availability-critical."
+}

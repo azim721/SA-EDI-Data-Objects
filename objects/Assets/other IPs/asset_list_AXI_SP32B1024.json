@@ -1,0 +1,135 @@
+{
+    "Name": "AXI_SP32B1024.axi_awaddr",
+    "Description": "Carries the AXI write address; its low 10 bits are captured on the falling edge to drive the memory address bus A for write accesses.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1257",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "AXI_SP32B1024.axi_araddr",
+    "Description": "Carries the AXI read address; its low 10 bits are captured on the falling edge to drive the memory address bus A for read accesses.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1257",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "AXI_SP32B1024.axi_wdata",
+    "Description": "Provides the data for write transactions; captured into DP and used to form the memory data bus D according to byte strobes.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "AXI_SP32B1024.CEN",
+    "Description": "Active-low enable gate for the memory, asserted during read or write activity; derived from read/write state flags.",
+    "Family": [
+        "Controllers",
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "AXI_SP32B1024.WEN",
+    "Description": "Active-low write enable for the memory, asserted during the write data phase.",
+    "Family": [
+        "Controllers",
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "AXI_SP32B1024.axi_wvalid",
+    "Description": "Indicates from the master that write data is present; initiates the write data phase.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "AXI_SP32B1024.axi_rvalid",
+    "Description": "From the slave, indicates read data is available; driven by reading2.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "AXI_SP32B1024.axi_rdata",
+    "Description": "Read data returned to the AXI master; directly driven from Q (memory output).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+}

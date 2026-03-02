@@ -1,0 +1,41 @@
+{
+    "Name": "neorv32_hwspinlock.lock_q",
+    "Description": "lock_q is a 32-bit vector holding the state of each hardware spinlock (one bit per lock). Bits are set on a claim (read transaction) and cleared on a release (write transaction); the vector is also returned (partially or fully) on read responses.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Critical",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1257",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "lock_q encodes critical control state that determines ownership of shared resources. Unauthorized or unintended modification of these bits (e.g., flipped or stuck bits) can grant or deny access to resources, corrupting system behavior and enabling escalation or denial-of-service, so integrity of lock_q is essential."
+},
+{
+    "Name": "neorv32_hwspinlock.sel",
+    "Description": "sel is a one-hot 32-bit selection vector derived from the incoming bus address that indicates which individual lock index is targeted by the current bus request; it gates updates to lock_q and is ANDed with lock_q to form per-lock read responses.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1257"
+    ],
+    "Justification": "sel is the control signal that determines which lock bit may be modified or observed. Tampering with sel (selecting the wrong index or suppressing the intended index) can cause incorrect lock modifications or reads, corrupting ownership semantics and enabling incorrect resource access, so integrity of sel is critical."
+}

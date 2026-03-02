@@ -1,0 +1,77 @@
+{
+    "Name": "neorv32_debug_dm.halt_req_o",
+    "Description": "Per-hart vector output that requests each hart to halt and enter debug mode; it is gated by hart selection, DM active state and authentication when enabled.",
+    "Family": [
+        "Test/Debug",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1313",
+        "CWE-1247"
+    ],
+    "Justification": "Assertion of halt_req_o can stop execution of the targeted hart(s), thereby denying normal operation (DoS). Because the debugger interface drives this signal, an attacker who can influence the related control path can disrupt system availability by repeatedly halting harts."
+},
+{
+    "Name": "neorv32_debug_dm.dci.data_reg",
+    "Description": "32-bit data buffer used as the abstract data0 exchange between the debugger and the hart; it can be written by the DM (DMI) or by the CPU bus and read via DMI/bus.",
+    "Family": [
+        "Test/Debug",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1262",
+        "CWE-1299",
+        "CWE-1247"
+    ],
+    "Justification": "This register is used as the intermediary for GPR <-> DM transfers and for abstract write operations that can modify hart registers/memory; corruption or unauthorized modification of dci.data_reg can directly alter CPU state and program behavior, compromising integrity of the system state."
+},
+{
+    "Name": "neorv32_debug_dm.ndmrstn_o",
+    "Description": "Active-low SoC reset output driven by the DM ndmreset control (when DM is active and authentication permits) to assert a system-level reset of the SoC.",
+    "Family": [
+        "Test/Debug",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "ndmrstn_o drives a chip-wide reset; if forced low spuriously it can continuously reset the SoC and deny service, while if it cannot be asserted when needed (despite dmactive and valid auth) the system cannot recover from faulted states, both directly compromising availability."
+},
+{
+    "Name": "neorv32_debug_dm.auth.valid",
+    "Description": "Indicates successful authentication when the optional authenticator is enabled; it gates authenticated DMI register read/write access (dmi_*_auth signals).",
+    "Family": [
+        "Security",
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1262",
+        "CWE-1244",
+        "CWE-1247"
+    ],
+    "Justification": "auth.valid controls whether privileged DMI accesses are allowed; if an attacker can set or spoof auth.valid, they obtain write/read capabilities to critical DM registers (progbuf, command, data0), enabling unauthorized modifications and thus breaching system integrity."
+}

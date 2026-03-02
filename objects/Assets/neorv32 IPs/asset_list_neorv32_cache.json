@@ -1,0 +1,137 @@
+{
+    "Name": "neorv32_cache.neorv32_cache_memory_inst.addr_i",
+    "Description": "Full 32-bit access address used by the cache memory to extract tag, index and word offset for tag/status lookup and data memory addressing.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1319"
+    ],
+    "Justification": "addr_i determines the tag, set index, and word offset; if corrupted, the cache targets the wrong line/word, returning stale data or overwriting unrelated entries, thereby violating data correctness."
+},
+{
+    "Name": "neorv32_cache.neorv32_cache_memory_inst.we_i",
+    "Description": "4-bit byte-wide write-enable vector that controls which bytes of the currently addressed 32-bit word are written into the byte-sliced data sub-memories.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1319"
+    ],
+    "Justification": "we_i gates byte-lane writes into the cache data arrays; if asserted or suppressed incorrectly per byte, updated data may not be stored or unrelated bytes may be overwritten, leading to silent corruption of cached words."
+},
+{
+    "Name": "neorv32_cache.neorv32_cache_memory_inst.inval_i",
+    "Description": "Command input to invalidate the currently addressed cache block (clears its valid flag) for flush/error operations.",
+    "Family": [
+        "Controllers",
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1251",
+        "CWE-1276",
+        "CWE-1319"
+    ],
+    "Justification": "inval_i controls the valid flag of a line; spurious invalidation discards correct data and forces misses, while suppression leaves stale/poisoned lines marked valid, both leading to incorrect read results."
+},
+{
+    "Name": "neorv32_cache.neorv32_cache_memory_inst.dirty_i",
+    "Description": "Command input to mark the currently addressed block as dirty (set dirty flag), used on cache write hits (disabled when READ_ONLY = true).",
+    "Family": [
+        "Controllers",
+        "Memories"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1221",
+        "CWE-1247",
+        "CWE-1251",
+        "CWE-1276",
+        "CWE-1319"
+    ],
+    "Justification": "dirty_i records whether a line holds modified data; if cleared when updates occurred, evictions can lose writes (no write-back), and if asserted spuriously, clean lines may be written back or mis-handled, both corrupting architectural state."
+},
+{
+    "Name": "neorv32_cache.ctrl.buf_req",
+    "Description": "Buffered request flag that latches an incoming host request across FSM cycles so the controller can service pending accesses.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1276",
+        "CWE-1319"
+    ],
+    "Justification": "ctrl.buf_req preserves a pending access across controller cycles; if it fails to capture or to clear, requests are dropped or never retire, causing stalls, starvation, or replay loops that impede forward progress."
+},
+{
+    "Name": "neorv32_cache.ctrl.buf_sync",
+    "Description": "Buffered fence/sync flag used to remember a pending cache flush/synchronization request across FSM transitions.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1276",
+        "CWE-1319"
+    ],
+    "Justification": "ctrl.buf_sync ensures fence/flush commands complete; if lost, ordered operations cannot proceed and the system can hang waiting for completion, while if stuck asserted the controller may repeatedly flush and block normal traffic\u2014both degrading availability."
+},
+{
+    "Name": "neorv32_cache.cache_i.sta_hit",
+    "Description": "Status input from the cache memory indicating whether the current access address results in a cache hit; used by the controller to decide read/write behavior and whether to initiate replacement or direct responses.",
+    "Family": [
+        "Memories",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1276",
+        "CWE-1319"
+    ],
+    "Justification": "sta_hit steers the controller between immediate service and miss/refill paths; if suppressed or incorrect, the FSM can wait for nonexistent data or thrash into needless refills, causing long stalls and loss of throughput."
+}

@@ -1,0 +1,177 @@
+{
+    "Name": "neorv32_spi.spi_dat_o",
+    "Description": "Serial data output (MOSI) driven from the transmit shift register (rtx_engine.sreg(7)) that sends bits to the selected SPI peripheral.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Altering the MOSI bitstream (or the logic that drives it) will corrupt transmitted payloads and thus corrupt integrator data/commands. The SPI controller is not a crypto primitive in this design, so integrity of outgoing data is the dominant concern."
+},
+{
+    "Name": "neorv32_spi.spi_dat_i",
+    "Description": "Serial data input sampled into the transceiver (synchronized into rtx_engine.sdi_sync) and shifted into the receive path and RX FIFO.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Injected or modified MISO bits can cause incorrect data to be presented to the host (via RX FIFO), corrupting system behavior or decisions. Since the module is not used for cryptography here, integrity of received data is the primary concern."
+},
+{
+    "Name": "neorv32_spi.spi_csn_o",
+    "Description": "Up to 8 active-low chip-select outputs; the chip_select process asserts the selected CS low based on rtx_engine.cs_ctrl to enable a specific SPI peripheral for a transaction.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical",
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1220",
+        "CWE-1319"
+    ],
+    "Justification": "If CS outputs are forced, blocked, or mis-asserted at integration time, the controller cannot communicate with the intended peripheral (denial-of-service). While mis-assertion can also affect integrity, preventing access (availability) is the dominant risk for system operation."
+},
+{
+    "Name": "neorv32_spi.clkgen_en_o",
+    "Description": "Output signal that enables an external pre-scaled clock generator when the SPI controller is enabled (driven from ctrl.enable).",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical",
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/tick will not be provided and the watchdog counter will not progress, disabling the WDT functionality and preventing the module from performing its recovery/reset role (Denial-of-service on WDT)."
+},
+{
+    "Name": "neorv32_spi.irq_o",
+    "Description": "Interrupt line asserted when enabled and configured FIFO/engine conditions (RX available, TX empty, TX not half full, or idle) occur to notify the host.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1320",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If irq_o is suppressed, the host may not service the peripheral promptly, leading to idle time and stalled workflows; if asserted spuriously, it can trigger interrupt storms that starve normal processing\u2014both harm overall availability."
+},
+{
+    "Name": "neorv32_spi.ctrl.enable",
+    "Description": "Control-register bit that gates the SPI engine, clock generation, and clears both FIFOs when deasserted (global enable for SPI operation).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the watchdog from starting/counting and thereby prevent the WDT from performing system recovery, causing a loss of the module's intended availability/safety function."
+},
+{
+    "Name": "neorv32_spi.ctrl.prsc",
+    "Description": "3-bit index selecting which pre-scaled clock in clkgen_i is used by the internal clock generator to produce SPI timing pulses.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "Tampering with the prescaler will alter uart_clk selection and thus change bit timing, which can corrupt transmissions and receptions. The primary risk is integrity degradation of serial data due to incorrect timing."
+},
+{
+    "Name": "neorv32_spi.ctrl.cdiv",
+    "Description": "4-bit fine divider value compared against internal counter to generate periodic spi_clk_en pulses that advance the transceiver state machine.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "ctrl.cdiv shapes tick generation and duty/hold timing; if altered, setup/hold windows and SCL high/low durations become incorrect, corrupting transfers even when logic otherwise behaves."
+},
+{
+    "Name": "neorv32_spi.rtx_engine.sreg",
+    "Description": "8-bit shift register holding the current transmit byte (MSB output) and shifting in sampled MISO bits during transmission.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Corruption of the shift register contents or its shifting behavior directly modifies transmitted and received bytes, breaking data correctness; integrity protection is therefore required."
+},
+{
+    "Name": "neorv32_spi.rtx_engine.cs_ctrl",
+    "Description": "4-bit control field from TX FIFO command entries; bit(3) indicates active and bits(2:0) select which CS line to assert for the next transaction.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If this internal control is altered, the controller can select the wrong peripheral or fail to assert CS, causing incorrect transactions or cross-device corruption; integrity of selection is the primary concern."
+}

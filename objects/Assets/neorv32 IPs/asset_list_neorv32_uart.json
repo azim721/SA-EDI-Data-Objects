@@ -1,0 +1,182 @@
+{
+    "Name": "neorv32_uart.clkgen_en_o",
+    "Description": "Output that enables/gates the external clock generator feeding the UART; driven directly from uart enable control to start/stop UART clocking.",
+    "Family": [
+        "Counter/Timer",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/tick will not be provided and the watchdog counter will not progress, disabling the WDT functionality and preventing the module from performing its recovery/reset role (Denial-of-service on WDT)."
+},
+{
+    "Name": "neorv32_uart.uart_txd_o",
+    "Description": "Asynchronous serial TX output driven by the transmitter shift register to send serial bits to external devices.",
+    "Family": [
+        "Communications",
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1313",
+        "CWE-1247",
+        "CWE-1384"
+    ],
+    "Justification": "If the TX line is forced, shorted, or otherwise made unavailable at integration, the module cannot deliver transmitted data, resulting in service loss. While it carries application data, the primary integration-level risk is preventing transmissions (DoS)."
+},
+{
+    "Name": "neorv32_uart.uart_rxd_i",
+    "Description": "Asynchronous serial RX input sampled and synchronized by the receiver FSM to capture incoming serial bytes.",
+    "Family": [
+        "Communications",
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1262"
+    ],
+    "Justification": "An attacker who injects or tampers with uart_rxd_i can modify the received byte-stream and thereby corrupt data delivered to the system, changing program behavior or data content. The dominant concern is integrity of the incoming data flow."
+},
+{
+    "Name": "neorv32_uart.uart_rtsn_o",
+    "Description": "Active-low RTS output indicating whether the UART is ready to receive; controlled by FIFO fill levels and hw flow-control enable.",
+    "Family": [
+        "Communications",
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If uart_rtsn_o is manipulated or driven to indicate 'not ready', a connected peer will stop sending data, preventing reception and causing a denial-of-service. Therefore this signal primarily impacts availability at integration."
+},
+{
+    "Name": "neorv32_uart.uart_ctsn_i",
+    "Description": "Active-low CTS input sampled for transmitter enable decisions; prevents the transmitter from starting new frames when de-asserted and hw flow-control is enabled.",
+    "Family": [
+        "Communications",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1384",
+        "CWE-1247"
+    ],
+    "Justification": "If uart_ctsn_i is forced to disallow transmissions, the UART transmitter will be prevented from sending, creating a DoS on outbound communication. The principal integration-level risk is loss of service."
+},
+{
+    "Name": "neorv32_uart.irq_rx_o",
+    "Description": "Interrupt line asserted based on RX FIFO thresholds (not-empty, half-full, full) when enabled to notify CPU of receive events.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1320",
+        "CWE-1247"
+    ],
+    "Justification": "Suppressing or spurious assertion of irq_rx_o can prevent the CPU from being informed of received data (or flood it), effectively denying timely processing of incoming bytes. The dominant threat is interruption/denial of normal RX handling (availability)."
+},
+{
+    "Name": "neorv32_uart.irq_tx_o",
+    "Description": "Interrupt line asserted based on TX FIFO thresholds (empty, not-half-full) when enabled to notify CPU about transmit-space conditions.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1320",
+        "CWE-1247"
+    ],
+    "Justification": "Tampering with irq_tx_o can prevent the CPU from knowing when it can enqueue more data or can create spurious conditions, disrupting transmission scheduling. This primarily impacts availability of transmit service."
+},
+{
+    "Name": "neorv32_uart.ctrl.enable",
+    "Description": "Control bit that globally enables or disables UART operation; gates transmitter, receiver and related logic and also drives clkgen_en_o.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1220"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the watchdog from starting/counting and thereby prevent the WDT from performing system recovery, causing a loss of the module's intended availability/safety function."
+},
+{
+    "Name": "neorv32_uart.ctrl.baud",
+    "Description": "10-bit baud divisor reloaded into per-bit counters to set the bit timing for transmitter and receiver.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "If ctrl.baud is modified, the transmitter/receiver timing will change and cause corrupted communication (mismatched bit sampling), altering the correctness of exchanged bytes. This is a configuration that directly impacts data integrity."
+},
+{
+    "Name": "neorv32_uart.ctrl.prsc",
+    "Description": "3-bit prescaler selecting which bit of the clkgen_i vector is used as uart_clk (affects effective baud timing).",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "Tampering with the prescaler will alter uart_clk selection and thus change bit timing, which can corrupt transmissions and receptions. The primary risk is integrity degradation of serial data due to incorrect timing."
+},
+{
+    "Name": "neorv32_uart.rx_engine.over",
+    "Description": "Status flag indicating an RX FIFO overrun (set when a write happens while fifo.free = '0'); exposed via control read status and used to detect lost incoming data.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220"
+    ],
+    "Justification": "rx_engine.over signals that incoming data was dropped due to a full FIFO; if suppressed, software cannot detect/recover from loss and the interface silently desynchronizes, while if stuck high it forces unnecessary clears/back-pressure, throttling throughput\u2014both degrading availability."
+}

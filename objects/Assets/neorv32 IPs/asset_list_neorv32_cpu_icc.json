@@ -1,0 +1,77 @@
+{
+    "Name": "neorv32_cpu_icc.csr_we_i",
+    "Description": "Input control signal that, when asserted together with the ICC data CSR address, triggers writes of csr_wdata_i into the outgoing TX FIFO (drives tx_fifo_we).",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1191",
+        "CWE-1262"
+    ],
+    "Justification": "csr_we_i directly enables modification of the TX FIFO contents by causing writes of software-provided data into the outgoing message queue. If corrupted or asserted incorrectly, it can introduce or alter messages transmitted between cores, thereby compromising the integrity of inter-core data."
+},
+{
+    "Name": "neorv32_cpu_icc.csr_re_i",
+    "Description": "Input control signal used to acknowledge TX link reads: it causes icc_tx_o.ack to be asserted when the ICC data CSR is read and drives FIFO read behavior (fifo read enable).",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1191",
+        "CWE-1262"
+    ],
+    "Justification": "csr_re_i gates read/transfer operations from the TX FIFO; if it is unavailable or blocked, outgoing transfers cannot be acknowledged/read and the TX path can be effectively disabled, producing a denial-of-service for inter-core message transmission. Malicious or missing assertions therefore primarily impact the module's availability to send data."
+},
+{
+    "Name": "neorv32_cpu_icc.tx_fifo_we",
+    "Description": "Internal control signal asserted when a CSR write to the ICC data register occurs (derived from csr_we_i & address match); it enables pushing csr_wdata_i into the tx_queue_inst FIFO.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1191",
+        "CWE-1262"
+    ],
+    "Justification": "tx_fifo_we is the immediate control that inserts data into the outgoing FIFO; tampering or unintended assertion can corrupt the FIFO contents or cause unintended messages to be enqueued, directly affecting the integrity of data exchanged between cores."
+},
+{
+    "Name": "neorv32_cpu_icc.tx_fifo_free",
+    "Description": "Status signal from the outgoing TX FIFO (free_o) that indicates available free space and is sampled into the ICC control/status CSR so software can determine if the FIFO accepts more data.",
+    "Family": [
+        "Memories",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1191"
+    ],
+    "Justification": "tx_fifo_free is used by software to decide whether it can write more data; if this indicator is missing, suppressed, or forged, software may be prevented from sending messages or may overflow the FIFO, resulting in denial-of-service or disrupted inter-core communication, making availability the dominant concern."
+}

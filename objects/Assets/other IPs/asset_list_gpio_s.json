@@ -1,0 +1,55 @@
+{
+    "Name": "gpio_s.addr",
+    "Description": "Selects which internal register (e.g., IO_DIR, IO_OUT, INTMASK, INTFLAGS, PINCTRL, IO readback) is accessed within the module\u2019s address window; used to generate cs_int and to decode rd/wr destinations.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1316"
+    ]
+},
+{
+    "Name": "gpio_s.IO_DIR",
+    "Description": "Defines per-bit pin direction; controls whether each io bit is driven by IO_OUT or left high-Z for input.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1221",
+        "CWE-1247",
+        "CWE-1316"
+    ]
+},
+{
+    "Name": "gpio_s.INTFLAGS",
+    "Description": "Latches per-pin interrupt status; software clears bits by writing ones to this register; drives int via OR-reduction.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1316"
+    ]
+}

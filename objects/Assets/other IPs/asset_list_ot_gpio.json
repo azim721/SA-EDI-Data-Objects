@@ -1,0 +1,118 @@
+{
+    "Name": "gpio.intr_gpio_o",
+    "Description": "Exports interrupt signals (32-bit) from the GPIO interrupt hardware to the integration/system level to indicate pin events or conditions.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1320"
+    ]
+},
+{
+    "Name": "gpio.cio_gpio_en_o",
+    "Description": "Per-pin output-enable vector that controls whether each GPIO pin is actively driven or tri-stated.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "gpio.u_reg.reg_we",
+    "Description": "Write-enable strobe for the TileLink register interface; when asserted with a valid address hit and byte enables, it qualifies acceptance of write data into the targeted register.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity, Availability",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1280"
+    ]
+},
+{
+    "Name": "gpio.u_reg.reg_re",
+    "Description": "Read-enable strobe for the TileLink register interface; when asserted with an address hit, it initiates the muxing and return of read data for the addressed register.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity, Availability",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1280"
+    ]
+},
+{
+    "Name": "gpio.u_reg.reg_error",
+    "Description": "Per-access error flag for the TileLink register interface that reports address misses, integrity/parity failures, or protocol violations during register transactions.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity, Availability",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "gpio.u_reg.intg_err_o",
+    "Description": "This output signals that an integrity error has been detected (either incoming payload integrity failure or internal write-enable error) and is used for alert generation externally.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "gpio.u_reg.err_q",
+    "Description": "err_q latches the occurrence of an integrity-related error (intg_err or reg_we_err) and makes the error persistent across cycles for use by alerting logic.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Sensitive",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+}

@@ -1,0 +1,193 @@
+{
+    "Name": "neorv32_cpu_alu.rs1_i",
+    "Description": "Primary source operand 1 supplied from the register file and used by the comparator, adder/subtractor, logic operations and various co-processor units as an ALU input.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Altering rs1_i changes the data being shifted and therefore directly corrupts computation results; an integrator would consider the correctness of this operand critical. Because rs1_i is an input that controls the value transformed by the shifter, its integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_alu.rs2_i",
+    "Description": "Primary source operand 2 supplied from the register file and used by the adder/subtractor, comparator, shift/multiply units and other co-processors as the second ALU input.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If rs2_i is modified the multiplier/divider will compute wrong outputs (or divide by wrong/divisor), potentially producing incorrect program-visible state or triggering faults. Ensuring integrity of rs2_i is essential for correct arithmetic behavior."
+},
+{
+    "Name": "neorv32_cpu_alu.rs3_i",
+    "Description": "Optional third source operand provided to co-processors (notably the FPU and CFU) for operations that require a third input (e.g., R4-type or fused FP ops).",
+    "Family": [
+        "Processors",
+        "Accelerator"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "rs3_i is used by FPU/CFU/custom operations; if altered, multi-operand co-processor operations will produce incorrect results or corrupt state. Maintaining correct rs3_i values is therefore an integrity requirement for co-processor correctness."
+},
+{
+    "Name": "neorv32_cpu_alu.res_o",
+    "Description": "Top-level ALU result output that multiplexes adder, comparator/slti result, co-processor results and logical operations based on control signals; this result is written back/observed by the rest of the CPU.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If res_o is blocked or not produced when expected, downstream units cannot obtain required computation results and processor execution would be disrupted (denial-of-service impact). Although output integrity matters, the dominant integration-level concern is that the result must be available when expected for correct operation."
+},
+{
+    "Name": "neorv32_cpu_alu.add_o",
+    "Description": "Direct XLEN-bit lower result from the adder/subtractor core used for address computations and other add/sub operations.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "add_o is typically used for address generation; if its value is corrupted, memory accesses can be mis-directed or cause data corruption. Protecting add_o integrity prevents incorrect memory accesses and maintains system correctness."
+},
+{
+    "Name": "neorv32_cpu_alu.cmp_o",
+    "Description": "Comparator status output (equal and less-than flags) used for conditional branches and provided as input to conditional/bit-manipulation co-ops.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute",
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If cmp_o is modified or spoofed, branch/conditional decisions become incorrect causing control-flow hijacks or logic errors. The integrity of cmp_o is therefore critical for correct program flow."
+},
+{
+    "Name": "neorv32_cpu_alu.csr_o",
+    "Description": "CSR read-back output that forwards CSR data from co-processor CSR proxies (FPU/CFU) when those CSRs are accessed.",
+    "Family": [
+        "Processors",
+        "Accelerator"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "csr_o exposes read-back values from co-processor CSRs; if those CSRs contain sensitive state or cryptographic-related data (possible via optional co-processors/custom functions), csr_o can leak that information. Therefore confidentiality of csr_o is important to prevent disclosure of sensitive internal data."
+},
+{
+    "Name": "neorv32_cpu_alu.addsub_res",
+    "Description": "Internal adder/subtractor result (with extra MSB) that feeds slt, add outputs and the add_o address result.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "addsub_res is the internal source for addresses, add_o, and some status bits; if this internal value is corrupted, multiple externally visible outputs (addresses, slt flags) become incorrect. Thus the integrity of addsub_res is central to correct ALU behavior."
+},
+{
+    "Name": "neorv32_cpu_alu.cp_res",
+    "Description": "OR/merge of individual co-processor result buses that is selected into res_o when co-processor output is the active ALU result source.",
+    "Family": [
+        "Processors",
+        "Accelerator"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "cp_res supplies co-processor outputs to res_o; tampering with cp_res causes incorrect ALU outputs for co-processor instructions and may corrupt program execution. Maintaining cp_res integrity preserves correctness of multi-cycle/co-processor operations."
+},
+{
+    "Name": "neorv32_cpu_alu.done_o",
+    "Description": "Top-level signal asserted when any multi-cycle co-processor indicates completion (set one cycle before the corresponding data is valid); used by the CPU to proceed after long-running ALU co-operations.",
+    "Family": [
+        "Processors",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If done_o is suppressed or not asserted correctly an integrating master may never observe co-processor completion and stall or timeout, causing denial-of-service of co-processor operations. Availability of this strobe is therefore critical to maintain forward progress."
+},
+{
+    "Name": "neorv32_cpu_alu.cp_valid",
+    "Description": "Vector of valid/done strobes (one bit per co-processor) indicating a co-processor will produce valid output next cycle; used to generate the done_o signal.",
+    "Family": [
+        "Processors",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If cp_valid bits are withheld or manipulated to never assert, the system will not receive completion notifications (done_o) and co-processor results will effectively be unavailable, causing stalls or denial-of-service. Ensuring correct cp_valid behavior is therefore an availability requirement."
+}

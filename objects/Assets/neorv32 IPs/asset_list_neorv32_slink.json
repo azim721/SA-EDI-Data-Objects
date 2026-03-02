@@ -1,0 +1,231 @@
+{
+    "Name": "neorv32_slink.slink_rx_data_i",
+    "Description": "32-bit incoming RX stream data which is written into the RX FIFO (rx_fifo.wdata[31:0]) when slink_rx_valid_i is asserted.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "Corruption or injection of slink_rx_data_i directly alters the data stored in the RX FIFO and later consumed by the host, changing system behavior. The dominant concern is integrity since incorrect/forged payloads will corrupt application data flows."
+},
+{
+    "Name": "neorv32_slink.slink_rx_src_i",
+    "Description": "4-bit source/routing metadata packed into rx_fifo.wdata[35:32] and later restored to route_src on FIFO reads and reported to the host.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "Tampering with slink_rx_src_i can cause mislabelling/misrouting of incoming data and mislead the host about origin or required handling. The primary risk is integrity corruption of routing metadata that affects downstream processing."
+},
+{
+    "Name": "neorv32_slink.slink_rx_last_i",
+    "Description": "Single-bit 'last' flag written into rx_fifo.wdata[36] to indicate stream/packet termination and backed up to rx_last on FIFO read.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "Altering the last flag changes stream boundaries interpretation (e.g., merging or splitting packets) and can corrupt higher-level protocol semantics; this is an integrity concern for the stream metadata."
+},
+{
+    "Name": "neorv32_slink.slink_rx_ready_o",
+    "Description": "Output driven from rx_fifo.free to indicate free FIFO entries and whether the module can accept another RX beat.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If slink_rx_ready_o is forced or stuck, upstream components may be prevented from sending or misinformed, causing loss of service or deadlock; availability of the receive path is the primary risk."
+},
+{
+    "Name": "neorv32_slink.slink_tx_data_o",
+    "Description": "32-bit TX stream data driven from tx_fifo.rdata[31:0] when the TX FIFO has data and the downstream consumer reads it.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "If the TX payload is corrupted (either from FIFO corruption or routing misconfiguration), consumers receive incorrect data; the main concern is integrity of transmitted payloads."
+},
+{
+    "Name": "neorv32_slink.slink_tx_dst_o",
+    "Description": "4-bit destination metadata driven from tx_fifo.rdata[35:32] that selects the destination/route for the outgoing stream.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "Tampering with tx destination bits causes misrouting of transmitted data (delivering to wrong consumer or bypassing checks), compromising correct system operation; integrity of routing metadata is the main risk."
+},
+{
+    "Name": "neorv32_slink.slink_tx_valid_o",
+    "Description": "Indicates that TX FIFO has available data (driven by tx_fifo.avail) and qualifies the slink_tx_data_o/t dst/last outputs as valid for the downstream consumer.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If tx_valid_o is suppressed or stuck, downstream will not accept data and the transmission path is effectively denied; thus availability of TX service is the primary concern."
+},
+{
+    "Name": "neorv32_slink.slink_tx_last_o",
+    "Description": "Single-bit 'last' signal for TX taken from tx_fifo.rdata[36] to signal packet/stream termination on outgoing interface.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "Modifying the TX last bit changes stream/packet framing on the output, potentially corrupting protocol boundaries; this is an integrity issue for transmitted stream semantics."
+},
+{
+    "Name": "neorv32_slink.slink_tx_ready_i",
+    "Description": "Input handshake from downstream indicating readiness; when asserted causes tx_fifo.re to pop the next TX entry and advance outputs.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If the ready line is prevented from asserting (or forced to assert inappropriately), the module can be stalled or forced to pop entries prematurely, causing denial-of-service or data-loss; availability is dominant."
+},
+{
+    "Name": "neorv32_slink.rx_irq_o",
+    "Description": "Asserted based on ctrl.enable and RX-side ctrl.irq_* settings combined with rx_fifo status (avail/half/free) to notify the host about RX events.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1320"
+    ],
+    "Justification": "If interrupts are suppressed or spurious, the host may not be notified about received data or may be interrupted excessively causing service disruption; interrupt signaling primarily affects availability of event notification."
+},
+{
+    "Name": "neorv32_slink.tx_irq_o",
+    "Description": "Asserted based on ctrl.enable and TX-side ctrl.irq_* settings combined with tx_fifo status to notify the host about TX conditions (empty/not-half/not-full).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1320"
+    ],
+    "Justification": "Manipulation of TX interrupt output impacts host responsiveness to transmit conditions (e.g., refilling FIFOs), enabling denial-of-service or missed transmissions; availability of transmit event signaling is the core concern."
+},
+{
+    "Name": "neorv32_slink.ctrl.enable",
+    "Description": "Global module enable flag from the CTRL register that gates operation; when '0' RX/TX FIFOs are cleared/inactive and interrupts are masked.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1262"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the SLINK module from operating (FIFOs cleared/inactive and IRQs masked), causing a loss of the module's intended availability/function."
+},
+{
+    "Name": "neorv32_slink.route_dst",
+    "Description": "Holds the destination routing value that is merged into TX FIFO write data (route_dst <= bus write) and thus used for subsequent TX entries.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "If route_dst is modified improperly the module will send data to incorrect destinations or leak data to unintended recipients; integrity of routing configuration is the main concern."
+},
+{
+    "Name": "neorv32_slink.route_src",
+    "Description": "Backed-up source/routing information taken from the RX FIFO read data and returned in the routing read register for the host (route_src <= rx_fifo.rdata(35 downto 32)).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "Corrupt route_src gives the host incorrect provenance information for received data and can lead to wrong processing or trust decisions; preserving correctness of source metadata is an integrity requirement."
+}

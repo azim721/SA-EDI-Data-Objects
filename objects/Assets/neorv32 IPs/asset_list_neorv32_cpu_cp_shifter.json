@@ -1,0 +1,142 @@
+{
+    "Name": "neorv32_cpu_cp_shifter.rs1_i",
+    "Description": "XLEN-bit source operand fed into the serial shifter or the barrel shifter input layer; also provides the sign bit for arithmetic right shifts.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Altering rs1_i changes the data being shifted and therefore directly corrupts computation results; an integrator would consider the correctness of this operand critical. Because rs1_i is an input that controls the value transformed by the shifter, its integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_cp_shifter.shamt_i",
+    "Description": "Supplies the shift distance controlling how many bit positions the operand is shifted (loaded into the serial counter or used to select barrel-shifter mux layers).",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1276, CWE-1384",
+    "Justification": "Corrupting shamt_i directly changes the executed shift operation (magnitude of shift) and therefore can silently change computational results or break software assumptions. As a control input that modifies data transformation, ensuring its integrity is essential."
+},
+{
+    "Name": "neorv32_cpu_cp_shifter.res_o",
+    "Description": "Presents the final shifted value produced by the module to the rest of the CPU (driven either from the serial shifter when done or from the barrel-shifter result).",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1384",
+    "Justification": "If res_o is blocked or not produced when expected, downstream units cannot obtain required computation results and processor execution would be disrupted (denial-of-service impact). Although output integrity matters, the dominant integration-level concern is that the result must be available when expected for correct operation."
+},
+{
+    "Name": "neorv32_cpu_cp_shifter.valid_o",
+    "Description": "Indicates when res_o contains a valid completed shift result (derived from done/done_ff for serial and from valid_cmd for barrel implementation).",
+    "Family": [
+        "Processors",
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1261, CWE-1384",
+    "Justification": "valid_o is the observable/unlocking signal used by the debug module; if it is unavailable, stuck low, or suppressed at integration, the debugger remains locked and normal debug functionality is denied, making this port availability-critical."
+},
+{
+    "Name": "neorv32_cpu_cp_shifter.shifter.sreg",
+    "Description": "Holds the operand and intermediate shift state in the serial-shifter implementation; loaded from rs1_i at start and updated each cycle until the operation completes.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data",
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1191, CWE-1244, CWE-1384",
+    "Justification": "sreg stores the live intermediate computation result; any corruption while an operation is in-flight will alter the final output and break correctness. Protecting the integrity of this internal register is necessary because it directly determines the produced result."
+},
+{
+    "Name": "neorv32_cpu_cp_shifter.shifter.cnt",
+    "Description": "Counts remaining shift steps for the serial shifter (loaded from shamt_i on start and decremented each shift cycle) and governs run/done behaviour.",
+    "Family": [
+        "Processors",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1384",
+    "Justification": "If shifter.cnt is tampered with, the number of performed shifts changes, causing incorrect results or premature/late completion; thus its correctness is integral to correct operation. The counter directly controls the data transformation sequence, making integrity the primary concern."
+},
+{
+    "Name": "neorv32_cpu_cp_shifter.shifter.done_ff",
+    "Description": "Registered combination of busy and done used to generate a one-cycle-stable result-valid condition and to gate the serial output (res_o) when a serial operation completes.",
+    "Family": [
+        "Processors",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1261, CWE-1245, CWE-1384",
+    "Justification": "done_ff controls when the completed serial result is presented; if it is stuck or suppressed the valid one-cycle result and res_o will be withheld, preventing consumption of the result and causing functional stall. Therefore availability (timely presentation of results) is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_cp_shifter.shifter.busy",
+    "Description": "Arbitration/state flag indicating that a serial shift operation is in progress (prevents new triggers and is used to derive done_ff/valid_o); also used to abort on trap.",
+    "Family": [
+        "Processors",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1313"
+    ],
+    "Justification": "shifter.busy gates new requests and qualifies done/valid generation; if stuck high or low, the unit either never accepts/completes shifts or accepts overlapping triggers that break sequencing, causing stalls, livelock, or dropped operations\u2014directly impacting forward progress."
+},
+{
+    "Name": "neorv32_cpu_cp_shifter.bs_result",
+    "Description": "Clocked register that captures the final barrel-shifter stage output (before optional bit-reverse) and supplies the module's res_o in the barrel implementation.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Code/Data",
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": "CWE-1247, CWE-1319, CWE-1191, CWE-1384",
+    "Justification": "bs_result holds the registered final shift result for the fast-path; unauthorized corruption of this register will produce incorrect outputs consumed by the CPU. Protecting the integrity of this register is essential because it directly determines the output value in the barrel-shifter mode."
+}

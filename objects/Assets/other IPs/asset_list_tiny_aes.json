@@ -1,0 +1,212 @@
+{
+    "Name": "aes_128.key",
+    "Description": "Provides the 128-bit cipher key used for the initial AddRoundKey and fed into the key expansion pipeline.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1239"
+    ]
+},
+{
+    "Name": "aes_128.state",
+    "Description": "Provides the 128-bit plaintext block to be encrypted; sampled and combined with the key at the first cycle.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1239"
+    ]
+},
+{
+    "Name": "aes_128.a1.in",
+    "Description": "Supplies the 128-bit cipher key to the key schedule logic that generates round keys.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1239"
+    ]
+},
+{
+    "Name": "aes_128.a1.out_1, aes_128.a1.out_2",
+    "Description": "Expose the 128-bit expanded round key result to downstream AES rounds (registered form via out_1 and combinational via out_2).",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1239"
+    ]
+},
+{
+    "Name": "aes_128.r1.state_in",
+    "Description": "128-bit input state for this AES round; split into s0\u2013s3 and transformed via table lookups and XOR with the round key.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Integrity",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1191",
+        "CWE-1262",
+        "CWE-1258",
+        "CWE-1247",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "aes_128.r1.key",
+    "Description": "128-bit round subkey used for AddRoundKey in the round computation.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1191",
+        "CWE-1262",
+        "CWE-1239",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "aes_128.r1.state_out",
+    "Description": "128-bit result of the round (registered) forwarded to the next stage of AES.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1313",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "aes_128.rf.state_in",
+    "Description": "128-bit input state to the final AES round; split into s0\u2013s3, substituted via S4 and combined.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality, Integrity",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1191",
+        "CWE-1262",
+        "CWE-1258",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "aes_128.rf.key_in",
+    "Description": "128-bit key for the final round used in AddRoundKey.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-1191",
+        "CWE-1262",
+        "CWE-1239",
+        "CWE-1244",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "aes_128.rf.state_out",
+    "Description": "128-bit final encrypted output registered at the end of the final round.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313",
+        "CWE-1296",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "aes_128.r1.t0.state",
+    "Description": "The 'AES state word input' is a 32-bit input word that is split into four bytes (b0, b1, b2, b3) for table lookups, which are used to generate round-transformation partial results in the AES encryption process.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1300",
+        "CWE-203",
+        "CWE-1247"
+    ]
+}

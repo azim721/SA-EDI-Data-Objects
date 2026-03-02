@@ -1,0 +1,211 @@
+{
+    "Name": "neorv32_cpu_counters.rdata_o",
+    "Description": "Global CSR read-data output that presents the selected CSR read-back value by OR-ing cycle_rd, time_rd, instret_rd and hpm_rd into the module's CSR read result.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "rdata_o is the value the core consumes after byte-lane selection and sign/zero extension; any corruption or mis-selection yields incorrect load results, causing silent state corruption and incorrect program behavior, so its integrity must be preserved."
+},
+{
+    "Name": "neorv32_cpu_counters.cnt_en",
+    "Description": "Per-counter increment enable bits computed by the cnt_control process; each bit enables incrementing its corresponding counter when its event fires and counting is not halted or in debug.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1313",
+        "CWE-1247"
+    ],
+    "Justification": "cnt_en gates whether counters actually increment on events; if cnt_en bits are held low or otherwise disabled, the counters will cease to update and monitoring is effectively denied. Because this directly prevents the counters from performing their intended runtime function, it is an availability-critical asset."
+},
+{
+    "Name": "neorv32_cpu_counters.cnt_we",
+    "Description": "16-bit vector of write-enable strobes for counter CSRs: asserted when a counter access is decoded (cnt_acc), the respective sel bit is set, and csr_we is active; used to load counter sub-words from CSR writes.",
+    "Family": [
+        "Bus/Interface",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "cnt_we controls which counters accept CSR writes; unauthorized assertion or manipulation of cnt_we allows injecting or corrupting counter values via writes, undermining the correctness of counter state. Since it enables modification of sensitive measurement state, this signal is integrity-critical."
+},
+{
+    "Name": "neorv32_cpu_counters.cfg_we",
+    "Description": "16-bit vector of write-enable strobes for mhpmeventx CSRs (HPM configuration): asserted when a config access is decoded (cfg_acc), the respective sel bit is set, and csr_we is active; used to update hpmevent registers.",
+    "Family": [
+        "Bus/Interface",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "cfg_we gates writes to the hpmevent configuration registers; if an attacker can assert or tamper with cfg_we they can change which events HPM counters track, corrupting monitoring semantics. Because cfg_we enables modification of configuration that determines what gets counted, it is an integrity-critical asset."
+},
+{
+    "Name": "neorv32_cpu_counters.hpmevent (array indices 3..15)",
+    "Description": "Array of 12-bit registers holding each HPM's mhpmeventx configuration; they select which events increment the associated HPM counters and are written via cfg_we when software writes the corresponding CSR.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "hpmevent entries directly determine which events increment each HPM counter; unauthorized modification changes monitored events and corrupts the meaning and trustworthiness of HPM measurements. Therefore these configuration registers are integrity-critical assets."
+},
+{
+    "Name": "neorv32_cpu_counters.hpmcnt (hpmcnt(i))",
+    "Description": "Array of HPM counter read-back values (m[h]pmcnt3..m[h]pmcntN) that hold the current counts of selected hardware events and contribute to the aggregated HPM read-back logic.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1384"
+    ],
+    "Justification": "Software depends on these values to reflect true event counts; if gating or addressing is subverted (e.g., via sel, cnt_acc/cfg_acc, or spurious cnt_we/cfg_we), reads can be forged or stale, corrupting diagnostics and masking anomalous activity\u2014violating integrity."
+},
+{
+    "Name": "neorv32_cpu_counters.sel",
+    "Description": "One-hot vector derived from CSR address low bits that selects which indexed counter or mhpmevent entry is targeted by the current CSR access.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "sel is the control signal that determines which lock bit may be modified or observed. Tampering with sel (selecting the wrong index or suppressing the intended index) can cause incorrect lock modifications or reads, corrupting ownership semantics and enabling incorrect resource access, so integrity of sel is critical."
+},
+{
+    "Name": "neorv32_cpu_counters.cnt_re",
+    "Description": "16-bit vector of read-enable strobes for counter CSRs: asserted when a counter access is decoded (cnt_acc), the respective sel bit is set, and csr_re is active; used by submodules to present counter values on their rdata_o.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1290",
+        "CWE-1247"
+    ],
+    "Justification": "cnt_re controls whether a counter's value is made available for readback; if cnt_re bits are suppressed or blocked, the corresponding counter values cannot be observed via CSR reads, denying read access to those counters. This is a denial-of-service on the module's readback capability and therefore an availability-critical asset."
+},
+{
+    "Name": "neorv32_cpu_counters.cycle_inst.lo_q",
+    "Description": "Low-word register storing the lower lo_width_c bits of a generic counter instance; updated either by CSR write (when sel_i='0' and we_i) or by increment logic on events.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "lo_q holds the persistent counter value for the low sub-word; unauthorized writes or corruption change the counter result and corrupt measurement data. Because these registers are the canonical storage of counter values, their integrity is critical."
+},
+{
+    "Name": "neorv32_cpu_counters.cycle_inst.hi_q",
+    "Description": "High-word register storing the upper hi_width_c bits of a generic counter instance (for counters wider than XLEN); updated by CSR write when sel_i='1' or incremented by the staged carry from the low word.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ],
+    "Justification": "hi_q forms the upper portion of wide counters and is required to maintain correct extended counter values; corruption or unauthorized writes to hi_q will produce incorrect combined counter values. Thus hi_q is an integrity-critical asset for correct counter functionality."
+},
+{
+    "Name": "neorv32_cpu_counters.cycle_inst.re_i",
+    "Description": "Read-enable input that gates presenting the selected counter sub-word on the rdata_o output when asserted; otherwise the submodule outputs zeros.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ],
+    "Justification": "re_i controls whether valid counter data is placed on rdata_o; if it is stuck low or corrupted, reads return zeros and software loses visibility into counter progress, causing polling loops and services that depend on these values to stall. Ensuring re_i operates correctly preserves system liveness and prevents denial-of-service via suppressed reads."
+},
+{
+    "Name": "neorv32_cpu_counters.cycle_inst.inc_i",
+    "Description": "Single-bit increment input to the generic counter that causes the low-word to be incremented on the next clock when asserted, propagating carry to the high-word if applicable.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ],
+    "Justification": "inc_i is the trigger for forward progress of the counter; if it is blocked or stuck low, the counter freezes and any time/event-based mechanisms relying on it cannot progress, leading to denial-of-service. Spurious assertion can also force unintended advancements/overflows, disrupting liveness guarantees and service continuity."
+}

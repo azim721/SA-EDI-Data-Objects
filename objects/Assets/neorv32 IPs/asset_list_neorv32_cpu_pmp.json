@@ -1,0 +1,111 @@
+{
+    "Name": "neorv32_cpu_pmp.pmpcfg",
+    "Description": "Array of 8-bit per-region configuration registers that store R/W/X permission bits, mode bits (OFF/TOR/NA4/NAPOT), reserved bits and the lock (L) bit. These registers determine how each PMP region behaves and whether entries are writable or locked.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1224",
+        "CWE-1262",
+        "CWE-1209",
+        "CWE-1247",
+        "CWE-1221"
+    ],
+    "Justification": "pmpcfg holds the authoritative permission and mode settings for all PMP regions; unauthorized modification of these bits (R/W/X/A/L) directly changes access control decisions and can either disable protection or incorrectly allow accesses. Protecting the integrity of pmpcfg is therefore essential to preserve the PMP security policy."
+},
+{
+    "Name": "neorv32_cpu_pmp.pmpaddr",
+    "Description": "Array of XLEN-bit per-region address registers (PMPADDR) that define region boundaries/masks used for TOR / NA4 / NAPOT matching. These values are used by the matching logic to determine whether a given access falls into a protected region.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1260",
+        "CWE-1262",
+        "CWE-1224",
+        "CWE-1247",
+        "CWE-1221"
+    ],
+    "Justification": "pmpaddr values define memory region boundaries; corrupting or overwriting these registers can expand, shrink or move protected regions and thereby allow unauthorized memory accesses or deny expected accesses. Maintaining their integrity is necessary to ensure the PMP enforces the intended memory protection policy."
+},
+{
+    "Name": "neorv32_cpu_pmp.addr_ls_i",
+    "Description": "XLEN-bit input that supplies the address of the current load/store operation to be checked by the PMP (selected into acc_addr when checking data accesses). It is compared against configured PMP regions for permission evaluation.",
+    "Family": [],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247",
+        "CWE-1280"
+    ],
+    "Justification": "The correctness of the address used for permission checking is critical: if addr_ls_i is tampered with or provided incorrectly, region matching may be bypassed or misapplied causing either unauthorized memory accesses or spurious faults. Thus the address input must be protected from corruption to ensure accurate permission enforcement."
+},
+{
+    "Name": "neorv32_cpu_pmp.acc_priv",
+    "Description": "Internal signal that selects the privilege level used for the current access (either fetch privilege or LSU-provided privilege) and is used by permission logic to apply M-mode exceptions or normal permission checks.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247",
+        "CWE-1280"
+    ],
+    "Justification": "acc_priv changes how allow(r) is computed (M-mode may bypass locked entries); if this signal were corrupted to indicate a higher privilege, accesses could be improperly permitted, undermining PMP protections. Therefore integrity of acc_priv is required to ensure correct permission decisions."
+},
+{
+    "Name": "neorv32_cpu_pmp.fault_o",
+    "Description": "Synchronous output flag that signals a permission violation (PMP fault) for the currently checked access, with debug-mode suppression. This output is used by the CPU to react to PMP violations (e.g., raise exceptions or block access).",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1320",
+        "CWE-1247",
+        "CWE-1261"
+    ],
+    "Justification": "fault_o directly affects whether the CPU perceives and acts upon PMP violations: a stuck-asserted or spuriously asserted fault can deny legitimate operation (DoS), while a permanently suppressed fault can hide violations. The dominant risk is availability impact because incorrect fault signaling can block or disrupt normal CPU memory operations."
+},
+{
+    "Name": "neorv32_cpu_pmp.fail",
+    "Description": "Priority chain vector that aggregates per-region deny decisions (starting from lowest priority) and computes the final failure result used to drive fault_o; implements static prioritization of PMP regions.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261"
+    ],
+    "Justification": "The fail chain is the structural logic that decides whether an access triggers a PMP fault; corruption or manipulation of this chain can cause spurious faults (blocking execution) or suppress real faults. Its correct operation is therefore critical to avoid denial-of-service or loss of expected fault signaling, making availability the dominant concern."
+}

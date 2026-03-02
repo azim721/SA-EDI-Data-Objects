@@ -1,0 +1,254 @@
+{
+    "Name": "omsp_gpio.per_en",
+    "Description": "Qualifies peripheral bus access and gates register read/write within the GPIO address space.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.per_we",
+    "Description": "Selects which byte(s) of the targeted register are written (high/low) during a bus transaction.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "omsp_gpio.p1_dout_en",
+    "Description": "Output enable for each Port 1 bit (derived from direction), controlling tri-state behavior.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p2_dout_en",
+    "Description": "Output enable for each Port 2 bit (derived from direction).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p3_dout_en",
+    "Description": "Output enable for each Port 3 bit (derived from direction).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p4_dout_en",
+    "Description": "Output enable for each Port 4 bit (derived from direction).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p5_dout_en",
+    "Description": "Output enable for each Port 5 bit (derived from direction).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p6_dout_en",
+    "Description": "Output enable for each Port 6 bit (derived from direction).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p1_sel",
+    "Description": "Chooses GPIO vs. alternate function for each Port 1 pin.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p2_sel",
+    "Description": "Chooses GPIO vs. alternate function for each Port 2 pin.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p3_sel",
+    "Description": "Chooses GPIO vs. alternate function for each Port 3 pin.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p4_sel",
+    "Description": "Chooses GPIO vs. alternate function for each Port 4 pin.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p5_sel",
+    "Description": "Chooses GPIO vs. alternate function for each Port 5 pin.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.p6_sel",
+    "Description": "Chooses GPIO vs. alternate function for each Port 6 pin.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "omsp_gpio.irq_port1",
+    "Description": "Interrupt signal for Port 1 generated from edge detection and control registers.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "omsp_gpio.irq_port2",
+    "Description": "Interrupt signal for Port 2 generated from edge detection and control registers.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262"
+    ]
+}

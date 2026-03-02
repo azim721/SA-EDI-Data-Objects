@@ -1,0 +1,1837 @@
+{
+    "Name": "kv.pcr_ecc_signing_key",
+    "Description": "Export of ECC signing key words derived from internal KEY_ENTRY storage.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-319"
+    ]
+},
+{
+    "Name": "kv.pcr_mldsa_signing_key",
+    "Description": "Export of MLDSA signing key words derived from internal KEY_ENTRY storage.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-319"
+    ]
+},
+{
+    "Name": "kv.key_entry_next",
+    "Description": "Internal per-entry/per-dword next-data values used to update stored key entries.",
+    "Family": [
+        "Security",
+        "Memories"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-226",
+        "CWE-1239",
+        "CWE-1244",
+        "CWE-1258",
+        "CWE-1191",
+        "CWE-1272"
+    ]
+},
+{
+    "Name": "kv.lock_use_q",
+    "Description": "Per-entry use-lock qualified register that prevents reads/uses when set.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality / Integrity",
+    "CWEs": [
+        "CWE-1224",
+        "CWE-1262",
+        "CWE-1191"
+    ]
+},
+{
+    "Name": "kv.uc_req_rdata",
+    "Description": "Internal read-data returned from register layer to the AHB interface.",
+    "Family": [
+        "Bus/Interface",
+        "Security"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality / Availability",
+    "CWEs": [
+        "CWE-319",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.hrdata_o",
+    "Description": "AHB Lite read-data output presented to the bus for master reads.",
+    "Family": [
+        "Bus/Interface",
+        "Security"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality / Availability",
+    "CWEs": [
+        "CWE-319",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.key_entry_we",
+    "Description": "Per-entry/per-dword write-enable signals used to gate writes into key storage.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.key_entry_ctrl_we",
+    "Description": "Per-entry control write-enable used for control fields (dest_valid/last_dword).",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.key_entry_last_dword_next",
+    "Description": "Per-entry next-value indicating the final dword offset for reads/writes.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.uc_req_addr",
+    "Description": "Internal address presented to the register interface (qualified AHB address).",
+    "Family": [
+        "Bus/Interface",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.haddr_i",
+    "Description": "AHB Lite address bus from the master to this slave.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.hwdata_i",
+    "Description": "AHB Lite write-data bus used to write register or key data.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.hwrite_i",
+    "Description": "AHB Lite write control that indicates a write transaction.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.hsel_i",
+    "Description": "AHB Lite slave select signal that enables this module for a transaction.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.cptra_in_debug_scan_mode",
+    "Description": "Signal indicating the chiplet is in debug/scan mode that affects key flush behavior.",
+    "Family": [
+        "Test/Debug",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity / Availability",
+    "CWEs": [
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv.debugUnlock_or_scan_mode_switch",
+    "Description": "Immediate control signal that forces keyvault flush behavior for debug/unlock transitions.",
+    "Family": [
+        "Test/Debug",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity / Availability",
+    "CWEs": [
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv.lock_wr_q",
+    "Description": "Per-entry write-lock qualified register that prevents further writes when set.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1224",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.key_entry_clear",
+    "Description": "Per-entry clear signal that asynchronously clears or marks key entry for clearing.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity / Availability",
+    "CWEs": [
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.cptra_pwrgood",
+    "Description": "Power-good input used to drive hardware qualified reset for register interface.",
+    "Family": [
+        "Power Management"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.zeroize",
+    "Description": "Control input that forces the FSM and counters to reset/clear state.",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.start",
+    "Description": "Control input to begin the FSM operation from IDLE.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.allow",
+    "Description": "Control input that gates whether start goes to RW (process) or DONE.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.last",
+    "Description": "Input flag indicating the last data dword of valid input.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.pcr_hash_extend",
+    "Description": "Control input that selects a fixed total dword count (pcr extend mode).",
+    "Family": [
+        "Controllers",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.num_dwords",
+    "Description": "Input specifying the (configured) number of dwords to process when PAD==0.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.write_en",
+    "Description": "Output write enable that controls external memory writes.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.write_offset",
+    "Description": "Output offset/address used by external logic for write operations.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.write_pad",
+    "Description": "Output flag indicating that pad_data should be written instead of input data.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.pad_data",
+    "Description": "32-bit output word used for padding writes (either 0x80000000, zeros, or length_for_pad).",
+    "Family": [
+        "Security",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.num_dwords_data",
+    "Description": "Internal register capturing the number of valid data dwords (used for padding length calculation).",
+    "Family": [
+        "Controllers",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1221",
+        "CWE-1247",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.num_dwords_total",
+    "Description": "Combinational internal total dword count used for termination and offset comparisons.",
+    "Family": [
+        "Controllers",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.length_for_pad",
+    "Description": "Combinational value computed as the bit-length (in 32-bit words shifted) used as the last pad word (HMAC aware).",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.kv_fsm_ps",
+    "Description": "FSM present state register representing the current state (IDLE, RW, PAD, ZERO, LENGTH, DONE).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1221",
+        "CWE-1247",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.kv_fsm_ns",
+    "Description": "Combinational next-state signal that drives kv_fsm_ps on clock.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.arc_KV_IDLE_KV_RW",
+    "Description": "Internal combinational condition (start && allow) used to transition IDLE -> RW.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.arc_KV_IDLE_KV_DONE",
+    "Description": "Internal combinational condition (start && !allow) used to transition IDLE -> DONE.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.arc_KV_RW_KV_DONE",
+    "Description": "Internal condition that detects completion of RW stage (either full count reached or last) and routes to DONE.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.arc_KV_DONE_KV_IDLE",
+    "Description": "Internal combinational always-true condition used to transition DONE -> IDLE.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.arc_KV_RW_KV_PAD",
+    "Description": "Internal condition indicating transition from RW to PAD when last is seen (PAD mode enabled).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.arc_KV_PAD_KV_ZERO",
+    "Description": "Internal condition used to move from the PAD state to ZERO state during padding.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.arc_KV_ZERO_KV_LENGTH",
+    "Description": "Internal condition that decides when to append the length word (ZERO -> LENGTH).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.arc_KV_LENGTH_KV_DONE",
+    "Description": "Internal condition to transition from LENGTH state to DONE after writing the length word.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.offset_en",
+    "Description": "Internal control that enables incrementing the offset counter.",
+    "Family": [
+        "Controllers",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.offset_rst",
+    "Description": "Internal control that resets the offset when a done condition or length-done occurs.",
+    "Family": [
+        "Controllers",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.offset",
+    "Description": "Register holding the current offset (used to form read_offset and write_offset).",
+    "Family": [
+        "Controllers",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1221",
+        "CWE-1247",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.offset_nxt",
+    "Description": "Combinational next value for the offset register (offset + 1 typically).",
+    "Family": [
+        "Controllers",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.read_offset",
+    "Description": "Output address (offset) used by external logic to read input data while in RW.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.write_last",
+    "Description": "Output flag indicating that the current write is the final write of the sequence.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.ready",
+    "Description": "Output that indicates the FSM is in IDLE and ready to accept a start.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_fsm.done",
+    "Description": "Output indicating the FSM has finished its processing and is in DONE state.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1276",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "kv_read_client.zeroize",
+    "Description": "Input control that triggers zeroization handling within the client.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.write_en",
+    "Description": "Output write enable asserted when the client issues a write beat to downstream storage/interface.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.write_offset",
+    "Description": "Output offset/address for each write beat produced by the client.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "kv_read_client.error_code",
+    "Description": "Status output encoding whether the last read produced an error condition or not.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.validated_read_en",
+    "Description": "Internal control (delayed read enable) used to start the read client FSM after rules check.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "kv_read_client.read_allow",
+    "Description": "Internal allow/permission signal produced by the rule-check block to permit the read FSM.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "kv_read_client.read_offset",
+    "Description": "Internal read-side offset/address value used to form the kv_read.read_offset output.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "kv_read_client.write_pad",
+    "Description": "Internal flag selecting whether pad_data or the forwarded read data is presented on write_data.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.pad_data",
+    "Description": "Internal 32-bit value used as the pad content when write_pad is asserted.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "kv_read_client.write_data",
+    "Description": "Output data beat produced by the client (either padded data or forwarded KV read data).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_ready",
+    "Description": "Output ready signal indicating the read client FSM is ready to proceed/accept operations.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.read_done",
+    "Description": "Output indicating completion of the read operation.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_rules.read_en_i",
+    "Description": "Input enable that starts the rule-check and, when asserted, causes the module to evaluate policy and drive read_en_o.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_rules.read_allow",
+    "Description": "Output policy result indicating whether the requested read is permitted by the module's rules.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1280",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_rules.rule_fail.no_read_key_release",
+    "Description": "Internal flag that indicates a rule failure condition preventing reads from the key-release slot when OCP lock is in progress.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_rules.read_done",
+    "Description": "Input indication that a read operation is complete and that the module should clear its outputs/state for the next transaction.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "kv_read_client.kv_read_rules.read_en_o",
+    "Description": "Output enable that starts the downstream read client FSM when the rule-check allows the read.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.s_cpuif_req",
+    "Description": "CPU-side request input signal that initiates register read/write transactions.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.s_cpuif_req_is_wr",
+    "Description": "CPU-side indicator that distinguishes write from read transactions.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.s_cpuif_addr",
+    "Description": "CPU-side address bus selecting which register is accessed.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.s_cpuif_wr_data",
+    "Description": "CPU-side write data bus carrying data to be written to registers.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.s_cpuif_wr_biten",
+    "Description": "CPU-side write byte-enable mask controlling which bytes of a write are committed.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.cpuif_req",
+    "Description": "Internal copy of the CPU request handshake (mirrors s_cpuif_req).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.cpuif_req_is_wr",
+    "Description": "Internal copy of read/write indicator for requests.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.cpuif_addr",
+    "Description": "Internal address bus used for register decode.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.cpuif_wr_data",
+    "Description": "Internal write-data signal forwarded to the decode/field logic.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.cpuif_wr_biten",
+    "Description": "Internal forwarded write byte-enable mask.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.decoded_reg_strb",
+    "Description": "Decoded per-register strobes that indicate which register is being accessed.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.decoded_req",
+    "Description": "Forwarded internal request signal used by the decoded stage.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.decoded_req_is_wr",
+    "Description": "Forwarded write/read indicator used by decode/field logic.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.decoded_wr_data",
+    "Description": "Internal copy of the write data presented to field update logic.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.decoded_wr_biten",
+    "Description": "Internal copy of write byte-enable mask used during field updates.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.field_storage.KEY_ENTRY[].data.value",
+    "Description": "Stored 32-bit values for KEY_ENTRY registers (per-key storage words).",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1244",
+        "CWE-1239",
+        "CWE-1272",
+        "CWE-1258",
+        "CWE-1262"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.field_storage.KEY_CTRL[].lock_wr.value",
+    "Description": "Per-key control bit that locks write updates for that KEY_ENTRY.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.field_storage.KEY_CTRL[].lock_use.value",
+    "Description": "Per-key control bit that locks usage of a key (prevents key usage changes).",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.field_storage.KEY_CTRL[].dest_valid.value",
+    "Description": "Per-key destination-valid vector indicating valid destinations for this key.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.field_storage.KEY_CTRL[].last_dword.value",
+    "Description": "Per-key field indicating the index of the last valid data word for a key entry.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1244"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.field_storage.KEY_CTRL[].clear.value",
+    "Description": "Per-key single-pulse-clear indicator exposed in KEY_CTRL.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.field_storage.CLEAR_SECRETS.wr_debug_values.value",
+    "Description": "Control bit used to write/trigger clearing of debug values (single-pulse behavior).",
+    "Family": [
+        "Security",
+        "Test/Debug"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv.kv_reg1.field_storage.CLEAR_SECRETS.sel_debug_value.value",
+    "Description": "Control bit that selects which debug value is exposed.",
+    "Family": [
+        "Test/Debug",
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1244",
+        "CWE-1313",
+        "CWE-1295"
+    ]
+},
+{
+    "Name": "kv_write_client.zeroize",
+    "Description": "Control input that requests clearing/zeroizing operational state.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1262",
+        "CWE-1276",
+        "CWE-1299",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.num_dwords",
+    "Description": "Input specifying the number of data double-words to write.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1191",
+        "CWE-1313",
+        "CWE-1299"
+    ]
+},
+{
+    "Name": "kv_write_client.dest_keyvault",
+    "Description": "Output indicating whether the destination is the keyvault.",
+    "Family": [
+        "Security",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.dest_data_avail",
+    "Description": "Input handshake signal that indicates client data is available to be consumed.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.kv_ready",
+    "Description": "Output ready handshake from the write FSM indicating the client is ready.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.dest_done",
+    "Description": "Output that signals completion of the destination write operation.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.error_code",
+    "Description": "Output status code that indicates error or success of write operations.",
+    "Family": [
+        "Security",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.write_allow",
+    "Description": "Internal signal produced by rule-checking logic that enables/blocks writes.",
+    "Family": [
+        "Security",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1280",
+        "CWE-1191",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.dest_read_offset",
+    "Description": "Internal read index used to select which word from dest_data to send to the writer.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.dest_write_offset",
+    "Description": "Internal write-offset/address used to compute the write destination within the key-value store.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1260",
+        "CWE-1257",
+        "CWE-1316",
+        "CWE-1191",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.dest_write_en",
+    "Description": "Internal enable signal that triggers actual write beats to the kv interface.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.write_pad",
+    "Description": "Internal flag indicating whether the current beat is a padding beat.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.write_last",
+    "Description": "Internal signal marking the last beat of a multi-beat write.",
+    "Family": [
+        "Controllers",
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.kv_write_rules.write_allow",
+    "Description": "Registered output that indicates whether a KV write operation is permitted.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity, Availability",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1220",
+        "CWE-1221",
+        "CWE-1242",
+        "CWE-1276",
+        "CWE-1280",
+        "CWE-1290",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.kv_write_rules.rule_fail.aes_only_to_key_release",
+    "Description": "Internal rule flag that indicates a failure when non\u2011AES sources attempt to write the key\u2011release slot during OCP lock.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1221",
+        "CWE-1242",
+        "CWE-1276",
+        "CWE-1290",
+        "CWE-1294",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.kv_write_rules.rule_fail.std_to_std",
+    "Description": "Internal rule flag that signals failure when an input from the standard region is not written to a standard destination during OCP lock.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1221",
+        "CWE-1242",
+        "CWE-1276",
+        "CWE-1290",
+        "CWE-1294",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.kv_write_rules.rule_fail.lock_to_lock",
+    "Description": "Internal rule flag that signals failure when input from the OCP lock region is not written to a lock destination during OCP lock.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1221",
+        "CWE-1242",
+        "CWE-1276",
+        "CWE-1290",
+        "CWE-1294",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "kv_write_client.kv_write_rules.rule_fail.aes_dec_to_rt_obf_key",
+    "Description": "Internal rule flag that verifies AES ECB decrypt with a specific RT obfuscated key results in the correct destination (key\u2011release slot) under OCP lock.",
+    "Family": [
+        "Security"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1221",
+        "CWE-1242",
+        "CWE-1276",
+        "CWE-1279",
+        "CWE-1290",
+        "CWE-1294",
+        "CWE-1313"
+    ]
+}

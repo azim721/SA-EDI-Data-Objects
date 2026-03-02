@@ -1,0 +1,126 @@
+{
+    "Name": "neorv32_gptmr.clkgen_en_o",
+    "Description": "Output signal that enables/disables the external clock generator used as the timer tick source; directly driven from the timer enable control bit.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/tick will not be provided and the watchdog counter will not progress, disabling the WDT functionality and preventing the module from performing its recovery/reset role (Denial-of-service on WDT)."
+},
+{
+    "Name": "neorv32_gptmr.irq_o",
+    "Description": "Interrupt request output driven when the internal interrupt-pending flag is set due to a counter-threshold match; used to notify the CPU or other masters of timer events.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If irq_o is suppressed, the host may not service the peripheral promptly, leading to idle time and stalled workflows; if asserted spuriously, it can trigger interrupt storms that starve normal processing\u2014both harm overall availability."
+},
+{
+    "Name": "neorv32_gptmr.ctrl",
+    "Description": "4-bit internal control register that holds the global enable bit and the three prescaler select bits which determine timer enable state and which clkgen_i bit is sampled as the tick.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Corruption or unauthorized modification of these control bits (enable or prescaler) will change the timer's operating mode, tick rate or disable it, producing incorrect timing behavior. Ensuring these bits are not tampered with is necessary to maintain correct and expected timer operation."
+},
+{
+    "Name": "neorv32_gptmr.timer.thres",
+    "Description": "32-bit internal threshold value loaded via bus writes; compared against the counter to produce a match event and generate the interrupt.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If the threshold value is modified unexpectedly (e.g., during operation) the time at which a match/interrupt occurs will be incorrect, leading to corrupted timing semantics for any software depending on the timer. Thus the integrity of the threshold register must be preserved."
+},
+{
+    "Name": "neorv32_gptmr.timer.count",
+    "Description": "32-bit internal counter that increments on each timer.tick while enabled and resets on match or when the timer is disabled; readable by the bus.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Tampering with the counter value (or corrupting the mechanism that updates it) will change when a match occurs and break timing correctness; maintaining counter integrity is required to ensure the timer produces expected events. Although the counter is read-only from the bus, its internal value is central to correct operation and thus an integrity-critical state."
+},
+{
+    "Name": "neorv32_gptmr.irq_pnd",
+    "Description": "Internal flag set when a counter-threshold match occurs (while enabled) and cleared by irq_clr or when disabled; drives irq_o.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If the pending flag is suppressed or repeatedly cleared, interrupts will not be presented to the CPU even though matches may occur, causing a denial-of-service of the interrupt mechanism. Protecting the availability of the pending indication is necessary for timely delivery of timer events."
+},
+{
+    "Name": "neorv32_gptmr.irq_clr",
+    "Description": "Write-strobe signal asserted by bus writes to the control register's IRQ-clear bit; when asserted it clears the irq_pnd flag in the interrupt generator.",
+    "Family": [
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "An attacker or buggy master that can repeatedly assert/force this strobe could continuously clear pending interrupts, preventing the CPU from ever observing them and causing a denial-of-service. Therefore control over this clear signal impacts the availability of the interrupt service."
+}

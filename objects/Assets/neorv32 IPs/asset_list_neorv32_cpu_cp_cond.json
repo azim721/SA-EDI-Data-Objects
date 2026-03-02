@@ -1,0 +1,108 @@
+{
+    "Name": "neorv32_cpu_cp_cond.rs1_i",
+    "Description": "Register-file source operand 1 (XLEN bits). When the unit is triggered and the evaluated condition is true, this value is forwarded to res_o on the clock edge.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Altering rs1_i changes the data being forwarded and therefore directly corrupts computation results; an integrator would consider the correctness of this operand critical. Because rs1_i is an input that controls the value transformed/forwarded by the unit, its integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_cp_cond.rs2_i",
+    "Description": "Register-file source operand 2 (XLEN bits). Compared against zero to form the zero/non-zero condition that determines whether rs1_i is forwarded to res_o.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "If rs2_i is modified the zero/non-zero comparator will produce the wrong outcome, leading to incorrect enable/disable decisions for the conditional forward and thus wrong program-visible results. Ensuring integrity of rs2_i is essential for correct conditional behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_cond.res_o",
+    "Description": "XLEN-bit operation result. Driven with rs1_i when a valid conditional instruction is recognized and the condition is true; otherwise driven to zero.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Compute"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "If res_o is blocked or not produced when expected, downstream units cannot obtain required computation results and processor execution would be disrupted (denial-of-service impact). Although output integrity matters, the dominant integration-level concern is that the result must be available when expected for correct operation."
+},
+{
+    "Name": "neorv32_cpu_cp_cond.valid_o",
+    "Description": "Single-bit data-output-valid signal indicating that the module recognized the targeted co-processor conditional instruction (driven from valid_cmd) and that res_o is meaningful.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "valid_o is the observable handshake/control signal that marks res_o as meaningful; if it is unavailable or suppressed, downstream control logic cannot correctly latch or act on the result, disrupting normal operation."
+},
+{
+    "Name": "neorv32_cpu_cp_cond.rs2_zero",
+    "Description": "Comparator flag that is '1' when rs2_i equals zero; used as part of the condition evaluation to decide zero vs non-zero tests.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Tampering rs2_zero alters the evaluated condition used to permit forwarding of rs1_i, leading to incorrect enable/disable decisions for the conditional move. Since it participates in the condition computation, its integrity is required for correct conditional behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_cond.condition",
+    "Description": "Final evaluated condition (rs2_zero xnor ctrl_i.ir_funct3(1)) determining whether the conditional test succeeded; when true together with valid_cmd it enables passing rs1 to res_o on the next clock.",
+    "Family": [
+        "Processors"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "If condition is corrupted, the module will incorrectly enable or disable forwarding of rs1_i, causing wrong results or unintended data flow. As the ultimate control used to gate the result, maintaining its integrity is critical to correct operation."
+}

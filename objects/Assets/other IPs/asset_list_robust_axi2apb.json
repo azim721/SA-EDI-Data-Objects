@@ -1,0 +1,456 @@
+{
+    "Name": "PREFIX.penable",
+    "Description": "Drives the APB second-phase enable to complete APB transfers according to protocol timing.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "PREFIX.pwrite",
+    "Description": "Indicates whether the current APB transaction is a write (1) or a read (0).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1311",
+        "CWE-1317"
+    ]
+},
+{
+    "Name": "PREFIX.paddr",
+    "Description": "Carries the APB address derived from the decoded AXI command for register access at the APB slave.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1311",
+        "CWE-1317"
+    ]
+},
+{
+    "Name": "PREFIX.pwdata",
+    "Description": "Carries 32-bit data from AXI to APB during write transactions.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1311",
+        "CWE-1317"
+    ]
+},
+{
+    "Name": "PREFIX.cmd_err",
+    "Description": "Indicates that an error was detected in command processing, influencing the response generation on AXI side.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "PREFIX.finish_wr",
+    "Description": "Signals completion of an APB write transaction to the control/command path for advancing or retiring the command.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1245",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "PREFIX.finish_rd",
+    "Description": "Signals completion of an APB read transaction to the control/command path for advancing or retiring the command.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1245",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_cmd.finish_wr",
+    "Description": "Input signal from the write path indicating that the current write transaction has completed; used to generate cmd_pop when the queued command is a write.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1313",
+        "CWE-1242",
+        "CWE-1296",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_cmd.finish_rd",
+    "Description": "Input signal from the read path indicating that the current read transaction has completed; used to generate cmd_pop when the queued command is a read.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1313",
+        "CWE-1242",
+        "CWE-1296",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_cmd.cmd_err",
+    "Description": "Output error indicator associated with the command (e.g., unsupported size/length) propagated from AERR through the FIFO.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1191",
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313",
+        "CWE-1242",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_ctrl.psel",
+    "Description": "Drives the APB select signal to start an APB access and to choose the targeted APB slave when combined with address decoding elsewhere. Asserted on wstart/rstart and deasserted on APB acknowledge (pack).",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1191"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_ctrl.penable",
+    "Description": "Sequences the second phase of an APB transfer; asserted after psel and cleared upon APB acknowledge (pack).",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1191"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_ctrl.pwrite",
+    "Description": "Indicates transaction direction (1=write, 0=read). Asserted only on write starts and cleared on acknowledge.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1191"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_ctrl.finish_wr",
+    "Description": "Input flag from write path signaling completion of a write; used to clear busy and allow new commands.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_ctrl.finish_rd",
+    "Description": "Input flag from read path signaling completion of a read; used to clear busy and allow new commands.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_ctrl.pready",
+    "Description": "APB slave ready input; contributes to pack (ack) creation to complete the APB access.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_ctrl.cmd_ready",
+    "Description": "Internal ready signal computed as (~busy) & (~cmd_empty); qualifies whether a new command may start.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_mux.cmd_addr",
+    "Description": "Carries the decoded AXI/APB command address into the mux to determine which APB slave is selected.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1221",
+        "CWE-1276",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_mux.psel",
+    "Description": "Enables an APB access and gates updates of prdata and pslverr; combined with slave_num to generate pselSX.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1313",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_mux.prdata",
+    "Description": "Latched read data forwarded to the controller when a transfer completes (psel & pready).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1313",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_mux.pslverr",
+    "Description": "Latched error indication forwarded to the controller upon transfer completion.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1276",
+        "CWE-1313",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_rd.cmd_err",
+    "Description": "Feeds into read response generation; when a read data beat is accepted, cmd_err is used to select the AXI RRESP value (error vs OK).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_rd.finish_rd",
+    "Description": "Asserted when a read beat completes handshaking (RVALID & RREADY) and is the last beat (RLAST), signaling the end of a read operation to surrounding control logic.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1261",
+        "CWE-1384"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_wr.cmd_err",
+    "Description": "Indicates whether the current command encountered an error; the write path uses it to form the AXI BRESP (SLVERR if asserted).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1313",
+        "CWE-1276"
+    ]
+},
+{
+    "Name": "PREFIX.PREFIX_wr.finish_wr",
+    "Description": "Asserts when the AXI B-channel handshake completes (BVALID & BREADY), signaling that a write transaction has finished.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261",
+        "CWE-1313",
+        "CWE-1276"
+    ]
+}

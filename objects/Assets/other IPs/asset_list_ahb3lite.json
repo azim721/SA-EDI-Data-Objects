@@ -1,0 +1,197 @@
+{
+    "Name": "biu_ahb3lite.HRESP",
+    "Description": "Indicates success or error of the AHB transfer; on error, it causes the BIU to terminate bursts and assert biu_err_o.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.HWDATA",
+    "Description": "Write data driven to the AHB slave, sourced from delayed biu_d_i.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.HADDR",
+    "Description": "Address driven onto the AHB bus for each transfer beat, computed from core address and burst progression.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1260",
+        "CWE-1316",
+        "CWE-1276",
+        "CWE-1247",
+        "CWE-1257"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.biu_we_i",
+    "Description": "Indicates whether the transaction is a write; used to set HWRITE.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.HWRITE",
+    "Description": "Signals read/write direction to the AHB slave; derived from biu_we_i.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.HSEL",
+    "Description": "Selects the addressed AHB slave to participate in the transfer.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1317",
+        "CWE-1247",
+        "CWE-1319"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.biu_err_o",
+    "Description": "Raised when HRESP indicates error or burst is interrupted; signals failure to the core.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.HREADY",
+    "Description": "Indicates completion of the current AHB transfer and gates all state updates, data enables, and acknowledgments.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.HRDATA",
+    "Description": "Read data returned by the AHB slave; forwarded to the core on biu_q_o.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.biu_stb_ack_o",
+    "Description": "Indicates the BIU has accepted a new core strobe/request.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+},
+{
+    "Name": "biu_ahb3lite.biu_ack_o",
+    "Description": "Indicates a transfer beat completed (qualified by HREADY and internal enables).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1276",
+        "CWE-1313"
+    ]
+}

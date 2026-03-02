@@ -1,0 +1,126 @@
+{
+    "Name": "apb_gpio.PWDATA",
+    "Description": "Carries data values to be written into GPIO control registers (direction, output, interrupt enables/types, enables, pad configuration, lock).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "apb_gpio.PWRITE",
+    "Description": "Indicates whether an APB access is a write versus a read, enabling state updates when asserted.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "apb_gpio.PENABLE",
+    "Description": "Qualifies the second cycle of APB transfers to trigger the actual register access.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "apb_gpio.gpio_dir",
+    "Description": "Drives each GPIO\u2019s direction (input vs output) based on r_gpio_dir.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1224",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "apb_gpio.PSLVERR",
+    "Description": "APB error indication signal (tied to 0 in this implementation).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "apb_gpio.PRDATA",
+    "Description": "Returns register contents (direction, inputs, outputs, interrupt config/status, enable, lock, padcfg) on APB reads.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1262",
+        "CWE-1231"
+    ]
+},
+{
+    "Name": "apb_gpio.interrupt",
+    "Description": "Aggregated interrupt line asserted when enabled and configured edges are detected on inputs.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1320",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "apb_gpio.r_gpio_en",
+    "Description": "Per-pin enable bits used to derive s_clk_en for domain clock gating and to gate interrupt generation.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ]
+}

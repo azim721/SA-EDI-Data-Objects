@@ -1,0 +1,224 @@
+{
+    "Name": "neorv32_cpu_cp_cfu.key_mem",
+    "Description": "Array of four 32-bit words used to store the XTEA round/key words; written via CSR writes and read asynchronously for round computations.",
+    "Family": [
+        "Memories",
+        "Security"
+    ],
+    "Type": [
+        "Secret",
+        "Cryptographic",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1300"
+    ],
+    "Justification": "key_mem holds the secret cryptographic key material used by the XTEA algorithm. If key_mem is exposed or read out by an integrator or attacker, the confidentiality of all encryption/decryption operations is broken."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.csr_wdata_i",
+    "Description": "32-bit data value supplied during a CSR write; when csr_we_i is asserted it is synchronously written into key_mem at the index given by csr_addr_i.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "csr_wdata_i contains the new key word or CSR configuration written into key_mem; tampering or erroneous values on this port directly corrupt the stored key/configuration and therefore compromise operational integrity."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.csr_addr_i",
+    "Description": "2-bit index selecting which key_mem element (0..3) is targeted by a CSR write or read access.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Tampering with csr_addr_i can redirect CSR writes/reads to the wrong key_mem element, corrupting the intended key word or configuration and causing incorrect behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.csr_we_i",
+    "Description": "Single-cycle strobe indicating a valid CSR write; when high on a clock edge causes csr_wdata_i to be written into key_mem[csr_addr_i].",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "csr_we_i directly enables modification of key_mem by causing synchronous writes of software-provided data; if asserted incorrectly or corrupted, it can alter or erase key material and compromise the integrity of operations."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.csr_rdata_o",
+    "Description": "Asynchronous 32-bit read port driven with the contents of key_mem indexed by csr_addr_i; used by the CPU to read CFU CSRs.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Secret",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Confidentiality",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1300"
+    ],
+    "Justification": "csr_rdata_o directly outputs the contents of key_mem to the CPU on CSR reads; therefore it is a clear channel by which secret key words can be leaked to software or an adversary with read access, making it a confidentiality-critical interface."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.funct3_i",
+    "Description": "3-bit selector from the instruction word that selects the CFU operation (init / encrypt v0/v1 / decrypt v0/v1) and controls operand/round-key handling.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "funct3_i selects the CFU operation mode (including initialization vs. encrypt/decrypt). If corrupted, the CFU can run unintended modes (e.g., skip initialization or use wrong arithmetic), altering results and breaking functional integrity."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.rs1_i",
+    "Description": "32-bit source register 1 supplied by the CPU and buffered into xtea.opa on operation start; used as one of the two XTEA data operands.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Sensitive",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Altering rs1_i changes the data being processed by XTEA and therefore directly corrupts computation results; its integrity is essential for correct cryptographic behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.rs2_i",
+    "Description": "32-bit source register 2 supplied by the CPU and buffered into xtea.opb on operation start; used as the second XTEA data operand.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Sensitive",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If rs2_i is modified, the XTEA engine will compute wrong outputs (v0/v1 updates), producing incorrect program-visible state or triggering faults. Ensuring integrity of rs2_i is essential for correct cryptographic behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.start_i",
+    "Description": "One-cycle strobe that triggers/buffers a new CFU operation when asserted (and rtype_i indicates the correct instruction format).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "start_i is the entry trigger for CFU operations; if an attacker or faulty integration prevents start_i from being asserted (or drops the strobe), CFU operations cannot be initiated, producing a denial-of-service on the accelerator functionality."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.active_i",
+    "Description": "Indicates the CPU is waiting for the CFU / that an operation is in progress; per interface spec the CFU should cease processing when this deasserts.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "active_i controls whether multi-cycle processing is expected; if active_i is de-asserted prematurely (or held inactive), the CFU must cease/reset operations or the CPU will not accept results, causing aborted operations or denial-of-service of CFU functions."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.result_o",
+    "Description": "32-bit operation result driven to the CPU when an operation completes (written into the CPU register file).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Cryptographic",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "result_o conveys processed data (ciphertext or plaintext) from the CFU to the CPU; loss or corruption of this output affects observable functionality."
+},
+{
+    "Name": "neorv32_cpu_cp_cfu.valid_o",
+    "Description": "Single-cycle strobe asserting that result_o is valid; the CPU samples this to accept the CFU result (for multi-cycle operations it follows xtea.done).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "valid_o is the handshake signal used by the CPU to accept the CFU result; if it is unavailable, stuck low, or suppressed at integration, the CPU will not capture results, causing denial-of-service of CFU functions."
+}

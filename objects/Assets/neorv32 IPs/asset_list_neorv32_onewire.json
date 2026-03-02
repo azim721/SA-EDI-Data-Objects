@@ -1,0 +1,121 @@
+{
+    "Name": "neorv32_onewire.onewire_i",
+    "Description": "Physical 1\u2011Wire line sense input sampled (synchronized into serial.wire_in) and used to read bits from devices and detect presence pulses on the 1\u2011Wire bus.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Manipulation of the sensed bus level directly changes the bits sampled by the serial engine and the presence detection result. An attacker controlling or spoofing this input can corrupt read data and presence detection, altering the integrity of reported device responses."
+},
+{
+    "Name": "neorv32_onewire.ctrl.enable",
+    "Description": "Internal enable flag that turns the 1\u2011Wire controller and its clock generator usage on/off and forces the serial engine into reset/off when cleared.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the watchdog from starting/counting and thereby prevent the WDT from performing system recovery, causing a loss of the module's intended availability/safety function."
+},
+{
+    "Name": "neorv32_onewire.serial.presence",
+    "Description": "Flag sampled during RESET state indicating whether any device pulled the bus low (presence detected); gets combined into RX FIFO results.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Altering the presence flag yields an incorrect indication of device presence to the host, which can lead to wrong control decisions. The integrity of presence reporting is required for correct device enumeration and operation."
+},
+{
+    "Name": "neorv32_onewire.onewire_o",
+    "Description": "Driver control for the 1\u2011Wire line; the serial engine drives this output to actively pull the line low (onewire_o='0') or release it/tristate (onewire_o='1') to generate bit time slots and reset pulses.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1245"
+    ],
+    "Justification": "If the line driver is forced or disabled, the module cannot generate correct time slots or reset pulses, preventing any meaningful communication on the 1\u2011Wire bus. This directly enables a denial\u2011of\u2011service condition at integration level by blocking all transactions."
+},
+{
+    "Name": "neorv32_onewire.irq_o",
+    "Description": "Interrupt output asserted when the module is enabled, TX FIFO empty and serial engine idle; signals transfer completion/ready state to the CPU.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If irq_o is suppressed, the host may not service the peripheral promptly, leading to idle time and stalled workflows; if asserted spuriously, it can trigger interrupt storms that starve normal processing\u2014both harm overall availability."
+},
+{
+    "Name": "neorv32_onewire.clkgen_en_o",
+    "Description": "Output enable for the SoC clock generator; when asserted by ctrl.enable the external clock generator is allowed to run and provide clkgen_i sources used by the module.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If clkgen_en_o is prevented from asserting or is driven incorrectly at integration, the prescaler/tick will not be provided and the watchdog counter will not progress, disabling the WDT functionality and preventing the module from performing its recovery/reset role (Denial-of-service on WDT)."
+},
+{
+    "Name": "neorv32_onewire.serial.done",
+    "Description": "Completion indicator asserted by the serial FSM when an operation finishes; used to write results into RX FIFO and to move the FSM to IDLE.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1245"
+    ],
+    "Justification": "If completion is not asserted when operations finish or is falsely asserted, the RX FIFO won't be updated or operations may be prematurely considered complete, stalling or disrupting higher\u2011level flows. Correct availability of results depends on serial.done."
+}

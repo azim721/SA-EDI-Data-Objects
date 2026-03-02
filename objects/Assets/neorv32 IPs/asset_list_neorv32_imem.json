@@ -1,0 +1,69 @@
+{
+    "Name": "neorv32_imem.mem_ram_b0, mem_ram_b1, mem_ram_b2, mem_ram_b3",
+    "Description": "Four byte-wide RAM slices that together implement the 32-bit instruction memory when IMEM is configured as RAM. Each slice stores one byte of the instruction word. Writes are selective via bus_req_i.ben, and reads assemble the four slices into rdata.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "These slices are the authoritative program store; any unintended write-enable, bit flip, or byte-lane corruption alters opcodes/immediates and can redirect control flow or execute unintended code, so code-store integrity is critical."
+},
+{
+    "Name": "neorv32_imem.rdata",
+    "Description": "A 32-bit register that captures and outputs instruction words from IMEM (ROM or RAM). It updates on clock edges and is driven on bus responses when reads are active.",
+    "Family": [
+        "Memories"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "rdata is the instruction presented to fetch/decode; corruption, stale sampling, or byte-lane mix-ups yield the wrong opcode to the CPU, causing incorrect execution, so its integrity must be preserved."
+},
+{
+    "Name": "neorv32_imem.addr",
+    "Description": "Word-aligned address derived from bus_req_i.addr(addr_hi_c downto 2). Used to index instruction memory for both reads and writes.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "addr selects which instruction word is fetched or written; if manipulated or computed incorrectly, the core fetches from the wrong location, enabling code redirection or silent corruption."
+},
+{
+    "Name": "neorv32_imem.rden",
+    "Description": "A single-bit registered signal derived from bus_req_i.stb and not bus_req_i.rw. It gates whether rdata is driven onto bus_rsp_o.data.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1313"
+    ],
+    "Justification": "rden governs when instruction data is driven; if stuck low, instruction fetches never complete and the pipeline stalls, while spurious assertion can cause fetch glitches\u2014both degrading forward progress."
+}

@@ -1,0 +1,187 @@
+{
+    "Name": "neorv32_cpu_cp_fpu.csr_frm",
+    "Description": "Holds the active floating-point rounding mode (3 bits) used by the normalizer and conversion units to decide how results are rounded for all FP operations.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "If csr_frm is modified (e.g., via CSR writes) an attacker or faulty integration could change rounding semantics, producing incorrect or unexpected numeric results across the system. Maintaining integrity of the rounding mode is essential because it directly alters arithmetic outcomes and software-visible behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.csr_fflags",
+    "Description": "Accumulated 5-bit FPU exception flags (NV, DZ, OF, UF, NX) that are read/written via CSR accesses and auto-accumulated from fflags produced by operations.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "Corrupting csr_fflags can hide or fabricate exception conditions (e.g., invalid operation or inexact) which influence software decisions (error handling, control flow). Preserving integrity of the flags is necessary to ensure correct exception reporting and subsequent behavior by software."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.csr_we_i",
+    "Description": "Input control that gates write access to FPU CSRs (frm/fflags/fcsr); when asserted allows CSR updates from csr_wdata_i to internal CSR registers.",
+    "Family": [
+        "Controllers",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "csr_we_i directly enables modification of FPU control/status registers by allowing writes of software-provided data into the internal CSRs. If corrupted or asserted incorrectly, it can alter rounding mode or exception flags, compromising the integrity of FP control state."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.csr_addr_i",
+    "Description": "2-bit input that selects which FPU CSR (fflags, frm or fcsr) is targeted for CSR read/write operations.",
+    "Family": [
+        "Controllers",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1247"
+    ],
+    "Justification": "Tampering with csr_addr_i can redirect CSR writes/reads to the wrong internal register (e.g., overwrite frm instead of fflags), corrupting control/state and causing incorrect FP behavior or misleading status. Ensuring correctness of the selected CSR protects internal control data integrity."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.rs1_i",
+    "Description": "XLEN-bit input carrying the first operand (integer-encoded single-precision float) from the CPU register file used by classifier, arithmetic, compare and conversion units.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "Altering rs1_i changes the data being shifted and therefore directly corrupts computation results; an integrator would consider the correctness of this operand critical. Because rs1_i is an input that controls the value transformed by the shifter, its integrity is the dominant concern."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.rs2_i",
+    "Description": "XLEN-bit input carrying the second operand (integer-encoded single-precision float) used by arithmetic, min/max, compare and sign-inject units.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If rs2_i is modified the multiplier/divider will compute wrong outputs (or divide by wrong/divisor), potentially producing incorrect program-visible state or triggering faults. Ensuring integrity of rs2_i is essential for correct arithmetic behavior."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.cmp_i",
+    "Description": "Two-bit comparator status from main ALU used by the FPU comparator logic to determine equal/less conditions for FEQ/FLT/FLE operations.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1276",
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "cmp_i encodes the ALU\u2019s equality/ordering outcome consumed by the FPU; if altered or corrupted, FEQ/FLT/FLE would produce incorrect flags/results, misleading program decisions and violating computational correctness, so its integrity must be maintained."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.res_o",
+    "Description": "XLEN-bit output delivering the final FPU operation result (classification, comparison, conversion or normalized/rounded arithmetic result) to the CPU pipeline.",
+    "Family": [
+        "Accelerator"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If res_o is blocked or not produced when expected, downstream units cannot obtain required computation results and processor execution would be disrupted (denial-of-service impact). Although output integrity matters, the dominant integration-level concern is that the result must be available when expected for correct operation."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.valid_o",
+    "Description": "Single-bit handshake indicating that res_o contains a valid, completed operation result (asserted when ctrl_engine.valid is set).",
+    "Family": [
+        "Controllers",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "valid_o is the observable/unlocking signal used by the debug module; if it is unavailable, stuck low, or suppressed at integration, the debugger remains locked and normal debug functionality is denied, making this port availability-critical."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.fu_core_done",
+    "Description": "Internal aggregated done signal (OR of all FU done signals) used by the control engine to detect that the currently-started multi-cycle operation completed.",
+    "Family": [
+        "Controllers",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "If fu_core_done is not asserted when operations finish (or is spuriously suppressed), the control FSM will not release the result (ctrl_engine.valid), preventing result delivery and causing a DoS of FPU operations. The availability of this completion indicator is essential for operation termination and handover to the CPU."
+},
+{
+    "Name": "neorv32_cpu_cp_fpu.normalizer.done",
+    "Description": "Done handshake from the normalizer/rounder indicating that normalization, rounding or integer-to-float conversion has finished and result/flags are valid.",
+    "Family": [
+        "Controllers",
+        "Accelerator"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247"
+    ],
+    "Justification": "The normalizer is on the critical path for arithmetic and conversion results; if normalizer.done is prevented or held low the FPU cannot complete many operation classes and results never reach res_o/valid_o. Therefore maintaining availability of this done signal is necessary to avoid denial of FP services."
+}

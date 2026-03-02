@@ -1,0 +1,183 @@
+{
+    "Name": "neorv32_bus_switch.sel",
+    "Description": "Controls which host port (A when '0', B when '1') is connected to the downstream device; used by request/response switching and gating ACK/ERR back to the correct host.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "sel is the control signal that determines which lock bit may be modified or observed. Tampering with sel (selecting the wrong index or suppressing the intended index) can cause incorrect lock modifications or reads, corrupting ownership semantics and enabling incorrect resource access, so integrity of sel is critical."
+},
+{
+    "Name": "neorv32_bus_switch.stb",
+    "Description": "Strobe asserted to the downstream device (x_req_o.stb) when the arbiter grants a host port access; initiates the forwarded transaction.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1245",
+        "CWE-1247"
+    ],
+    "Justification": "If 'stb' is suppressed or spuriously asserted the downstream transaction can be blocked or injected, resulting in denial-of-service or unintended operations. The primary impact is preventing or enabling progress of accesses, making availability the dominant objective."
+},
+{
+    "Name": "neorv32_bus_switch.a_req",
+    "Description": "Latched request indicator for host port A that stores incoming A strobes until the arbiter services them or clears them when A is granted.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1261",
+        "CWE-1247"
+    ],
+    "Justification": "Tampering with 'a_req' can cause A's requests to be lost or permanently stalled (DoS) or create spurious requests that flood the bus; the main consequence is preventing legitimate A accesses, so availability is the dominant concern."
+},
+{
+    "Name": "neorv32_bus_switch.b_req",
+    "Description": "Latched request indicator for host port B that stores incoming B strobes until the arbiter services them or clears them when B is granted.",
+    "Family": [
+        "Bus/Interface",
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1261",
+        "CWE-1319"
+    ],
+    "Justification": "Analogous to a_req, corruption of 'b_req' can block or fabricate requests for port B and thereby deny service or create bus contention; availability impact is most significant."
+},
+{
+    "Name": "neorv32_bus_gateway.port_sel",
+    "Description": "4-bit vector that indicates which section (A,B,C or X) the incoming host request address maps to; used to steer the request to the matching section port.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1260",
+        "CWE-1316"
+    ],
+    "Justification": "If 'port_sel' is manipulated an access can be routed to the wrong section or to the void X port, causing accesses to reach incorrect peripherals or bypass intended targets; this corrupts address-to-device mapping and thus primarily threatens integrity of memory/IO routing."
+},
+{
+    "Name": "neorv32_bus_gateway.keeper.err",
+    "Description": "Local error flag set by the keeper when a timeout or device error is detected; exposed as the host response error (rsp_o.err) to signal bus errors to the CPU.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1320",
+        "CWE-1247"
+    ],
+    "Justification": "False positives in 'keeper.err' will report spurious bus errors and can cause the CPU to abort or retry transactions unnecessarily, effectively denying correct service; conversely clearing real errors can hide failures. The dominant impact is on availability of correct operation."
+},
+{
+    "Name": "neorv32_bus_gateway.keeper.halt",
+    "Description": "Indicator used to disable timeout counting for accesses directed to the X (void) port; when asserted the keeper will not time out the access.",
+    "Family": [
+        "Bus/Interface",
+        "Counter/Timer"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1320",
+        "CWE-1319"
+    ],
+    "Justification": "If 'keeper.halt' is forced erroneously, real timeouts may be suppressed allowing hung accesses to remain undetected and blocking progress; if cleared wrongly, legitimate long-running accesses may be timed out \u2014 both cause availability issues, making availability dominant."
+},
+{
+    "Name": "neorv32_bus_amo_rmw.alu_res",
+    "Description": "Computed result of the AMO read-modify-write ALU that is written back to memory during the write phase of an AMO operation.",
+    "Family": [],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "If 'alu_res' is manipulated the value written back for AMO operations will be incorrect, leading to corrupted memory state and violated atomic operation semantics; this is a clear integrity threat."
+},
+{
+    "Name": "neorv32_bus_amo_rmw.arbiter.wdata",
+    "Description": "Internal register that stores the write operand (host-provided data) for the AMO sequence; used together with the pre-read rdata to compute the final write value.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Code/Data",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319"
+    ],
+    "Justification": "Tampering with 'arbiter.wdata' changes the computed AMO result and the value written back during the atomic write phase, corrupting memory contents and breaking atomic semantics; integrity is the dominant impact."
+},
+{
+    "Name": "neorv32_bus_amo_rvs.state",
+    "Description": "Tracks whether a global LR reservation is active and handles LR/SC transitions and invalidation for the reservation-set controller.",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control",
+        "Sensitive"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Corrupting the reservation FSM 'state' can incorrectly allow or disallow store-conditional (SC) commits or invalidate reservations improperly, breaking atomicity guarantees for LR/SC sequences and thus compromising operation integrity."
+}

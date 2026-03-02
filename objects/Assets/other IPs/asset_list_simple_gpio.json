@@ -1,0 +1,49 @@
+{
+    "Name": "simple_gpio.we_i",
+    "Description": "Qualifies a bus access as a write, enabling updates to the selected register when combined with cyc_i and stb_i.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1262",
+        "CWE-1220",
+        "CWE-1247"
+    ]
+},
+{
+    "Name": "simple_gpio.ack_o",
+    "Description": "Signals completion of a WISHBONE transaction one cycle after a valid access.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261"
+    ]
+},
+{
+    "Name": "simple_gpio.stb_i",
+    "Description": "Qualifies a data transfer within a bus cycle alongside cyc_i.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1261"
+    ]
+}

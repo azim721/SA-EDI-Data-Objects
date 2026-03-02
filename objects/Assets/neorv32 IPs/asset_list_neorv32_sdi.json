@@ -1,0 +1,103 @@
+{
+    "Name": "neorv32_sdi.sdi_csn_i",
+    "Description": "Active-low chip-select for the SDI link; synchronized into sync.csn and used to start/abort transmissions and reported in the control status bit (ctrl_cs_active).",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control",
+        "Critical"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "If sdi_csn_i is not asserted (or is held inactive), no transfers will start; if it is spuriously toggled the serial engine aborts transfers. Thus unavailability or manipulation of this signal can directly deny SDI data-transfer functionality."
+},
+{
+    "Name": "neorv32_sdi.sdi_dat_i",
+    "Description": "Asynchronous serial data input synchronized into sync.sdi and sampled into serial.sdi_ff then shifted into serial.sreg and finally written to the RX FIFO on serial.done.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "Tampering or injection on sdi_dat_i directly modifies received payload bits, corrupting received data content. The dominant concern is integrity because altered input bits change the semantic data delivered to the CPU."
+},
+{
+    "Name": "neorv32_sdi.sdi_dat_o",
+    "Description": "MSB of the serial shift register (serial.sreg) driven out as the serial transmit bitstream for the remote device; reflects the next transmit bit (TX) from the FIFO or zeros when empty.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220"
+    ],
+    "Justification": "sdi_dat_o conveys the module's transmitted bits; corruption of the transmit path or of the driving register changes what is sent to the external host. The primary risk is integrity of the transmitted data."
+},
+{
+    "Name": "neorv32_sdi.irq_o",
+    "Description": "Asserts an interrupt to the CPU when the peripheral is enabled and configured FIFO/status conditions (RX/TX available, half/full, etc.) match enabled IRQ control bits.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220"
+    ],
+    "Justification": "If irq_o is suppressed, the host may not service the peripheral promptly, leading to idle time and stalled workflows; if asserted spuriously, it can trigger interrupt storms that starve normal processing\u2014both harm overall availability."
+},
+{
+    "Name": "neorv32_sdi.ctrl.enable",
+    "Description": "Control bit written by the CPU to enable/disable the SDI; when '0' it causes tx_fifo and rx_fifo to be cleared and disables the serial engine (serial.state bit2 used).",
+    "Family": [
+        "Controllers"
+    ],
+    "Type": [
+        "Control"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Availability",
+    "CWEs": [
+        "CWE-1220"
+    ],
+    "Justification": "Tampering with ctrl.enable (clearing or preventing it from being set) will stop the watchdog from starting/counting and thereby prevent the WDT from performing system recovery, causing a loss of the module's intended availability/safety function."
+},
+{
+    "Name": "neorv32_sdi.serial.sreg",
+    "Description": "8-bit shift register loaded from tx_fifo.rdata (or zero) for transmission and shifted-in with sampled bits to produce received bytes that are written into the RX FIFO (rx_fifo.wdata). Its MSB drives sdi_dat_o.",
+    "Family": [
+        "Bus/Interface"
+    ],
+    "Type": [
+        "Code/Data"
+    ],
+    "Database_ID": "MITRE CWE VIEW: Hardware Design",
+    "Security Objective": "Integrity",
+    "CWEs": [
+        "CWE-1247",
+        "CWE-1319",
+        "CWE-1384"
+    ],
+    "Justification": "serial.sreg directly holds TX bytes and assembled RX bytes; corruption of its contents alters data transmitted or delivered to the CPU, so integrity of this register is critical."
+}
