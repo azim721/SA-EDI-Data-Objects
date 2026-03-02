@@ -1,0 +1,8 @@
+Name,Definition,Examples
+Critical,"Material that is critical for proper functionality. Without this asset, the IP would not be able to function.","Timers/Counters, clock generators"
+Secret,Material that requires confidentiality and should not be accessible outside the IP,"Password, cryptographic keys"
+Sensitive,Material that requires integrity but not necessarily confidentiality.,"Root of Trust (e.g. Asymmetric public key), fuse/OTP"
+Control,Material used to alter and/or control the state of the IP. This material can also setup or configure the IP.,"FSM, control register"
+Cryptographic,Material that is part of a cryptographic operation,"AES, RSA, SHA, HMAC, RNG"
+Code/Data,Material that contains information which can alter the behavior of the IP,Storage (Volatile/Non-volatile)
+Compute,Material that is part of an execution engine that operates on opcodes or instructions,"CISC, RISC, CPU, GPU"
