@@ -1,0 +1,195 @@
+[
+  {
+    "Name": "Key_leak_via_module_output",
+    "Asset Name": "aes_128.key",
+    "Security Objective": "Confidentiality",
+    "Description": "The aes_128.key value may be exposed through the aes_128.out signal due to insufficient zeroization or side-channel/physical leakage paths. Monitor aes_128.out for unauthorized disclosure of the key material.",
+    "Security Weakness Reference": [
+      "CWE-1239",
+      "CWE-1300",
+      "CWE-1319"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "State_leak_via_module_output",
+    "Asset Name": "aes_128.state",
+    "Security Objective": "Confidentiality",
+    "Description": "Internal AES state (aes_128.state) may be exposed via aes_128.out due to insufficient clearing or side-channel leakage; check aes_128.out for unauthorized disclosure of internal state.",
+    "Security Weakness Reference": [
+      "CWE-1239",
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "Input_port_leak_via_output",
+    "Asset Name": "aes_128.a1.in",
+    "Security Objective": "Confidentiality",
+    "Description": "Values provided to aes_128.a1.in may remain or be leaked and become observable on aes_128.out due to insufficient zeroization or side-channel protections.",
+    "Security Weakness Reference": [
+      "CWE-1239",
+      "CWE-1300",
+      "CWE-1319"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "Register_state_leak_via_output_and_debug",
+    "Asset Name": "aes_128.r1.state_in",
+    "Security Objective": "Confidentiality",
+    "Description": "aes_128.r1.state_in may be exposed through aes_128.out or debug-related paths due to uncleared debug information, improper debug access control, or side-channel leakage; monitor aes_128.out for such disclosures.",
+    "Security Weakness Reference": [
+      "CWE-1191",
+      "CWE-1258",
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "Unauthorized_register_write_to_state_in",
+    "Asset Name": "aes_128.r1.state_in",
+    "Security Objective": "Integrity",
+    "Description": "An attacker able to control register-access inputs (aes_128.key or aes_128.state) or abuse debug interfaces can modify aes_128.r1.state_in and break integrity; validate access controls on register inputs.",
+    "Security Weakness Reference": [
+      "CWE-1191",
+      "CWE-1262"
+    ],
+    "Attack Points": [
+      "aes_128.clk",
+      "aes_128.key",
+      "aes_128.state"
+    ]
+  },
+  {
+    "Name": "State_in_availability_via_output_path",
+    "Asset Name": "aes_128.r1.state_in",
+    "Security Objective": "Availability",
+    "Description": "Fault injection (e.g., clock/voltage glitches) may impair aes_128.r1.state_in and cause availability failures observable on aes_128.out; monitor for fault-induced availability anomalies.",
+    "Security Weakness Reference": [
+      "CWE-1247"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "Round_key_leak_via_output",
+    "Asset Name": "aes_128.r1.key",
+    "Security Objective": "Confidentiality",
+    "Description": "aes_128.r1.key may be exposed on aes_128.out due to insufficient zeroization, debug exposure, or side-channel leakage; inspect aes_128.out for key disclosure.",
+    "Security Weakness Reference": [
+      "CWE-1191",
+      "CWE-1239",
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "State_out_dos_via_environment_or_glitch",
+    "Asset Name": "aes_128.r1.state_out",
+    "Security Objective": "Availability",
+    "Description": "aes_128.r1.state_out availability may be disrupted by fault injection or environmental tampering, with effects observable on aes_128.out; monitor for anomalies indicating DoS.",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1384"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "RF_state_in_leak_via_output_or_debug",
+    "Asset Name": "aes_128.rf.state_in",
+    "Security Objective": "Confidentiality",
+    "Description": "aes_128.rf.state_in may be disclosed via aes_128.out due to debug interface exposure, uncleared debug information, or side-channel leakage; check aes_128.out for unauthorized state disclosures.",
+    "Security Weakness Reference": [
+      "CWE-1191",
+      "CWE-1258",
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "RF_unauthorized_register_write_or_misconnection",
+    "Asset Name": "aes_128.rf.state_in",
+    "Security Objective": "Integrity",
+    "Description": "Improper access control, misconnection, or debug misuse may allow modification of aes_128.rf.state_in via inputs such as aes_128.key or aes_128.state; validate register protections and correct block integration.",
+    "Security Weakness Reference": [
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1276"
+    ],
+    "Attack Points": [
+      "aes_128.clk",
+      "aes_128.key",
+      "aes_128.state"
+    ]
+  },
+  {
+    "Name": "PRELIM_A_7_REF_1",
+    "Asset Name": "aes_128.rf.state_in",
+    "Security Objective": "Availability",
+    "Description": "Physical faults, environmental tampering, or incorrect integration can cause aes_128.rf.state_in to become unavailable or corrupted, producing incorrect or missing outputs observable on aes_128.out. Monitor aes_128.out for discrepancies that indicate loss of availability of the input state.",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1276",
+      "CWE-1384"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "PRELIM_C_8_REF_1",
+    "Asset Name": "aes_128.rf.key_in",
+    "Security Objective": "Confidentiality",
+    "Description": "Improper debug access or failure to zeroize the key register can result in aes_128.rf.key_in being exposed; an attacker observing aes_128.out may be able to infer or extract key material. Ensure aes_128.out does not leak key material and that key registers are zeroized and protected from debug access.",
+    "Security Weakness Reference": [
+      "CWE-1191",
+      "CWE-1239",
+      "CWE-1244"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "PRELIM_A_9_REF_1",
+    "Asset Name": "aes_128.rf.state_out",
+    "Security Objective": "Availability",
+    "Description": "Voltage/clock glitches or environmental tampering can corrupt aes_128.rf.state_out or interrupt correct output generation, leading to availability or incorrectness observable on aes_128.out. Detect such anomalies on aes_128.out to catch availability failures.",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1384"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Name": "PRELIM_C_10_REF_1",
+    "Asset Name": "aes_128.r1.t0.state",
+    "Security Objective": "Confidentiality",
+    "Description": "Observable discrepancies or unprotected side-channel emissions can leak internal round state (aes_128.r1.t0.state) to an observer of aes_128.out; monitor and harden outputs to prevent leakage of intermediate state.",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203"
+    ],
+    "Attack Points": [
+      "aes_128.out"
+    ]
+  }
+]

@@ -1,3 +1,4 @@
+[
 {
     "Name": "aes_128.key",
     "Description": "Provides the 128-bit cipher key used for the initial AddRoundKey and fed into the key expansion pipeline.",
@@ -210,3 +211,4 @@
         "CWE-1247"
     ]
 }
+]

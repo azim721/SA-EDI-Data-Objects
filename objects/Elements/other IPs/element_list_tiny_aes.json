@@ -1,0 +1,261 @@
+[
+  {
+    "Asset Name": "aes_128.key",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1239"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.state",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1239"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.a1.in",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1239"
+    ],
+    "Ports": [
+      "aes_128.clk",
+      "aes_128.key"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.a1.in",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1239"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.r1.state_in",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1258",
+      "CWE-1247",
+      "CWE-1313"
+    ],
+    "Ports": [
+      "aes_128.clk",
+      "aes_128.key",
+      "aes_128.state"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.r1.state_in",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1258",
+      "CWE-1247",
+      "CWE-1313"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.r1.key",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1239",
+      "CWE-1247"
+    ],
+    "Ports": [
+      "aes_128.clk",
+      "aes_128.key"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.r1.key",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1239",
+      "CWE-1247"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.r1.state_out",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1313",
+      "CWE-1384"
+    ],
+    "Ports": [
+      "aes_128.clk",
+      "aes_128.key",
+      "aes_128.state"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.r1.state_out",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1313",
+      "CWE-1384"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.rf.state_in",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1258",
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1276"
+    ],
+    "Ports": [
+      "aes_128.clk",
+      "aes_128.key",
+      "aes_128.state"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.rf.state_in",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1258",
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1276"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.rf.key_in",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1239",
+      "CWE-1244",
+      "CWE-1247"
+    ],
+    "Ports": [
+      "aes_128.clk",
+      "aes_128.key"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.rf.key_in",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1191",
+      "CWE-1262",
+      "CWE-1239",
+      "CWE-1244",
+      "CWE-1247"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.rf.state_out",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1313",
+      "CWE-1296",
+      "CWE-1384"
+    ],
+    "Ports": [
+      "aes_128.clk",
+      "aes_128.key",
+      "aes_128.state"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.rf.state_out",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1313",
+      "CWE-1296",
+      "CWE-1384"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.r1.t0.state",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203",
+      "CWE-1247"
+    ],
+    "Ports": [
+      "aes_128.clk",
+      "aes_128.key[127:96]",
+      "aes_128.state[127:96]"
+    ]
+  },
+  {
+    "Asset Name": "aes_128.r1.t0.state",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203",
+      "CWE-1247"
+    ],
+    "Ports": [
+      "aes_128.out"
+    ]
+  }
+]
