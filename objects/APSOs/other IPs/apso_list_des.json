@@ -1,0 +1,167 @@
+[
+  {
+    "Name": "Leak_u0_K_sub_via_side_channel",
+    "Asset Name": "des3.u0.K_sub",
+    "Security Objective": "Confidentiality",
+    "Description": "Sensitive subkey des3.u0.K_sub may be leaked via side-channel observable signals; monitor des3.desOut for correlation with the asset to detect leakage.",
+    "Security Weakness Reference": [
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "Leak_key1_via_side_channel",
+    "Asset Name": "des3.key1",
+    "Security Objective": "Confidentiality",
+    "Description": "Secret des3.key1 may be exposed through physical side-channels observable on des3.desOut; check correlations between the asset and des3.desOut.",
+    "Security Weakness Reference": [
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "Leak_key2_via_side_channel",
+    "Asset Name": "des3.key2",
+    "Security Objective": "Confidentiality",
+    "Description": "Secret des3.key2 may be leaked through side-channel emissions observable on des3.desOut; use des3.desOut as the observation point.",
+    "Security Weakness Reference": [
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "Leak_key3_via_side_channel",
+    "Asset Name": "des3.key3",
+    "Security Objective": "Confidentiality",
+    "Description": "Secret des3.key3 may be exposed via physical side-channels observable on des3.desOut; monitor that output for leakage.",
+    "Security Weakness Reference": [
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "Leak_K_sub_via_side_channel",
+    "Asset Name": "des3.K_sub",
+    "Security Objective": "Confidentiality",
+    "Description": "Sensitive key material des3.K_sub may leak via side-channel information observable on des3.desOut; use that signal as the observation port.",
+    "Security Weakness Reference": [
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "Leak_desIn_via_side_channel",
+    "Asset Name": "des3.desIn",
+    "Security Objective": "Confidentiality",
+    "Description": "Plaintext input des3.desIn may be exposed through side-channel signals observable on des3.desOut; instrument des3.desOut for leakage detection.",
+    "Security Weakness Reference": [
+      "CWE-1300"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "LEAK_via_DES_output_or_sidechannel_key1",
+    "Asset Name": "des3.u1.key1",
+    "Security Objective": "Confidentiality",
+    "Description": "Observation of DES outputs (des3.desOut) or related observable signals can allow extraction of des3.u1.key1 via side-channels or observable discrepancies. Test that secret key flows to/describes observable outputs under normal/variant conditions.",
+    "Security Weakness Reference": [
+      "CWE-1240",
+      "CWE-1300",
+      "CWE-203"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "LEAK_via_DES_output_or_sidechannel_key2",
+    "Asset Name": "des3.u1.key2",
+    "Security Objective": "Confidentiality",
+    "Description": "Observation of DES outputs (des3.desOut) or related observable signals can allow extraction of des3.u1.key2 via side-channels or observable discrepancies. Verify key material is not observable on public outputs.",
+    "Security Weakness Reference": [
+      "CWE-1240",
+      "CWE-1300",
+      "CWE-203"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "LEAK_via_DES_output_or_sidechannel_key3",
+    "Asset Name": "des3.u1.key3",
+    "Security Objective": "Confidentiality",
+    "Description": "Observation of DES outputs (des3.desOut) or related observable signals can allow extraction of des3.u1.key3 via side-channels or observable discrepancies. Ensure key bits are not reflected in observable outputs or side channels.",
+    "Security Weakness Reference": [
+      "CWE-1240",
+      "CWE-1300",
+      "CWE-203"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "TAMPER_roundSel_to_alter_rounds",
+    "Asset Name": "des3.u1.roundSel",
+    "Security Objective": "Integrity",
+    "Description": "An attacker who can drive or tamper with des3.roundSel may change the selected round count, violating integrity of the cryptographic operation (des3.u1.roundSel). Verify that unauthorized changes to roundSel cannot reach or affect the asset.",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1319"
+    ],
+    "Attack Points": [
+      "des3.roundSel"
+    ]
+  },
+  {
+    "Name": "FAULT_injection_or_SEU_disrupt_decrypt",
+    "Asset Name": "des3.u1.decrypt",
+    "Security Objective": "Availability",
+    "Description": "Induced faults or SEUs can disrupt des3.u1.decrypt so that it fails or produces incorrect/no outputs observable at des3.desOut, causing availability loss. Verify the decrypt unit maintains availability under fault conditions and that failures are detectable/mitigated.",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1261",
+      "CWE-1319"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Name": "LEAK_via_DES_output_or_sidechannel_K_sub",
+    "Asset Name": "des3.u1.K_sub",
+    "Security Objective": "Confidentiality",
+    "Description": "Observable outputs (des3.desOut) or other measurable signals may leak des3.u1.K_sub through side-channels or observable discrepancies. Validate that subkeys are not exposed on public outputs or via observable behavior.",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203"
+    ],
+    "Attack Points": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  }
+]

@@ -1,3 +1,4 @@
+[
 {
     "Name": "des3.u0.K_sub",
     "Description": "The 48-bit subkey input (K_sub) is used in each DES round. It is XORed with the expanded right-half (E) to form the intermediate value X, which directly drives the S-box lookups. The output of the S-boxes ultimately determines the permutation output P.",
@@ -273,3 +274,4 @@
         "CWE-203"
     ]
 }
+]

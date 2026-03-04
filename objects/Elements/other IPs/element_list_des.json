@@ -1,0 +1,310 @@
+[
+  {
+    "Asset Name": "des3.u0.K_sub",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247",
+      "CWE-1319"
+    ],
+    "Ports": [
+      "des3.decrypt",
+      "des3.key1",
+      "des3.key2",
+      "des3.key3",
+      "des3.roundSel"
+    ]
+  },
+  {
+    "Asset Name": "des3.u0.K_sub",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247",
+      "CWE-1319"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.key1",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247",
+      "CWE-1262"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.key2",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247",
+      "CWE-1262"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.key3",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247",
+      "CWE-1262"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.K_sub",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247"
+    ],
+    "Ports": [
+      "des3.decrypt",
+      "des3.key1",
+      "des3.key2",
+      "des3.key3",
+      "des3.roundSel"
+    ]
+  },
+  {
+    "Asset Name": "des3.K_sub",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-1247"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.desIn",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.decrypt",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1262"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.roundSel",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1262"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.desOut",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1384"
+    ],
+    "Ports": [
+      "des3.clk",
+      "des3.decrypt",
+      "des3.desIn",
+      "des3.key1",
+      "des3.key2",
+      "des3.key3",
+      "des3.roundSel"
+    ]
+  },
+  {
+    "Asset Name": "des3.desOut",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1384"
+    ],
+    "Ports": [
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.key1",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203",
+      "CWE-1240"
+    ],
+    "Ports": [
+      "des3.key1"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.key1",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203",
+      "CWE-1240"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.key2",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203",
+      "CWE-1240"
+    ],
+    "Ports": [
+      "des3.key2"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.key2",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203",
+      "CWE-1240"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.key3",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203",
+      "CWE-1240"
+    ],
+    "Ports": [
+      "des3.key3"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.key3",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203",
+      "CWE-1240"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.roundSel",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1319"
+    ],
+    "Ports": [
+      "des3.roundSel"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.roundSel",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1319"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.decrypt",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1261"
+    ],
+    "Ports": [
+      "des3.decrypt"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.decrypt",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1247",
+      "CWE-1319",
+      "CWE-1261"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.K_sub",
+    "Direction": "Input",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203"
+    ],
+    "Ports": [
+      "des3.decrypt",
+      "des3.key1",
+      "des3.key2",
+      "des3.key3",
+      "des3.roundSel"
+    ]
+  },
+  {
+    "Asset Name": "des3.u1.K_sub",
+    "Direction": "Output",
+    "Security Weakness Reference": [
+      "CWE-1300",
+      "CWE-203"
+    ],
+    "Ports": [
+      "des3.desOut",
+      "des3.tmp"
+    ]
+  }
+]
